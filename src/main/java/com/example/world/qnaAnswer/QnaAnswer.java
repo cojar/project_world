@@ -23,7 +23,6 @@ public class QnaAnswer {
     private LocalDate createDate;
 
 
-
     @Column(columnDefinition = "text")
     private String content;
     //질문답변 내용
