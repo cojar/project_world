@@ -26,8 +26,6 @@ public class Notice {
 
     private LocalDate createDate;
 
-
-
     @Column(columnDefinition = "text")
     private String content;
 
