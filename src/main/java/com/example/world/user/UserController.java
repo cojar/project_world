@@ -108,74 +108,74 @@ public class UserController {
 
             return isDuplicate;
         }
-        @GetMapping("/mypage")
-        public String myPage(Model model, Principal principal, Integer id) {
-            SiteUser user = userService.getUser(principal.getName());
-            List<Review> reviewList = reviewService.getReviewsByAuthor(user);
-            List<Product> voterProducts = productService.getProductsByVoter(user);
-            List<Product> wishProducts = productService.getProductsByWish(user);
-            model.addAttribute("voterProducts", voterProducts);
-            model.addAttribute("wishProducts", wishProducts);
-            model.addAttribute("reviewList", reviewList);
-            model.addAttribute("userName", user.getUsername());
-            model.addAttribute("userNickName", user.getNickname());
-            model.addAttribute("userBirthDate", user.getBirthDate());
-            model.addAttribute("userImg", user.getProfileFilepath());
+//        @GetMapping("/mypage")
+//        public String myPage(Model model, Principal principal, Integer id) {
+//            SiteUser user = userService.getUser(principal.getName());
+//            List<Review> reviewList = reviewService.getReviewsByAuthor(user);
+//            List<Product> voterProducts = productService.getProductsByVoter(user);
+//            List<Product> wishProducts = productService.getProductsByWish(user);
+//            model.addAttribute("voterProducts", voterProducts);
+//            model.addAttribute("wishProducts", wishProducts);
+//            model.addAttribute("reviewList", reviewList);
+//            model.addAttribute("userName", user.getUsername());
+//            model.addAttribute("userNickName", user.getNickname());
+//            model.addAttribute("userBirthDate", user.getBirthDate());
+//            model.addAttribute("userImg", user.getProfileFilepath());
+//
+//            System.out.println(reviewList.toString());
+//            return "mypage";
+//        }
 
-            System.out.println(reviewList.toString());
-            return "mypage";
-        }
-
-        @PreAuthorize("isAuthenticated()")
-        @PostMapping("/modifyPassword")
-        public String modifyPassword(UserModifyForm userModifyForm, BindingResult bindingResult, Principal principal) {
-            if (bindingResult.hasErrors()) {
-                return "mypage";
-            }
-
-            SiteUser user = this.userService.getUser(principal.getName());
-            if (!userService.confirmPassword(userModifyForm.getPresentPW(), user)) {
-                bindingResult.rejectValue("presentPW", "passwordInCorrect",
-                        "현재 비밀번호를 바르게 입력해주세요.");
-                return "mypage";
-            }
-
-            // 비밀번호와 비밀번호 확인에 입력한 문자열이 서로 다르면 다시 입력 하도록
-            if (!userModifyForm.getNewPW().equals(userModifyForm.getNewPW2())) {
-                bindingResult.rejectValue("newPW2", "passwordInCorrect",
-                        "입력한 비밀번호가 일치하지 않습니다.");
-                return "mypage";
-            }
-
-            userService.modifyPassword(userModifyForm.getNewPW(), user);
-
-            return "redirect:/user/logout";
-        }
-
-        @PreAuthorize("isAuthenticated()")
-        @PostMapping("/updateprofile")
-        public String updateProfileImg(@Valid @ModelAttribute("userCreateForm") UserCreateForm userCreateForm,
-                                       BindingResult bindingResult,
-                                       Principal principal,
-                                       @RequestParam("file") MultipartFile file,
-                                       RedirectAttributes redirectAttributes) throws Exception {
-            SiteUser siteUser = this.userService.getUser(principal.getName());
-
-            // 업로드된 파일을 임시 폴더에 저장
-            String tempFolderPath = System.getProperty("java.io.tmpdir");
-            File tempFile = File.createTempFile("temp", file.getOriginalFilename(), new File(tempFolderPath));
-            file.transferTo(tempFile);
-
-            // 프로필 이미지 업데이트
-            userService.updateProfile(siteUser, tempFile);
-
-            // 임시 파일 삭제
-            tempFile.delete();
-
-            redirectAttributes.addFlashAttribute("successMessage", "프로필 이미지가 업데이트되었습니다.");
-
-            return "redirect:/user/mypage";
-        }
+//        @PreAuthorize("isAuthenticated()")
+//        @PostMapping("/modifyPassword")
+//        public String modifyPassword(UserModifyForm userModifyForm, BindingResult bindingResult, Principal principal) {
+//            if (bindingResult.hasErrors()) {
+//                return "mypage";
+//            }
+//
+//            SiteUser user = this.userService.getUser(principal.getName());
+//            if (!userService.confirmPassword(userModifyForm.getPresentPW(), user)) {
+//                bindingResult.rejectValue("presentPW", "passwordInCorrect",
+//                        "현재 비밀번호를 바르게 입력해주세요.");
+//                return "mypage";
+//            }
+//
+//            // 비밀번호와 비밀번호 확인에 입력한 문자열이 서로 다르면 다시 입력 하도록
+//            if (!userModifyForm.getNewPW().equals(userModifyForm.getNewPW2())) {
+//                bindingResult.rejectValue("newPW2", "passwordInCorrect",
+//                        "입력한 비밀번호가 일치하지 않습니다.");
+//                return "mypage";
+//            }
+//
+//            userService.modifyPassword(userModifyForm.getNewPW(), user);
+//
+//            return "redirect:/user/logout";
+//        }
+//
+//        @PreAuthorize("isAuthenticated()")
+//        @PostMapping("/updateprofile")
+//        public String updateProfileImg(@Valid @ModelAttribute("userCreateForm") UserCreateForm userCreateForm,
+//                                       BindingResult bindingResult,
+//                                       Principal principal,
+//                                       @RequestParam("file") MultipartFile file,
+//                                       RedirectAttributes redirectAttributes) throws Exception {
+//            SiteUser siteUser = this.userService.getUser(principal.getName());
+//
+//            // 업로드된 파일을 임시 폴더에 저장
+//            String tempFolderPath = System.getProperty("java.io.tmpdir");
+//            File tempFile = File.createTempFile("temp", file.getOriginalFilename(), new File(tempFolderPath));
+//            file.transferTo(tempFile);
+//
+//            // 프로필 이미지 업데이트
+//            userService.updateProfile(siteUser, tempFile);
+//
+//            // 임시 파일 삭제
+//            tempFile.delete();
+//
+//            redirectAttributes.addFlashAttribute("successMessage", "프로필 이미지가 업데이트되었습니다.");
+//
+//            return "redirect:/user/mypage";
+//        }
 
 
         @GetMapping("/login")
