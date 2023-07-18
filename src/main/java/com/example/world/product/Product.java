@@ -40,8 +40,14 @@ public class Product {
     private LocalDate createDate;
     // 상품 등록일
 
-    private String device;
-    // 상품 권장 장치 (콘솔 , pc )
+    private String OS;
+    // 운영체제
+
+    private String requirements;
+    // 최소, 권장
+
+    private String specification;
+    // 스펙
 
     private int viewCount;
     //조화수
