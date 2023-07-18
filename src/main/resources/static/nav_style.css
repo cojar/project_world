@@ -35,3 +35,42 @@ nav>.left-box>.menu1:hover>.sub-menu{
     display:block;
 }
 
+
+.sub-menu>li:hover{
+  border-bottom:2px solid white;
+}
+.sub-menu{
+  padding-bottom:10px;
+}
+
+.max-w-full{
+  position: fixed;
+  top: 2%;
+  /* width: 100% */
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+        background-color: rgba( 255, 255, 255, 0 );
+}
+
+.bgc{
+  background: black;
+  width:100%;
+  height:2000px;
+}
+
+.menu1>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
+.menu2>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
+.menu3>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
