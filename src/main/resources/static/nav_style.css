@@ -1,5 +1,15 @@
 /*노멀라이징*/
+
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 *{
+    font-family: 'NeoDunggeunmoPro-Regular';
     margin:0;
     padding:0;
 }
@@ -15,63 +25,13 @@ a{
     text-decoration:none;
 }
 
+/* 스타일 시작 */
 
 nav{
-    width:1200px;
     margin:0 auto;
-    display:flex;
-    justify-content:space-around;
-    align-items:flex-end;
-    background-color:navy;
-    color:white;
-
-}
-
-nav>.left-box{
-    width:30%;
-    display:flex;
-    justify-content:space-evenly;
-    font-size:28px;
-    position:relative;
-}
-
-nav>.left-box>.menu1>.sub-menu{
-    display:none;
-    color:red;
-    position:absolute;
-    top:50;
-    left:30;
 }
 
 nav>.left-box>.menu1:hover>.sub-menu{
     display:block;
 }
 
-nav>.logo-box{
-     height:150px;
-
-     box-sizing:border-box;
-}
-
-nav>.logo-box>a>img{
-   width:300px
-}
-
-
-nav>.right-box{
-    width:30%;
-    display:flex;
-    justify-content:space-evenly;
-
-    font-size:28px;
-}
-
-nav>.right-box>.user-box{
-    display:flex;
-    align-items:flex-end;
-    font-size:15px;
-}
-
-nav>.right-box>.user-box>div:last-child{
-    margin-left:20px;
-}
