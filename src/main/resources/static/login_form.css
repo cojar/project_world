@@ -7,14 +7,15 @@
 
 .my-3con{
   text-align:center;
-  margin-top:100px;
   background: rgb(30, 30, 30);
+  height: 1000px;
 }
 
 .My-3{
   display:inline-block;
   text-align:center;
   width:600px;
+  margin-top: 300px;
 }
 
 form>div{
