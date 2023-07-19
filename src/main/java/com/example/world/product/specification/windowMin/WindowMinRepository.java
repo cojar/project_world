@@ -1,4 +1,6 @@
 package com.example.world.product.specification.windowMin;
 
-public interface WindowMinRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface WindowMinRepository extends JpaRepository<WindowMin, Long> {
 }

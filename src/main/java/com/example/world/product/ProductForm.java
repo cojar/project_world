@@ -1,6 +1,9 @@
 package com.example.world.product;
 
-import com.example.world.product.operatingsystem.OperatingSystemForm;
+import com.example.world.product.specification.macMin.MacMinForm;
+import com.example.world.product.specification.macRecommended.MacRecommendedForm;
+import com.example.world.product.specification.windowMin.WindowMinForm;
+import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -17,19 +20,23 @@ public class ProductForm {
     private String developer;
     // 게임 개발사
     @NotEmpty
-    private int price;
-    // 상품 가격
-    @NotEmpty
-    private String thema;
+    private String theme;
     //게임 테마 (장르)
-
     @NotEmpty
-    private List<OperatingSystemForm> operatingSystemList;
-    // 운영체제
+    private Integer price;
+    // 상품 가격
 
-    @NotEmpty
-    private List<SpecificationForm> specificationList;
-    // 스펙
+    private List<MacMinForm> macMinFormList;
+    // 맥 최소 스펙
+
+    private List<MacRecommendedForm> macRecommendedFormList;
+    // 맥 권장 스펙
+
+    private List<WindowMinForm> windowMinFormList;
+    // 맥 최소 스펙
+
+    private List<WindowRecommendedForm> windowRecommendedFormList;
+    // 맥 권장 스펙
 
     @Column(columnDefinition = "text")
     private String content;

@@ -1,4 +1,6 @@
 package com.example.world.product.specification.macMin;
 
-public interface MacMinRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MacMinRepository extends JpaRepository<MacMin, Long> {
 }

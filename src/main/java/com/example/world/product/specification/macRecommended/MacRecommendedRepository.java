@@ -1,4 +1,6 @@
 package com.example.world.product.specification.macRecommended;
 
-public interface MacRecommendedRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MacRecommendedRepository extends JpaRepository<MacRecommended, Long> {
 }
