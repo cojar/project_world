@@ -160,11 +160,6 @@ form > div {
   outline: none;
 }
 
-.email-check input#mailKey,
-.email-check input#genMailKey {
-  display: none;
-}
-
 .email-checkmark,
 .email-check-checkmark,
 .password-checkmark {
@@ -195,17 +190,20 @@ form > div {
   margin-right: 10px;
 }
 
-.btn-primary {
+.btnPrimary {
   background: #000;
   color: white;
   border: none;
   font-size: 20px;
-  padding: 15px;
-  border-radius: 10px;
 }
 
-.btn-primary:hover {
+.btnPrimary:hover {
   background: red;
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: gray;
 }
 
 .nickname-box {
