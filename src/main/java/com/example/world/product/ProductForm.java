@@ -1,9 +1,11 @@
 package com.example.world.product;
 
+import com.example.world.product.operatingsystem.OperatingSystemForm;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,11 +22,17 @@ public class ProductForm {
     @NotEmpty
     private String thema;
     //게임 테마 (장르)
+
     @NotEmpty
-    private String device;
-    // 상품 권장 장치 (콘솔 , pc )
+    private List<OperatingSystemForm> operatingSystemList;
+    // 운영체제
+
+    @NotEmpty
+    private List<SpecificationForm> specificationList;
+    // 스펙
+
     @Column(columnDefinition = "text")
     private String content;
-    // 상품 내용
+    // 상품 설명
 
 }

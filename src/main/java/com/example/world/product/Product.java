@@ -1,6 +1,10 @@
 package com.example.world.product;
 
 
+import com.example.world.product.specification.macMin.MacMin;
+import com.example.world.product.specification.macRecommended.MacRecommended;
+import com.example.world.product.specification.windowMin.WindowMin;
+import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.productReview.ProductReview;
 import com.example.world.qna.Qna;
 import jakarta.persistence.*;
@@ -17,7 +21,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     //상품번호
 
     private String thema;
@@ -29,9 +33,9 @@ public class Product {
 
     @Column(columnDefinition = "text")
     private String content;
-    // 상품 내용
+    // 상품 설명
 
-    private int price;
+    private Integer price;
     // 상품 가격
 
     private String developer;
@@ -39,18 +43,18 @@ public class Product {
 
     private LocalDate createDate;
     // 상품 등록일
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<MacMin> macMinList;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<MacRecommended> macRecommendedList;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<WindowMin> windowMinList;
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<WindowRecommended> windowRecommendedList;
 
-    private String OS;
-    // 운영체제
+    private Integer viewCount;
+    //조회수
 
-    private String requirements;
-    // 최소, 권장
-
-    private String specification;
-    // 스펙
-
-    private int viewCount;
-    //조화수
 
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
