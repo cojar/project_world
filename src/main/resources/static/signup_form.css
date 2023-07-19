@@ -1,0 +1,227 @@
+@font-face {
+  font-family: 'NeoDunggeunmoPro-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.my-3con {
+  text-align: center;
+  background: rgb(30, 30, 30);
+  height: 1400px;
+}
+
+.My-3 {
+  display: inline-block;
+  text-align: center;
+  width: 600px;
+  margin-top: 300px;
+}
+
+form > div {
+  font-size: 20px;
+}
+
+.signup {
+  text-align: center;
+  color: white;
+  font-family: 'NeoDunggeunmoPro-Regular';
+  font-size: 45px;
+}
+
+.signment {
+  font-size: 10px;
+  text-align: center;
+  color: gray;
+  margin-top: 0;
+}
+
+.form-control {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 20px;
+  outline: none;
+}
+
+.btnPrimary {
+  background: #000;
+  color: white;
+  border: none;
+  font-size: 20px;
+}
+
+.btnPrimary:hover {
+  background: red;
+  color: #fff;
+}
+
+.alertDanger {
+  text-align: center;
+  color: red;
+}
+
+.signComent > p {
+  font-size: 18px;
+  font-weight: light;
+  color: white;
+}
+
+.My-3 hr {
+  border: 2px solid white;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.signupBox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.signupBox .form-control {
+  border-radius: 0px;
+  border-style: none;
+  border-bottom: 2px solid #000;
+  width: 100%;
+}
+
+.signupSummitBtn {
+  text-align: center;
+}
+
+.signupSummitBtn1 .btnPrimary,
+.signupSummitBtn2 .btnPrimary {
+  background: #000;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid white;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+.signupSummitBtn .btnPrimary:hover {
+  background: gray;
+}
+
+.signupBtnArea .btnPrimary {
+  width: 100%;
+  padding: 15px 0;
+}
+
+.signComent .signUpment {
+  text-align: center;
+}
+
+.signwrap {
+  margin-top: 93px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0;
+}
+
+.email-box,
+.email-check-box,
+.birthday-box,
+.password-box,
+.password-check-box,
+.nickname-box,
+.signup-btn,
+.cancel-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.email-box .email,
+.email-check-box .email-check,
+.birthday-box .birthday,
+.password-box .password,
+.password-check-box .password-check,
+.nickname-box .nickname {
+  flex: 1;
+  display: flex;
+}
+
+.email input,
+.email-check input,
+.birthday input,
+.password input,
+.password-check input,
+.nickname input {
+  flex: 1;
+  margin-right: 10px;
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+}
+
+.email-check input#mailKey,
+.email-check input#genMailKey {
+  display: none;
+}
+
+.email-checkmark,
+.email-check-checkmark,
+.password-checkmark {
+  display: none;
+  margin-left: 10px;
+  color: green;
+}
+
+#timer,
+#timer-expired,
+#mail-key-errorMessage,
+#password-error,
+#password-match-error {
+  display: none;
+  color: red;
+}
+
+#show-password {
+  margin-left: -30px;
+  cursor: pointer;
+}
+
+#nicknameCheckResult {
+  margin-top: 10px;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background: #000;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.btn-primary:hover {
+  background: red;
+}
+
+.nickname-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nickname-box .nickname {
+  flex: 1;
+  display: flex;
+}
+
+.nickname-box .nickname2 {
+  flex: 1;
+}
+
+.nickname-box .check-btn {
+  margin-left: 10px;
+}
