@@ -12,5 +12,10 @@ public class MainController {
     public String hi(){
         return "navbar";
     }
+
+    @GetMapping("/")
+    public String Main(){
+        return "MainPage";
+    }
 }
 
