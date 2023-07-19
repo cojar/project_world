@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="/layout/MainPage.css"/>
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+
+<!-- 메인페이지  -->
+<div class="container-box">
+  <div class="serch_line">
+    <input type="text" id="search_kw" class="searchBox" th:value="${kw}" placeholder="상품 검색">
+    <button class="search_button" type="submit" id="btn_search">search</button>
+  </div>
+  <div class="mainbanner">
+    <div class="banner-box">
+      <a href="">
+        <img src="https://i.postimg.cc/c6qnWmbD/1-1200-400.png"/>
+      </a>
+    </div>
+  </div>
+  <div class="icon">
+    <div class="icon-box">
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/KvrHWsVs/RPG.png"/>
+          <p class="iconName">RPG</p>
+        </div>
+      </a>
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/8kq7YZWW/image.png"/>
+          <p class="iconName">스포츠</p>
+        </div>
+      </a>
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/hvqqLQzJ/FPS.png"/>
+          <p class="iconName">FPS</p>
+        </div>
+      </a>
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/85RYVKc5/image.png"/><p class="iconName">아케이드</p>
+        </div>
+      </a>
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/xjPZx4Bp/image.png" style="width:100px height:100px"/>
+          <p class="iconName">스릴러</p>
+        </div>
+      </a>
+      <a href="">
+        <div class="img-box">
+          <img src="https://i.postimg.cc/Dy8crphX/image.png">
+          <p class="iconName">시뮬레이션</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+  <div class="gameList">
+    <div class="gameListTitle-box">
+    <span class="gameListTitle">
+      인기게임
+    </span>
+    </div>
+
+  </div>
+</div>
+<footer th:replace="layout/footer.html"></footer>
+</body>
+</html>

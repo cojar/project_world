@@ -1,0 +1,159 @@
+/**아래부터 상단 / 하단 **/
+
+footer {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width:100%;
+}
+
+.footer-left {
+    width: 30%;
+    margin-right: 10%;
+}
+
+.footer-left img {
+    width: 100%;
+    margin-left: 20%;
+}
+
+.footer-right {
+    width: 70%;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-right h4 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.team-members {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.team-members li {
+    margin-bottom: 10px;
+}
+
+.member-name {
+    font-weight: bold;
+}
+
+.member-role {
+    color: gray;
+    font-size: 14px;
+}
+
+.footer-links {
+    background-color: rgba(192, 192, 192, 0.2);
+    padding: 10px;
+}
+
+.footer-links p {
+    color: gray;
+    margin-bottom: 5px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+
+/*노멀라이징*/
+
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+li{
+    list-style:none;
+    text-decoration:none;
+}
+
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* 스타일 시작 */
+
+nav{
+    margin:0 auto;
+}
+
+nav>.left-box>.menu1:hover>.sub-menu{
+    display:block;
+}
+
+
+.sub-menu>li:hover{
+  border-bottom:2px solid white;
+}
+.sub-menu{
+  padding-bottom:10px;
+}
+
+.max-w-full{
+  position: fixed;
+  top: 2%;
+  /* width: 100% */
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+        background-color: rgba( 255, 255, 255, 0 );
+}
+
+.menu1{
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+.menu2{
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+.menu3{
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+.menu1>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
+.menu2>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
+.menu3>a:hover{
+  color:gray;
+  border-bottom:2px solid white;
+  transition: 0.3s;
+}
+
+
+/*배경컬러 */
+
+.container-box{
+  background: rgb(30, 30, 30);
+  padding-top:150px;
+  width:100%;
+}
