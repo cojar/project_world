@@ -23,11 +23,11 @@
         <div>
             <form th:action="@{/user/login}" method="post" class="sign_In">
                 <div>
-                    <h1 class="signin">LOGIN TO WORLD</h1>
+                    <span class="signin">LOGIN TO WORLD</span>
                     <hr>
                     <div class="signComent">
-                        <p class="signment">가입하신 아이디와 비밀번호를 입력해주세요. </p>
-                        <p class="signment"> 비밀번호는 대소문자를 구분합니다</p>
+                        <p class="signment">가입하신 아이디와 비밀번호를 입력해주세요.</p>
+                        <p class="signment"> 비밀번호는 대소문자를 구분합니다.</p>
                     </div>
                 </div>
                 <div th:if="${param.error}">
