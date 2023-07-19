@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/nav_style.css}" type="text/css">
+    <link rel="stylesheet" href="/layout/layout.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
 </head>
 <body>
-<nav class="max-w-full flex justify-around items-end bg-blue-900 text-white">
+<nav th:fragment="navbarFragment" class="max-w-full flex justify-around items-end  text-white">
     <div class="left-box flex justify-evenly text-5xl relative w-2/5 font-bold">
         <div class="menu1"><a href="">GAME</a>
             <ul class="sub-menu absolute hidden top-50 left-30 bg-gray-700 text-gray-300 text-xl">
                 <li><a class="pl-3" href="">전체</a></li>
-                <li><a class="pl-4" href="">RPG</a></li>
-                <li><a class="pl-4" href="">FPS</a></li>
+                <li><a class="pl-3" href="">RPG</a></li>
+                <li><a class="pl-3" href="">FPS</a></li>
                 <li><a class="pl-3" href="">스릴러</a></li>
                 <li><a class="pl-3" href="">아케이드</a></li>
                 <li><a class="pl-3" href="">스포츠</a></li>
@@ -27,7 +27,7 @@
         <a href=""><img class="w-72" src="https://ifh.cc/g/XWcpsl.png" alt=""></a>
     </div>
     <div class="right-box w-2/5 flex justify-evenly text-5xl font-bold">
-        <div menu3><a href="">CART</a></div>
+        <div class="menu3"><a href="">CART</a></div>
         <div class="user-box flex items-end text-sm">
             <div class="text-lg"><a href="">LOGIN</a></div>
             <div class="ml-5 text-lg"><a href="">SIGNUP</a></div>
