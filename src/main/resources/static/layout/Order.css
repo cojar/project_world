@@ -1,0 +1,118 @@
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.container-box{
+  background-color: rgba(30,30,30);
+  text-align:center;
+  width:100%;
+  padding-top:150px;
+  margin-right:0;
+}
+
+.content_box{
+  display:inline-block;
+  width:70%;
+  margin:50px;
+}
+.title_box{
+  text-align:left;
+}
+.order_title{
+  color:white;
+  font-size:40px;
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+/* 아래부터 상품 */
+
+.product_title_box{
+  margin-top:50px;
+  text-align:left;
+}
+.product_title{
+  color:white;
+  font-size:20px;
+}
+.product{
+  border-top:2px solid white;
+  padding-top:20px;
+  position:relative;
+}
+.product>img{
+display:inline-block;
+  width:30%;
+  margin:0;
+  padding:0;
+}
+.product_detail{
+  display:inline-block;
+  width:40%;
+  margin-left:30%;
+  position:absolute;
+  top:60%;
+  height:40%;
+}
+
+.product_detail>div>p{
+  display:inline-block;
+  margin:0;
+  padding:0;
+  color:white;
+  font-size:20px;
+}
+.customer>p{
+  color:white;
+  font-size:20px;
+  display:inline-block;
+}
+.customer>input{
+  width:40%;
+  height:20px;
+}
+.pay_check{
+  color:white;
+}
+.pay_box{
+  margin-top:10px;
+  text-align:center;
+}
+
+.account_number{
+  display:none;
+  text-align:center;
+  background: gray;
+  width:50%;
+  height:100px;
+}
+
+.account_number>p{
+   padding-top:20px;
+   font-family: 'NeoDunggeunmoPro-Regular';
+  font-size:20px;
+
+}
+.toss_pay{
+  display:none;
+}
+
+/* 하단버튼 */
+.bt_box{
+  margin-top:70px;
+  margin-right:30px;
+  text-align:right;
+}
+.bt_box>button{
+  height:35px;
+  width:150px;
+  background: rgb(20, 20, 20);
+  border:2px solid white;
+  color:white;
+  font-size:20px;
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+.bt_box>button:hover{
+  background: gray;
+}
