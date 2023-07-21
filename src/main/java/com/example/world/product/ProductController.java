@@ -1,9 +1,13 @@
 package com.example.world.product;
 
 import com.example.world.product.specification.macMin.MacMinForm;
+import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
+import com.example.world.product.specification.macRecommended.MacRecommendedService;
 import com.example.world.product.specification.windowMin.WindowMinForm;
+import com.example.world.product.specification.windowMin.WindowMinService;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
+import com.example.world.product.specification.windowRecommended.WindowRecommendedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,8 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
-
     private final ProductService productService;
+    private final MacMinService macMinService;
+    private final MacRecommendedService macRecommendedService;
+    private final WindowMinService windowMinService;
+    private final WindowRecommendedService windowRecommendedService;
 
     @GetMapping("/list/All")
     public String allList(Model model, @RequestParam(value = "page",defaultValue = "0")int page){
