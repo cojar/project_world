@@ -1,10 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/layout/Product_form.css"/>
+    <title>world</title>
 </head>
-<body>
+<nav th:replace="layout/navbar.html"></nav>
+<section class="product-form-section">
+    <form class="product-form"  th:action="@{/product/registration}" method="post">
+        <div class="form-container">
+            <div class="menu">게임명</div>
+            <input type="text" id="productName">
+        </div>
+        <div class="form-container">
+            <div class="menu">개발사</div>
+            <input type="text" id="developer">
+        </div>
+        <div class="form-container">
+            <div class="menu">장르</div>
+            <select type="text" id="theme">
+                <option value="">선택</option>
+                <option value="">RPG</option>
+                <option value="">FPS</option>
+                <option value="">스릴러</option>
+                <option value="">아케이드</option>
+                <option value="">스포츠</option>
+                <option value="">시뮬레이션</option>
+                <option value="">기타</option>
+                <option value="">전체</option>
+            </select>
+        </div>
+        <div class="form-container">
+            <div class="menu">가격</div>
+            <input type="number" id="price">
+        </div>
 
-</body>
+        <div class="form-container">
+            <div class="menu">시스템 요구 사항</div>
+            <div class="checkbox-container" id="specification">
+                <div class="checkbox-label">
+                    <input type="checkbox" class="windowMin" checked>
+                    <span>Window 최소</span>
+                </div>
+
+                <div class="checkbox-label">
+                    <input type="checkbox" id="windowRecommended">
+                    <span>Window 권장</span>
+                </div>
+
+                <div class="checkbox-label">
+                    <input type="checkbox" id="MacMin">
+                    <span>Mac 최소</span>
+                </div>
+
+                <div class="checkbox-label">
+                    <input type="checkbox" id="MacRecommended">
+                    <span>Mac 권장</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="menu" >Window 최소</div>
+            <input type="text">
+            <div id="windowMin" th:each="windowMin, loop : ${windowMinList}">
+                <input type="text">
+                    <input type="text" id="operatingSystem" th:value="${windowMin.operatingSystem}" th:field="*{windowMinList[__${loop.index}__].operatingSystem}" placeholder="운영체제">
+                    <input type="text" id="processor" th:value="${windowMin.processor}" th:field="*{windowMinList[__${loop.index}__].processor}" placeholder="프로세서">
+                    <input type="text" id="memory" th:value="${windowMin.memory}" th:field="*{windowMinList[__${loop.index}__].memory}" placeholder="RAM">
+                    <input type="text" id="graphics" th:value="${windowMin.graphics}" th:field="*{windowMinList[__${loop.index}__].graphics}" placeholder="그래픽">
+                    <input type="text" id="storage" th:value="${windowMin.storage}" th:field="*{windowMinList[__${loop.index}__].storage}" placeholder="저장공간">
+                    <input type="text" id="directAccess" th:value="${windowMin.directAccess}" th:field="*{windowMinList[__${loop.index}__].directAccess}" placeholder="DirectX">
+                    <input type="text" id="network" th:value="${windowMin.network}" th:field="*{windowMinList[__${loop.index}__].network}" placeholder="인터넷">
+
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-container">
+            <div class="menu">게임 설명</div>
+            <textarea id="content" rows="5"></textarea>
+        </div>
+        <div class="product-form-btn">
+            <button class="cancel_button" type="button" id="btn_cancel">취소</button>
+            <button class="submit_button" type="submit" id="btn_submit">등록</button>
+        </div>
+    </form>
+</section>
+
+
+<footer th:replace="layout/footer.html"></footer>
 </html>

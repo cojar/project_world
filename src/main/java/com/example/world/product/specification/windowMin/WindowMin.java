@@ -20,7 +20,7 @@ public class WindowMin {
     //RAM
     private String graphics;
     //그래픽카드
-    private String Storage;
+    private String storage;
     //저장 공간
     private String directAccess;
     //DirectX

@@ -26,16 +26,16 @@ public class ProductForm {
     private Integer price;
     // 상품 가격
 
-    private List<MacMinForm> macMinFormList;
+    private List<MacMinForm> macMinList;
     // 맥 최소 스펙
 
-    private List<MacRecommendedForm> macRecommendedFormList;
+    private List<MacRecommendedForm> macRecommendedList;
     // 맥 권장 스펙
 
-    private List<WindowMinForm> windowMinFormList;
+    private List<WindowMinForm> windowMinList;
     // 맥 최소 스펙
 
-    private List<WindowRecommendedForm> windowRecommendedFormList;
+    private List<WindowRecommendedForm> windowRecommendedList;
     // 맥 권장 스펙
 
     @Column(columnDefinition = "text")
