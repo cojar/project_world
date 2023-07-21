@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import jakarta.persistence.criteria.*;
@@ -22,6 +23,19 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+
+    public Product create(String productName, String developer, String theme, Integer price, String content){
+        Product product = new Product();
+
+        product.setProductName(productName);
+        product.setDeveloper(developer);
+        product.setTheme(theme);
+        product.setPrice(price);
+        product.setContent(content);
+        product.setCreateDate(LocalDate.now());
+        this.productRepository.save(product);
+        return product;
+    }
 
     public Page<Product> getTheme(int page, String key){
         List<Sort.Order> sorts = new ArrayList<>();
@@ -37,7 +51,7 @@ public class ProductService {
 
             // Season 컬럼을 기준으로 검색 조건 생성
             if (sortkey != null) {
-                Path<String> seasonPath = root.get("thema");
+                Path<String> seasonPath = root.get("theme");
                 Predicate seasonPredicate = criteriaBuilder.equal(seasonPath, sortkey);
                 predicates.add(seasonPredicate);
             }
