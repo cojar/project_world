@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/login_form.css}">
+    <title>world</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
+</style>
+    <title>navbar_no</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/af580f77b6.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="layout/navbar.html"></div>
+<div class="my-3con">
+    <div class="My-3">
+        <div>
+            <form th:action="@{/user/login}" method="post" class="sign_In">
+                <div>
+                    <span class="signin">LOGIN TO WORLD</span>
+                    <hr>
+                    <div class="signComent">
+                        <p class="signment">가입하신 아이디와 비밀번호를 입력해주세요.</p>
+                        <p class="signment"> 비밀번호는 대소문자를 구분합니다.</p>
+                    </div>
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alertDanger">
+                        사용자ID 또는 비밀번호를 확인해 주세요.
+                    </div>
+                </div>
+                <div class="signInput">
+                    <input type="text" name="username" id="username" class="form-control" placeholder="아이디">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호">
+                </div>
+
+                <div class="signupSummitBtn">
+                    <div class="signInBtn">
+                        <button type="submit" class="btnPrimary">로그인</button>
+                        <button type="submit" class="btnPrimary">회원가입</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+<footer th:replace="layout/footer.html"></footer>
+</body>
+</html>
