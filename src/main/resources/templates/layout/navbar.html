@@ -29,7 +29,8 @@
     <div class="right-box w-2/5 flex justify-evenly text-5xl font-bold">
         <div class="menu3"><a href="">CART</a></div>
         <div class="user-box flex items-end text-sm">
-            <div class="text-lg"><a href="/user/login">LOGIN</a></div>
+            <div class="text-lg"><a href="/user/login" sec:authorize="isAnonymous()">LOGIN</a></div>
+            <div class="text-lg"><a href="/user/logout" sec:authorize="isAuthenticated()">LOGOUT</a></div>
             <div class="ml-5 text-lg"><a href="/user/signup">SIGNUP</a></div>
         </div>
     </div>

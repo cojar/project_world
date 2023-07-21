@@ -48,10 +48,10 @@ public class UserController {
             if (bindingResult.hasErrors()) {
                 return "signup_form";
             }
-//            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
-//                bindingResult.rejectValue("password2", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
-//                return "signup_form";
-//            }
+            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
+                bindingResult.rejectValue("password2", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
+                return "signup_form";
+            }
 //
 //            try {
 //                userService.create(userCreateForm.getUsername(),
@@ -66,6 +66,12 @@ public class UserController {
 //                return "signup_form";
 //            }
             this.userService.create(userCreateForm.getUsername(), userCreateForm.getPassword1(), userCreateForm.getNickname(), userCreateForm.getBirthDate());
+
+            System.out.println("loginId = " + userCreateForm.getUsername());
+            System.out.println("password = " + userCreateForm.getPassword1());
+            System.out.println("passwordCheck = " + userCreateForm.getPassword2());
+            System.out.println("nickname = " + userCreateForm.getNickname());
+            System.out.println("birthdate = " + userCreateForm.getBirthDate());
 
             return "redirect:/";
         }

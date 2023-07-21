@@ -31,7 +31,7 @@ public class UserService {
         //user.setRole(role);
 //        user.setMailKey(mailKey);
 //        user.setMailAuth(mailAuth);
-        userRepository.save(user);
+        this.userRepository.save(user);
         return user;
     }
 

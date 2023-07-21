@@ -19,7 +19,7 @@
 <div class="my-3con">
   <div class="My-3">
     <div>
-      <form th:action="@{/user/signup}" method="post" class="sign_In">
+      <form th:object="${userCreateForm}" method="post" class="sign_In">
         <div>
           <span class="signup">SIGNUP TO WORLD</span>
           <hr>
@@ -35,7 +35,7 @@
         <div class="signupBox">
           <div class="email-box">
             <div class="email">
-              <input id="email" field="*{username}" type="email" class="form-control"
+              <input id="email" th:field="*{username}" type="email" class="form-control"
                      placeholder=" 이메일을 입력해주세요.ex) example@example.com" required="" value="">
               <div class="email-checkmark">✓</div>
               <div class="signupSummitBtn1">
@@ -45,26 +45,26 @@
             <div id="email-format-error" style="display: none; color: red;">이메일 형식으로 작성해주세요.</div>
           </div>
 
-          <div class="email-check-box">
-            <div class="email-check">
-              <input id="mailKey" field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">
-              <input id="genMailKey" field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">
-              <div class="email-check-checkmark">✓</div>
-              <div id="timer">00:30</div>
-              <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>
-              <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>
-            </div>
-          </div>
+<!--          <div class="email-check-box">-->
+<!--            <div class="email-check">-->
+<!--              <input id="mailKey" field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">-->
+<!--              <input id="genMailKey" field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">-->
+<!--              <div class="email-check-checkmark">✓</div>-->
+<!--              <div id="timer">00:30</div>-->
+<!--              <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>-->
+<!--              <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>-->
+<!--            </div>-->
+<!--          </div>-->
 
           <div class="birthday-box">
             <div class="birthday">
-              <input field="*{birthDate}" type="date" placeholder="" class="form-control" required="" value="">
+              <input th:field="*{birthDate}" type="date" placeholder="" class="form-control" required="" value="">
             </div>
           </div>
           <div class="password-box">
             <div class="password">
-              <input id="password-input" field="*{password1}" type="password" class="form-control"
-                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="" autocomplete="off">
+              <input id="password-input" th:field="*{password1}" type="password" class="form-control"
+                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="">
               <div class="password-checkmark">✓</div>
               <i id="show-password" class="fa-solid fa-eye fa-lg" alt="Show Password"></i>
             </div>
@@ -73,8 +73,8 @@
 
           <div class="password-check-box">
             <div class="password-check">
-              <input id="password-check-input" field="*{password2}" type="password" class="form-control"
-                     placeholder="비밀번호를 다시 입력해주세요." required="" value="" autocomplete="off">
+              <input id="password-check-input" th:field="*{password2}" type="password" class="form-control"
+                     placeholder="비밀번호를 다시 입력해주세요." required="" value="">
               <div class="password-check-checkmark">✓</div>
             </div>
             <div id="password-match-error" style="display: none; color: red;">비밀번호와 일치하지 않습니다.</div>
@@ -82,7 +82,7 @@
 
           <div class="nickname-box">
             <div class="nickname2">
-              <input field="*{nickname}" type="text"
+              <input th:field="*{nickname}" type="text"
                      placeholder="닉네임을 입력해주세요.(공백,특수문자 제외한 2~10글자)" class="form-control" required="" value=""
                      id="nicknameInput">
             </div>
@@ -95,8 +95,8 @@
 
         <div class="signupSummitBtn2">
           <div class="signInBtn">
-            <button type="submit" class="btnPrimary" onclick="showPopup()">회원가입</button>
-            <button type="submit" class="btnPrimary"><a th:href="@{|/main|}">취소하기</a></button>
+            <button type="submit" class="btnPrimary" name="signupBtn">회원가입</button>
+            <button type="button" class="btnPrimary"><a th:href="@{|/main|}">취소하기</a></button>
           </div>
         </div>
 
