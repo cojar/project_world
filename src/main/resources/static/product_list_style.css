@@ -1,0 +1,39 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+li{
+    list-style:none;
+    text-decoration:none;
+}
+
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* 스타일 시작 */
+
+
+
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.wrap>.title{
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+
+.section>.goods-list .per{
+  color : #FA622F;
+}
+
+.section>.goods-list > div > p > span {
+  font-weight : bold;
+}
