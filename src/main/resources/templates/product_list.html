@@ -17,7 +17,7 @@
                 <img class="inline-block w-full" src="https://ifh.cc/g/6xAKMx.jpg" alt="">
             </div>
         </div>
-        <div class="title text-center mt-5 font-bold text-3xl">전체</div>
+        <div class="title text-center mt-5 font-bold text-3xl" th:text="${product.theme}"></div>
         <div class="sort-section">
             <ul class="flex justify-end">
                 <li class="mr-3"><button>인기순</button></li>
@@ -26,35 +26,16 @@
             </ul>
         </div>
         <div class="section w-full mt-8">
-            <section class="goods-list flex justify-around">
+            <section class="goods-list flex justify-around flex-wrap" th:each="product : ${paging}">
 
-                <div class="goods-1 w-96 align-top mr-5 bg-gray-600">
-                    <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
-                    <p class="goods-name">좀비</p>
-                    <p><span>2,980won</span></p>
+                <div class="goods w-96 align-top mr-5 bg-gray-600">
+                    <a th:href="">
+                      <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
+                      <p class="goods-name" th:text="productName"></p>
+                      <p><span th:text="price"></span>won</p>
+                    </a>
                 </div>
-                <div class="goods-2 w-96 align-top mr-5 bg-gray-600">
 
-                    <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2218750/header_292x136.jpg?t=1684937598" alt="">
-                    <p class="goods-name">공포</p>
-                    <p><span>19,000won</span></p>
-
-                </div>
-                <div class="goods-3 w-96 align-top mr-5 bg-gray-600">
-
-                    <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/1089090/header_292x136.jpg?t=1678851805" alt="">
-                    <p class="goods-name">원피스</p>
-                    <p>
-                        <span> 8,100won</span>
-                    </p>
-                </div>
-                <div class="goods-4 w-96 align-top bg-gray-600">
-
-                    <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2381590/header_292x136.jpg?t=1689443414" alt="">
-                    <p class="goods-name">모험</p>
-                    <p><span>9,900won</span></p>
-
-                </div>
             </section>
         </div>
     </div>
