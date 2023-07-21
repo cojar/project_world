@@ -26,6 +26,5 @@ public interface UserRepository extends JpaRepository<SiteUser, Long> {
 //    @Query("UPDATE SiteUser u SET u.mailAuth = true WHERE u.username = :username AND u.mailKey = :mailKey")
 //    int updateMailAuth(@Param("username") String username, @Param("mailKey") int mailKey);
 
-
     Optional<SiteUser> findSiteUserByUsername(String username);
 }

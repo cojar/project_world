@@ -1,5 +1,3 @@
-
-
 spring:
   profiles:
     active: dev, base-addi
@@ -18,6 +16,13 @@ spring:
         show_sql: 'true'
     hibernate:
       ddl-auto: update
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+
 #  security:
     oauth2:
       client:

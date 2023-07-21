@@ -5,9 +5,7 @@
   <meta charset="UTF-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="/layout/navbar.css"/>
   <link rel="stylesheet" type="text/css" th:href="@{/signup_form.css}">
-  <link rel="stylesheet" href="/layout/footer.css"/>
   <title>world</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Grandiflora+One&display=swap');
@@ -66,7 +64,7 @@
           <div class="password-box">
             <div class="password">
               <input id="password-input" field="*{password1}" type="password" class="form-control"
-                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="">
+                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="" autocomplete="off">
               <div class="password-checkmark">✓</div>
               <i id="show-password" class="fa-solid fa-eye fa-lg" alt="Show Password"></i>
             </div>
@@ -76,7 +74,7 @@
           <div class="password-check-box">
             <div class="password-check">
               <input id="password-check-input" field="*{password2}" type="password" class="form-control"
-                     placeholder="비밀번호를 다시 입력해주세요." required="" value="">
+                     placeholder="비밀번호를 다시 입력해주세요." required="" value="" autocomplete="off">
               <div class="password-check-checkmark">✓</div>
             </div>
             <div id="password-match-error" style="display: none; color: red;">비밀번호와 일치하지 않습니다.</div>

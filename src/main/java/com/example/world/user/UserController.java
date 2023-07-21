@@ -48,13 +48,24 @@ public class UserController {
             if (bindingResult.hasErrors()) {
                 return "signup_form";
             }
-            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
-                bindingResult.rejectValue("password1", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
-                return "signup_form";
-            }
-
-            userService.create(userCreateForm.getUsername(),
-                    userCreateForm.getPassword1(), userCreateForm.getNickname());
+//            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
+//                bindingResult.rejectValue("password2", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
+//                return "signup_form";
+//            }
+//
+//            try {
+//                userService.create(userCreateForm.getUsername(),
+//                        userCreateForm.getPassword1(), userCreateForm.getNickname(), userCreateForm.getBirthDate());
+//            } catch(DataIntegrityViolationException e) {
+//                e.printStackTrace();
+//                bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+//                return "signup_form";
+//            } catch(Exception e) {
+//                e.printStackTrace();
+//                bindingResult.reject("signupFailed", e.getMessage());
+//                return "signup_form";
+//            }
+            this.userService.create(userCreateForm.getUsername(), userCreateForm.getPassword1(), userCreateForm.getNickname(), userCreateForm.getBirthDate());
 
             return "redirect:/";
         }
@@ -66,6 +77,29 @@ public class UserController {
 
             return isDuplicate;
         }
+
+        @GetMapping("/login")
+        public String login() {
+            return "login_form";
+        }
+
+        @PostMapping("/login")
+        public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model) {
+
+            if ("admin@gmail.com".equals(username) && "123".equals(password)) {
+                UserDetails userDetails = userSecurityService.loadUserByUsername(username);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+
+                return "redirect:/";
+            } else {
+                model.addAttribute("error", true);
+                return "login_form";
+            }
+        }
+
 //        @GetMapping("/mypage")
 //        public String myPage(Model model, Principal principal, Integer id) {
 //            SiteUser user = userService.getUser(principal.getName());
@@ -134,29 +168,5 @@ public class UserController {
 //
 //            return "redirect:/user/mypage";
 //        }
-
-
-        @GetMapping("/login")
-        public String login() {
-
-            return "login_form";
-        }
-
-        @PostMapping("/login")
-        public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model) {
-
-            if ("admin@gmail.com".equals(username) && "123".equals(password)) {
-                UserDetails userDetails = userSecurityService.loadUserByUsername(username);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-                return "redirect:/";
-            } else {
-                model.addAttribute("error", true);
-                return "login_form";
-            }
-        }
 
     }
