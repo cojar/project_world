@@ -30,10 +30,10 @@ public class UserCreateForm {
     private String nickname;
 
     private LocalDate birthDate;
-//
-//    private Integer mailKey = null;
-//
-//    private Integer genMailKey;
-//
-//    private boolean mailAuth;
+
+    private Integer mailKey = null;
+
+    private Integer genMailKey;
+
+    private boolean mailAuth;
 }

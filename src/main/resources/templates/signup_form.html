@@ -45,16 +45,16 @@
             <div id="email-format-error" style="display: none; color: red;">이메일 형식으로 작성해주세요.</div>
           </div>
 
-<!--          <div class="email-check-box">-->
-<!--            <div class="email-check">-->
-<!--              <input id="mailKey" field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">-->
-<!--              <input id="genMailKey" field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">-->
-<!--              <div class="email-check-checkmark">✓</div>-->
-<!--              <div id="timer">00:30</div>-->
-<!--              <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>-->
-<!--              <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="email-check-box">
+            <div class="email-check">
+              <input id="mailKey" th:field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">
+              <input id="genMailKey" th:field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">
+              <div class="email-check-checkmark">✓</div>
+              <div id="timer">03:00</div>
+              <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>
+              <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>
+            </div>
+          </div>
 
           <div class="birthday-box">
             <div class="birthday">
@@ -107,3 +107,42 @@
 <footer th:replace="layout/footer.html"></footer>
 </body>
 </html>
+
+<script>
+  function sendEmailConfirmation() {
+    // 이메일 주소 가져오기
+    var email = $("#email").val();
+    var mailKey = $("#mailKey").val();
+    // AJAX 요청 보내기
+    $.ajax({
+        url: "http://localhost:8080/mailCheck", // 이메일 인증번호를 보낼 서버의 URL
+        method: "GET",
+        data: {
+        email: email,
+        mailKey: mailKey
+        }, // 이메일 주소를 서버로 전달
+        success: function(data) {
+            alert("이메일 인증번호를 전송했습니다.");
+            $("#genMailKey").val(data);
+        },
+        error: function(xhr, status, error) {
+            alert("이메일 인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+
+  function validateMailKey() {
+      const mailKey = document.getElementById('mailKey').value;
+      const genMailKey = document.getElementById('genMailKey').value;
+      const checkmark = document.querySelector('.email-check-checkmark');
+      const errorMessage = document.getElementById('mail-key-errorMessage');
+
+      if (mailKey.length === 5 && mailKey === genMailKey) {
+          checkmark.style.display = 'block';
+          errorMessage.style.display = 'none';
+      } else {
+          checkmark.style.display = 'none';
+          errorMessage.style.display = 'block';
+      }
+  }
+</script>
