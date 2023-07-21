@@ -1,0 +1,105 @@
+@font-face {
+  font-family: "NeoDunggeunmoPro-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+section {
+  font-family: "NeoDunggeunmoPro-Regular";
+  font-size: 18px;
+  background: rgb(30, 30, 30);
+  padding-top:150px;
+
+}
+.product-form-section {
+  display: grid;
+  place-items: center;
+}
+.product-form {
+  width: 815px;
+}
+.form-container {
+  width: 800px;
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 10px;
+  margin: 20px 0px;
+  font-family: "NeoDunggeunmoPro-Regular";
+}
+
+.form-container select {
+  width: 15%;
+  height: 40px;
+  margin: 5px;
+
+}
+
+.form-container > .menu {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: 5px;
+  color:white;
+}
+.form-container input {
+  width: 100%;
+  height: 30px;
+  padding: 5px 5px;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  margin: 5px;
+}
+.form-container textarea {
+  width: 100%;
+  padding: 5px 5px;
+  font-size: 1rem;
+  border-radius: 0.3rem;
+  margin: 5px;
+}
+
+.product-form-btn {
+  float: right;
+
+  font-family: "NeoDunggeunmoPro-Regular";
+}
+
+.product-form-btn > .cancel_button {
+  height: 35px;
+  width: 80px;
+  background: gray;
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}
+
+.product-form-btn > .submit_button {
+  height: 35px;
+  width: 80px;
+  background: rgb(20, 20, 20);
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}
+.serch_line > button:hover {
+  background: gray;
+}
+
+.checkbox-container {
+  display: flex;
+  gap: 5%;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  color:white;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
