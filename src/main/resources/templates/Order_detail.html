@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/layout/Order.css"/>
+    <title>Hello World!</title>
+</head>
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<div class="container-box">
+    <div class="content_box">
+        <div class="title_box">
+    <span class="order_title">
+      Order Detail
+    </span>
+        </div>
+        <!--  상품정보    -->
+        <div class="product_title_box">
+            <span class="product_title">product</span>
+            <div class="product" >
+                <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                <div class="product_detail">
+                    <div>
+                        <p> 상품명 :</p>
+                        <p>디아블로(타임리프)</p>
+                    </div>
+                    <div>
+                        <p>가격 :</p>
+                        <p>35,000(타임리프)</p>
+                        <p> won</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  구매자정보    -->
+        <div class="product_title_box">
+            <span class="product_title">customer</span>
+            <div class="product" >
+                <div class="customer">
+                    <p>회원 ID :</p>
+                    <p> admin1234(타임리프)</p>
+                </div>
+                <div class="customer">
+                    <p>구매자명 :</p>
+                    <p> admin1234(타임리프)</p>
+                </div>
+                <div class="customer">
+                    <p>e-mail :</p>
+                    <p> admin1234@test.test(타임리프)</p>
+                </div>
+            </div>
+        </div>
+        <!--   결제정보   -->
+        <div class="product_title_box">
+            <span class="product_title">payment</span>
+            <div class="product" >
+                <div class="customer">
+                    <p> 무통장입금(타임리프)</p>
+                    <br>
+                    <p> 카카오뱅크 3333-03-1659896 오택주</p>
+                </div>
+            </div>
+        </div>
+        <!--   결제정보 끝   -->
+        <!--   주문상태      -->
+        <div class="product_title_box">
+            <span class="product_title">주문상태 </span>
+            <div class="product" >
+                <div class="customer">
+                    <p> 발송완료(타임리프)</p>
+                </div>
+                <div class="customer">
+                    <p>발송 코드 :</p>
+                    <p> DSFD-J25M-MFJ1(타임리프)</p>
+                </div>
+            </div>
+        </div>
+
+        <!--   주문상태 끝   -->
+        <div class="bt_box">
+            <button class="order_button" type="submit" id="btn_search">쇼핑계속하기</button>
+            <button class="exit_button" type="submit" id="btn_search">주문취소</button>
+        </div>
+    </div>
+
+</div>
+<footer th:replace="layout/footer.html"></footer>
+
+
+</body>
+</html>
