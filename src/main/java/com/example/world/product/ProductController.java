@@ -45,6 +45,7 @@ public class ProductController {
             themeKey = "RPG";
             Page<Product> paging = this.productService.getTheme(page, themeKey);
             model.addAttribute("paging",paging);
+            model.addAttribute("themeKey",themeKey);
         }else if(key.equals("fps")){
             themeKey="FPS";
             Page<Product> paging = this.productService.getTheme(page, themeKey);

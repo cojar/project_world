@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/product_list_style.css}" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-
-
+<div th:replace="layout/navbar.html"></div>
 <div class="big-wrap max-w-full">
     <div class="wrap max-w-full">
         <div class="banner-section">
@@ -17,7 +18,10 @@
                 <img class="inline-block w-full" src="https://ifh.cc/g/6xAKMx.jpg" alt="">
             </div>
         </div>
-        <div class="title text-center mt-5 font-bold text-3xl" th:text="${product.theme}"></div>
+
+        <div class="title text-center mt-5 font-bold text-3xl" th:text="${themeKey}"></div>
+
+
         <div class="sort-section">
             <ul class="flex justify-end">
                 <li class="mr-3"><button>인기순</button></li>
@@ -29,20 +33,20 @@
             <section class="goods-list flex justify-around flex-wrap" th:each="product : ${paging}">
 
                 <div class="goods w-96 align-top mr-5 bg-gray-600">
-                    <a th:href="">
+                    <a th:href="@{|/product/detail/${product.id}|}">
                       <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
-                      <p class="goods-name" th:text="productName"></p>
-                      <p><span th:text="price"></span>won</p>
+                      <p class="goods-name" th:text="${product.productName}"></p>
+                      <p><span th:text="${product.price}"></span>won</p>
                     </a>
                 </div>
 
             </section>
         </div>
         <!--페이징-->
-        <div class="pagination-1">
+        <div class="pagination-1" th:if="${paging}">
             <div class="pagination">
                 <ul class="page-list">
-                    <li th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                    <li th:class="${!paging.hasPrevious} ? 'disabled'">
                         <a class="page-link"
                            th:href="${paging.hasPrevious} ? @{|?page=${paging.number+1}|} : @{|?page=0|}">
                             <span>이전</span>
@@ -50,11 +54,11 @@
                     </li>
                     <li th:each="page: ${#numbers.sequence(0, paging.totalPages)}"
                         th:if="${page >= paging.number-3 and page <= paging.number+3}"
-                        th:classappend="${page + 1 == paging.number} ? 'active'"
+                        th:classappend="${page + 1 == paging.number} ? 'active' : ''"
                         class="page-item">
                         <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
                     </li>
-                    <li th:classappend="${!paging.hasNext} ? 'disabled'">
+                    <li th:class="${!paging.hasNext} ? 'disabled'">
                         <a class="page-link"
                            th:href="${paging.hasNext} ? @{|?page=${paging.number+1}|} : @{|?page=${paging.totalPages}|}">
                             <span>다음</span>
@@ -63,8 +67,11 @@
                 </ul>
             </div>
         </div>
+
+
+
     </div>
 </div>
-
+<footer th:replace="layout/footer.html"></footer>
 </body>
 </html>
