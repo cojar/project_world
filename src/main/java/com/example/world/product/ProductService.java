@@ -63,13 +63,12 @@ public class ProductService {
         };
     }
 
-    public Page<Product> AllTheme(int page){
+    public Page<Product> allTheme(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page,16);
         return this.productRepository.findAll(pageable);
     }
-
 
 
 

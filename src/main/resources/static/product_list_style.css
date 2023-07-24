@@ -34,6 +34,45 @@ a{
   color : #FA622F;
 }
 
+.section>.goods-list>.goods{
+    background-image: linear-gradient(to right, rgb(64,64,64), rgb(128,128,128));
+}
+
+.section>.goods-list>.goods>a>.info>p{
+    background-color:rgb(30,30,30);
+}
+
 .section>.goods-list > div > p > span {
   font-weight : bold;
+}
+
+/*페이징*/
+.page-list{
+list-style:none;
+text-align:row;
+font-size:25px;
+}
+
+.page-link{
+font-family: 'NeoDunggeunmoPro-Regular';}
+
+.holy{
+    border:2px solid white;
+      color:white;
+}
+
+.page-list>li{
+display:inline-block;
+}
+
+.page-item{
+display:inline-block;
+list-style:none;
+}
+
+.disabled{
+display:inline-block;
+}
+.page-link > a {
+    color: black;
 }

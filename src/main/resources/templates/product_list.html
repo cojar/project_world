@@ -21,49 +21,48 @@
             </div>
         </div>
 
-        <div class="title text-center mt-5 font-bold text-3xl" th:text="${themeKey}"></div>
+        <div class="title text-center mt-5 font-bold text-3xl text-white" th:text="${themeKey}"></div>
 
 
         <div class="sort-section">
-            <ul class="flex justify-end">
+            <ul class="flex justify-end text-white">
                 <li class="mr-3"><button>인기순</button></li>
                 <li class="mr-3"><button>높은 가격순</button></li>
                 <li class="mr-3"><button>낮은 가격순</button></li>
             </ul>
         </div>
-        <div class="section w-full mt-8">
-            <section class="goods-list flex justify-around flex-wrap" th:each="product : ${paging}">
+        <div class="section w-full mt-8  flex justify-evenly flex-wrap">
+            <section class="goods-list" th:each="product : ${paging}">
 
-                <div class="goods w-96 align-top mr-5 bg-gray-600">
+                <div class="goods w-72 align-top">
                     <a th:href="@{|/product/detail/${product.id}|}">
-                      <img class="w-96 h-32 mb-3" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
-                      <p class="goods-name" th:text="${product.productName}"></p>
-                      <p><span th:text="${product.price}"></span>won</p>
+                      <img class="w-full h-36" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
+                      <div class="info h-8 flex items-center text-white text-xs"><p class="price inline-block ml-2"><span th:text="${product.price}"></span> won</p></div>
                     </a>
                 </div>
 
             </section>
         </div>
         <!--페이징-->
-        <div class="pagination-1" th:if="${paging}">
-            <div class="pagination">
+        <div class="pagination-1 flex justify-center mt-4" th:if="${paging}">
+            <div class="pagination text-white">
                 <ul class="page-list">
                     <li th:class="${!paging.hasPrevious} ? 'disabled'">
-                        <a class="page-link"
+                        <a class="page-link holy"
                            th:href="${paging.hasPrevious} ? @{|?page=${paging.number+1}|} : @{|?page=0|}">
-                            <span>이전</span>
+                            <span class="text-lg">이전</span>
                         </a>
                     </li>
                     <li th:each="page: ${#numbers.sequence(0, paging.totalPages)}"
                         th:if="${page >= paging.number-3 and page <= paging.number+3}"
                         th:classappend="${page + 1 == paging.number} ? 'active' : ''"
-                        class="page-item">
+                        class="page-item text-lg">
                         <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
                     </li>
                     <li th:class="${!paging.hasNext} ? 'disabled'">
-                        <a class="page-link"
+                        <a class="page-link holy"
                            th:href="${paging.hasNext} ? @{|?page=${paging.number+1}|} : @{|?page=${paging.totalPages}|}">
-                            <span>다음</span>
+                            <span class="text-lg">다음</span>
                         </a>
                     </li>
                 </ul>
