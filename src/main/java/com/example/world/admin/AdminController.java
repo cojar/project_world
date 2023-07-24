@@ -20,4 +20,9 @@ public class AdminController {
     public String adminProduct(){
         return "admin/admin_product";
     }
+
+    @GetMapping("/ad/user")
+    public String adminUser(){
+        return "admin/admin_user";
+    }
 }

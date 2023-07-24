@@ -59,18 +59,16 @@
     <div class="container-fluid xyz">
       <div class="row">
         <div class="col-lg-12">
-          <h1>상품 관리</h1>
+          <h1>회원 관리</h1>
 
           <div class="date_content">
-            <div class="date_title"><p>상품 관리 </p></div>
+            <div class="date_title"><p>회원 관리 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn"> 상품등록 </button>
-              <button type="button" class="date_btn"> 선택삭제 </button>
+              <button type="button" class="date_btn"> 관리자권한 부여 </button>
+              <button type="button" class="date_btn"> 관리자권한 회수 </button>
 
             </div>
-            <div class="code_input">
-              <input type="text" placeholder="발송할 코드를 입력해주세요"><button type="button">발송</button>
-            </div>
+
 
             <div class="date_data">
               <!--    리스트 -->
@@ -81,12 +79,12 @@
               <table class="list_table">
                 <thead>
                 <tr>
-                  <th class="number">상품번호</th>
-                  <th class="title">상품명</th>
-                  <th class="name">장르</th>
-                  <th class="name">가격</th>
-                  <th class="date">판매 건 수</th>
-                  <th class="inquiry">수정</th>
+                  <th class="number">회원번호</th>
+                  <th class="title">회원 e-mail</th>
+                  <th class="name">닉네임</th>
+                  <th class="name">생년월일</th>
+                  <th class="date">권한 상태</th>
+                  <th class="inquiry">회원정보수정</th>
                   <th class="button_menu">선택</th>
                 </tr>
                 </thead>
@@ -96,10 +94,10 @@
                   <td class="title">
                     <a
                             th:href="@{|/product/detail/${product.id}|}"                         th:text="${product.name}"
-                    > 상품명</a>
+                    > test@test.test</a>
                   </td>
-                  <td class="nickname" th:text="${product.theme}">테마</td>
-                  <td class="nickname" th:text="${product.price}">20,000</td>
+                  <td class="nickname" th:text="${product.theme}">아무개</td>
+                  <td class="nickname" th:text="${product.price}">2001.01.01</td>
                   <td class="date" th:text=“${오더사이즈}”>1</td>
                   <td class="inquiry" > <a href=""><button>수정</button></a></td>
                   <td class="button_menu">
