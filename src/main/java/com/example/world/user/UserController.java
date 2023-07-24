@@ -68,7 +68,6 @@ public class UserController {
                         // 미성년자 예외 처리 로직을 실행합니다.
                         throw new IllegalArgumentException("미성년자는 가입할 수 없습니다.");
                     }
-
                     // 회원가입 처리
                     UserRole role = userCreateForm.getUsername().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
                     userService.create(
