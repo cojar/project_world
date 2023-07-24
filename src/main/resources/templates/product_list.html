@@ -9,10 +9,12 @@
     <link rel="stylesheet" th:href="@{/product_list_style.css}" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-<div th:replace="layout/navbar.html"></div>
-<div class="big-wrap max-w-full">
-    <div class="wrap max-w-full">
+<nav th:replace="layout/navbar.html"></nav>
+<div class="container-box">
+<div class="big-wrap w-full">
+    <div class="wrap w-full">
         <div class="banner-section">
             <div class="banner text-center">
                 <img class="inline-block w-full" src="https://ifh.cc/g/6xAKMx.jpg" alt="">
@@ -72,6 +74,8 @@
 
     </div>
 </div>
+</div>
 <footer th:replace="layout/footer.html"></footer>
 </body>
+
 </html>
