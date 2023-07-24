@@ -19,7 +19,7 @@
 <div class="my-3con">
   <div class="My-3">
     <div>
-      <form th:action="@{/user/signup}" method="post" class="sign_In">
+      <form th:object="${userCreateForm}" method="post" class="sign_In">
         <div>
           <span class="signup">SIGNUP TO WORLD</span>
           <hr>
@@ -35,7 +35,7 @@
         <div class="signupBox">
           <div class="email-box">
             <div class="email">
-              <input id="email" field="*{username}" type="email" class="form-control"
+              <input id="email" th:field="*{username}" type="email" class="form-control"
                      placeholder=" 이메일을 입력해주세요.ex) example@example.com" required="" value="">
               <div class="email-checkmark">✓</div>
               <div class="signupSummitBtn1">
@@ -47,10 +47,10 @@
 
           <div class="email-check-box">
             <div class="email-check">
-              <input id="mailKey" field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">
-              <input id="genMailKey" field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">
-              <div class="email-check-checkmark">✓</div>
-              <div id="timer">00:30</div>
+              <input id="mailKey" th:field="*{mailKey}" type="text" placeholder="인증번호" class="form-control">
+              <input id="genMailKey" th:field="*{genMailKey}" type="hidden" placeholder="인증번호" class="form-control">
+              <div class="email-checkmark">✓</div>
+              <div id="timer">03:00</div>
               <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>
               <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>
             </div>
@@ -58,13 +58,13 @@
 
           <div class="birthday-box">
             <div class="birthday">
-              <input field="*{birthDate}" type="date" placeholder="" class="form-control" required="" value="">
+              <input th:field="*{birthDate}" type="date" placeholder="" class="form-control" required="" value="">
             </div>
           </div>
           <div class="password-box">
             <div class="password">
-              <input id="password-input" field="*{password1}" type="password" class="form-control"
-                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="" autocomplete="off">
+              <input id="password-input" th:field="*{password1}" type="password" class="form-control"
+                     placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="">
               <div class="password-checkmark">✓</div>
               <i id="show-password" class="fa-solid fa-eye fa-lg" alt="Show Password"></i>
             </div>
@@ -73,8 +73,8 @@
 
           <div class="password-check-box">
             <div class="password-check">
-              <input id="password-check-input" field="*{password2}" type="password" class="form-control"
-                     placeholder="비밀번호를 다시 입력해주세요." required="" value="" autocomplete="off">
+              <input id="password-check-input" th:field="*{password2}" type="password" class="form-control"
+                     placeholder="비밀번호를 다시 입력해주세요." required="" value="">
               <div class="password-check-checkmark">✓</div>
             </div>
             <div id="password-match-error" style="display: none; color: red;">비밀번호와 일치하지 않습니다.</div>
@@ -82,7 +82,7 @@
 
           <div class="nickname-box">
             <div class="nickname2">
-              <input field="*{nickname}" type="text"
+              <input th:field="*{nickname}" type="text"
                      placeholder="닉네임을 입력해주세요.(공백,특수문자 제외한 2~10글자)" class="form-control" required="" value=""
                      id="nicknameInput">
             </div>
@@ -95,8 +95,8 @@
 
         <div class="signupSummitBtn2">
           <div class="signInBtn">
-            <button type="submit" class="btnPrimary" onclick="showPopup()">회원가입</button>
-            <button type="submit" class="btnPrimary"><a th:href="@{|/main|}">취소하기</a></button>
+            <button type="submit" class="btnPrimary" name="signupBtn">회원가입</button>
+            <button type="button" class="btnPrimary"><a th:href="@{|/main|}">취소하기</a></button>
           </div>
         </div>
 
@@ -107,3 +107,261 @@
 <footer th:replace="layout/footer.html"></footer>
 </body>
 </html>
+
+<script>
+
+  $(document).ready(function () {
+    var timer;
+    var minutes = 3;
+    var seconds = 00;
+
+    function startTimer() {
+      timer = setInterval(updateTimer, 1000);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      minutes = 3;
+      seconds = 00;
+      $("#timer").text("03:00");
+    }
+
+    function updateTimer() {
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(timer);
+          $("#timer").hide();
+          $("#timer-expired").show();
+          $("#mailKey").prop("disabled", true); // 인증번호 입력 필드 비활성화
+          return;
+        }
+        minutes--;
+        seconds = 59;
+      } else {
+        seconds--;
+      }
+
+      var formattedTime =
+        ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+      $("#timer").text(formattedTime);
+    }
+
+    $("#send-verification").click(function () {
+      $("#email-format-error").hide(); // 숨기기
+      resetTimer(); // 타이머 초기화
+      startTimer();
+      $("#mailKey").prop("disabled", false); // 인증번호 입력 필드 활성화
+
+      // 인증 코드 발송 후 초기화
+      $("#mailKey").val(""); // 인증번호 입력 필드 초기화
+      $(".email-check-checkmark").hide(); // 체크마크 숨김
+      $("#mail-key-errorMessage").hide(); // 에러 메시지 숨김
+
+      // 타이머 관련 UI 처리
+      $("#timer-expired").hide(); // 만료 안내문 숨김
+      $("#timer").show(); // 타이머 표시
+    });
+  });
+
+   $(document).ready(function() {
+  $('#email-input').on('input', function() {
+    var email = $(this).val();
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (emailRegex.test(email)) {
+      $('.email-checkmark').css('display', 'block');
+      $('#email-format-error').css('display', 'none');
+    } else {
+      $('.email-checkmark').css('display', 'none');
+      $('#email-format-error').css('display', 'block');
+    }
+  });
+
+  $('#email-input').on('focus', function() {
+    $('#email-format-error').css('display', 'none');
+  });
+});
+
+$(document).ready(function() {
+  $('#password-input').on('input', function() {
+    var password = $(this).val();
+    var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (regex.test(password)) {
+      $('.password-checkmark').css('display', 'block');
+      $('#password-error').css('display', 'none');
+    } else {
+      $('.password-checkmark').css('display', 'none');
+      $('#password-error').css('display', 'block');
+    }
+  });
+
+  $('#password-input').on('focus', function() {
+    $('#password-error').css('display', 'none');
+  });
+});
+
+$(document).ready(function() {
+  $('#password-check-input').on('input', function() {
+    var password = $('#password-input').val();
+    var confirmPassword = $(this).val();
+
+    if (password === confirmPassword) {
+      $('.password-check-checkmark').css('display', 'block');
+      $('#password-match-error').css('display', 'none');
+    } else {
+      $('.password-check-checkmark').css('display', 'none');
+      $('#password-match-error').css('display', 'block');
+    }
+  });
+
+  $('#password-check-input').on('focus', function() {
+    $('#password-match-error').css('display', 'none');
+  });
+});
+
+    $(document).ready(function() {
+  $('#checkDuplicateBtn').on('click', function() {
+    checkNickname();
+  });
+
+  function checkNickname() {
+    var nickname = $('#nicknameInput').val();
+
+    if (nickname === '') {
+      $('#nicknameCheckResult')
+        .text('특수문자를 제외한 2~10글자로 입력하세요.')
+        .css('color', 'black');
+      return;
+    }
+
+    var regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,10}$/;
+    if (!regex.test(nickname)) {
+      $('#nicknameCheckResult')
+        .text('특수문자를 제외한 2~10글자로 입력하세요.')
+        .css('margin-left', '120px')
+        .css('color', 'black');
+
+      return;
+    }
+
+    // 서버로 닉네임 중복 확인 요청 보내기 (AJAX 등을 사용하여 구현)
+    // 예시: 여기에서는 닉네임이 중복되었다고 가정하고 결과를 보여줍니다.
+    var isNicknameDuplicate = true;
+
+    // AJAX 요청 보내기
+    $.ajax({
+      url: '/user/checkDuplicate',
+      type: 'GET',
+      dataType: 'JSON',
+      data: {
+        nickname: nickname
+      },
+      success: function(response) {
+        if (!response) {
+          isNicknameDuplicate = false;
+        }
+
+        if (isNicknameDuplicate) {
+          $('#nicknameCheckResult')
+            .text('이미 사용 중인 닉네임입니다.')
+            .css('color', 'red')
+            .css('margin-left', '40px');
+        } else {
+          $('#nicknameCheckResult')
+            .text('사용 가능한 닉네임입니다.')
+            .css('margin-left', '70px')
+            .css('color', 'black');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('유저 삭제 오류:', error);
+      }
+    });
+  }
+});
+document.getElementById("checkDuplicateBtn").addEventListener("click", checkNickname);
+
+
+document.getElementById("show-password-icon").addEventListener("click", function() {
+    var passwordInput = document.getElementById("password-input");
+    var passwordType = passwordInput.getAttribute("type");
+
+    if (passwordType === "password") {
+        passwordInput.setAttribute("type", "text");
+    } else {
+        passwordInput.setAttribute("type", "password");
+    }
+});
+
+const passwordInput = document.getElementById('password-input');
+const showPasswordButton = document.getElementById('show-password');
+const passwordError = document.getElementById('password-error');
+
+showPasswordButton.addEventListener('click', togglePasswordVisibility);
+
+function togglePasswordVisibility() {
+    const type = passwordInput.getAttribute('type');
+    if (type === 'password') {
+        passwordInput.setAttribute('type', 'text');
+    } else {
+        passwordInput.setAttribute('type', 'password');
+    }
+}
+
+passwordInput.addEventListener('input', validatePassword);
+
+function validatePassword() {
+    const password = passwordInput.value;
+    if (password.length >= 8) {
+        passwordError.style.display = 'none';
+        passwordInput.nextElementSibling.style.display = 'block';
+    } else {
+        passwordError.style.display = 'block';
+        passwordInput.nextElementSibling.style.display = 'none';
+    }
+}
+
+  function sendEmailConfirmation() {
+    // 이메일 주소 가져오기
+    var email = $("#email").val();
+    var mailKey = $("#mailKey").val();
+    // AJAX 요청 보내기
+    $.ajax({
+        url: "http://localhost:8080/mailCheck", // 이메일 인증번호를 보낼 서버의 URL
+        method: "GET",
+        data: {
+        email: email,
+        mailKey: mailKey
+        }, // 이메일 주소를 서버로 전달
+        success: function(data) {
+            alert("이메일 인증번호를 전송했습니다.");
+            $("#genMailKey").val(data);
+        },
+        error: function(xhr, status, error) {
+            alert("이메일 인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+
+ // 인증 번호 확인 버튼 클릭 이벤트 처리
+  document.getElementById("checkMailKeyBtn").addEventListener("click", function() {
+    validateMailKey();
+  });
+
+  // 인증 번호 확인 함수
+  function validateMailKey() {
+    const mailKey = document.getElementById('mailKey').value;
+    const genMailKey = document.getElementById('genMailKey').value;
+    const checkmark = document.querySelector('.email-check-checkmark');
+    const errorMessage = document.getElementById('mail-key-errorMessage');
+
+    if (mailKey.length === 5 && mailKey === genMailKey) {
+      checkmark.style.display = 'block';
+      errorMessage.style.display = 'none';
+    } else {
+      checkmark.style.display = 'none';
+      errorMessage.style.display = 'block';
+    }
+  }
+</script>

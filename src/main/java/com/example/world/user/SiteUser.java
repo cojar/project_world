@@ -27,4 +27,7 @@ public class SiteUser {
 
     private LocalDate birthDate;
 
+    private int mailKey;
+
+    private boolean mailAuth;
 }

@@ -41,9 +41,12 @@
                 <div class="signupSummitBtn">
                     <div class="signInBtn">
                         <button type="submit" class="btnPrimary">로그인</button>
-                        <button type="submit" class="btnPrimary">회원가입</button>
+                        <a th:href="@{/user/signup}">
+                            <button type="button" class="btnPrimary">회원가입</button>
+                        </a>
                     </div>
                 </div>
+
 
             </form>
         </div>

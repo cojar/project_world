@@ -1,5 +1,6 @@
 package com.example.world.user;
 
+import com.example.world.email.MailController;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class UserController {
         private final UserRepository userRepository;
 //        private final ReviewService reviewService;
 //        private final ProductService productService;
-//        private final MailController mailController;
+        private final MailController mailController;
 
         @GetMapping("/signup")
         public String signup(UserCreateForm userCreateForm) {
@@ -48,24 +49,54 @@ public class UserController {
             if (bindingResult.hasErrors()) {
                 return "signup_form";
             }
-//            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
-//                bindingResult.rejectValue("password2", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
-//                return "signup_form";
-//            }
-//
-//            try {
-//                userService.create(userCreateForm.getUsername(),
-//                        userCreateForm.getPassword1(), userCreateForm.getNickname(), userCreateForm.getBirthDate());
-//            } catch(DataIntegrityViolationException e) {
-//                e.printStackTrace();
-//                bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
-//                return "signup_form";
-//            } catch(Exception e) {
-//                e.printStackTrace();
-//                bindingResult.reject("signupFailed", e.getMessage());
-//                return "signup_form";
-//            }
-            this.userService.create(userCreateForm.getUsername(), userCreateForm.getPassword1(), userCreateForm.getNickname(), userCreateForm.getBirthDate());
+            if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
+                bindingResult.rejectValue("password2", "passwordIncorrect", "2개의 패스워드가 일치하지 않습니다.");
+                return "signup_form";
+            }
+
+            try {
+                // 인증 코드 검증
+                if (userCreateForm.getMailKey().equals(userCreateForm.getGenMailKey())) {
+                    LocalDate currentDate = LocalDate.now();
+                    LocalDate birthDate = userCreateForm.getBirthDate();
+
+                    // 날짜 비교를 위해 현재 날짜에서 18년 전 날짜를 계산
+                    LocalDate legalAgeDate = currentDate.minusYears(18);
+
+                    // 미성년자인 경우 예외 처리
+                    if (birthDate.isAfter(legalAgeDate)) {
+                        // 미성년자 예외 처리 로직을 실행합니다.
+                        throw new IllegalArgumentException("미성년자는 가입할 수 없습니다.");
+                    }
+                    // 회원가입 처리
+                    UserRole role = userCreateForm.getUsername().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
+                    userService.create(
+                            userCreateForm.getUsername(),
+                            userCreateForm.getPassword1(),
+                            userCreateForm.getNickname(),
+                            userCreateForm.getBirthDate(),
+                            userCreateForm.getMailKey(),
+                            role,
+                            true);
+                } else {
+                    // 두 값이 일치하지 않는 경우 예외 처리 로직을 실행
+                    bindingResult.rejectValue("mailKey", "mailKeyNotMatched", "유효하지 않은 이메일 또는 메일 키입니다.");
+                    return "signup_form";
+                }
+
+            } catch (IllegalArgumentException e) {
+                // 미성년자 예외 처리에 대한 예외 처리 로직을 추가
+                bindingResult.rejectValue("birthDate", "minorAge", "미성년자는 가입할 수 없습니다.");
+                return "signup_form";
+            } catch (DataIntegrityViolationException e) {
+                e.printStackTrace();
+                bindingResult.reject("signupFailed", "이미 등록된 아이디입니다.");
+                return "signup_form";
+            } catch (Exception e) {
+                e.printStackTrace();
+                bindingResult.reject("signupFailed", e.getMessage());
+                return "signup_form";
+            }
 
             return "redirect:/";
         }
