@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/layout/admin.css"/>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default no-margin">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header fixed-brand">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
+      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+    </button>
+    <a class="navbar-brand" href="#"><img class="rogoimg" src="https://i.postimg.cc/qRMyWWkr/image.png"/></a>
+  </div>
+  <!-- navbar-header-->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+
+    </ul>
+  </div>
+  <!-- bs-example-navbar-collapse-1 -->
+</nav>
+<div id="wrapper">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+
+      <li>
+        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+      </li>
+      <li>
+        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
+      </li>
+      <li>
+        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
+      </li>
+      <li>
+        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
+      </li>
+      <li>
+        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
+      </li>
+      <li>
+        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
+      </li>
+      <li>
+        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid xyz">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>리뷰 관리</h1>
+
+          <div class="date_content">
+            <div class="date_title"><p>리뷰 관리 </p></div>
+            <div class="btn_line">
+              <button type="button" class="date_btn"> 선택 삭제 </button>
+
+
+            </div>
+
+
+            <div class="date_data">
+              <!--    리스트 -->
+
+
+
+
+              <table class="list_table">
+                <thead>
+                <tr>
+                  <th class="number">리뷰번호</th>
+                  <th class="title">작성자 e-mail</th>
+                  <th class="name">리뷰 제목</th>
+                  <th class="name">상품명</th>
+                  <th class="date">평점</th>
+                  <th class="inquiry">리뷰수정</th>
+                  <th class="button_menu">선택</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${productList}">
+                  <td class="number" th:text="${product.id}">1</td>
+                  <td class="title">
+                    <a
+                            th:href="@{|/product/detail/${product.id}|}"                         th:text="${product.name}"
+                    > test@test.test</a>
+                  </td>
+                  <td class="nickname" th:text="${product.theme}">좋아요</td>
+                  <td class="nickname" th:text="${product.price}">디아블로 4</td>
+                  <td class="date" th:text=“${오더사이즈}”>1</td>
+                  <td class="inquiry" > <a href=""><button>수정</button></a></td>
+                  <td class="button_menu">
+                    <label class="order_check"><input type="checkbox" name="orderCheck"  > </label>
+
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+
+
+
+              <!--    리스트 -->                   </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<!-- jQuery -->
+
+
+</body>
+</html>

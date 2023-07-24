@@ -1,0 +1,245 @@
+/* Common CSS */
+.nav-pills > li > a {
+   border-radius: 0;
+}
+
+#wrapper {
+   padding-left: 0;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+   overflow: hidden;
+}
+
+#wrapper.toggled {
+   padding-left: 250px;
+   overflow: hidden;
+}
+
+#sidebar-wrapper {
+   z-index: 1000;
+   position: absolute;
+   left: 250px;
+   width: 0;
+   height: 100%;
+   margin-left: -250px;
+   overflow-y: auto;
+   background: #000;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+   width: 250px;
+}
+
+#page-content-wrapper {
+   position: absolute;
+   padding: 15px;
+   width: 100%;
+   overflow-x: hidden;
+}
+
+.xyz {
+   min-width: 360px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+   position: relative;
+   margin-right: 0px;
+}
+
+.fixed-brand {
+   width: auto;
+}
+
+/* Sidebar Styles */
+.sidebar-nav {
+   position: absolute;
+   top: 0;
+   width: 250px;
+   margin: 0;
+   padding: 0;
+   list-style: none;
+   margin-top: 2px;
+}
+
+.sidebar-nav li {
+   text-indent: 15px;
+   line-height: 40px;
+}
+
+.sidebar-nav li a {
+   display: block;
+   text-decoration: none;
+   color: #999999;
+}
+
+.sidebar-nav li a:hover {
+   text-decoration: none;
+   color: #fff;
+   background: rgba(255, 255, 255, 0.2);
+   border-left: red 2px solid;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+   text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+   height: 65px;
+   font-size: 18px;
+   line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+   color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+   color: #fff;
+   background: none;
+}
+
+.no-margin {
+   margin: 0;
+}
+
+/* Media Queries */
+@media (min-width: 768px) {
+   #wrapper {
+      padding-left: 250px;
+   }
+   .fixed-brand {
+      width: 250px;
+   }
+   #wrapper.toggled {
+      padding-left: 0;
+   }
+   #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled #sidebar-wrapper {
+      width: 250px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper {
+      width: 50px;
+   }
+   #wrapper.toggled-2 #sidebar-wrapper:hover {
+      width: 250px;
+   }
+   #page-content-wrapper {
+      padding: 20px;
+      position: relative;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+   }
+   #wrapper.toggled #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      padding-left: 250px;
+   }
+   #wrapper.toggled-2 #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+      margin-left: -200px;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+      width: auto;
+   }
+}
+
+/* Additional CSS */
+.rogoimg {
+   width: 70%;
+   display: inline-block;
+}
+
+#bs-example-navbar-collapse-1 {
+   background-color: rgb(30, 30, 30);
+}
+
+.navbar-brand {
+   padding: 0;
+}
+
+/* 폼 안에 CSS */
+.date_content {
+   border: 1px solid gray;
+   border-radius: 10px;
+}
+
+.formdate-control {
+   display: inline-block;
+}
+
+.birthday > p {
+   display: inline-block;
+   color: black;
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+.date_btn {
+   display: inline-block;
+   margin-left: 20px;
+   margin-top: 20px;
+}
+
+.date_data {
+   padding: 20px;
+   margin-left: 10px;
+}
+
+.date_title {
+   background: linear-gradient(to top, gray, lightgray);
+   border-radius: 9px 9px 0px 0px;
+   padding: 10px;
+}
+
+.date_title > p {
+   color: white;
+   font-size: 15px;
+}
+
+.col-lg-12 > h1 {
+   border-bottom: 2px solid rgb(30, 30, 30);
+}
+
+/* 여기부터 영역  */
+.btn_line {
+   padding-left: 10px;
+}
+
+.list_table {
+   width: 100%;
+}
+
+.list_table > thead > tr > th {
+   background: gray;
+   text-align: center;
+   border: 1px solid gray;
+   color: black;
+}
+
+.list_table > tbody > tr > td {
+   text-align: center;
+   border: 1px solid black;
+}
+
+.code_input {
+   display: none;
+   padding-left: 30px;
+}
+
+.code_input > input {
+   width: 300px;
+}
