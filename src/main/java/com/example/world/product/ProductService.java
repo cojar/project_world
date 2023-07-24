@@ -1,6 +1,7 @@
 package com.example.world.product;
 
 
+import com.example.world.DataNotFoundException;
 import org.springframework.data.jpa.domain.Specification;
 
 import lombok.RequiredArgsConstructor;
@@ -55,9 +56,7 @@ public class ProductService {
                 Predicate seasonPredicate = criteriaBuilder.equal(seasonPath, sortkey);
                 predicates.add(seasonPredicate);
             }
-
             // 다른 조건들을 추가하고 싶다면 여기에 추가
-
             // 검색 조건들을 조합하여 최종 검색 조건 생성
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
@@ -70,11 +69,13 @@ public class ProductService {
         return this.productRepository.findAll(pageable);
     }
 
-
-
-
-
-
-
+    public Product getProduct(Integer id) {
+        Optional<Product> product = this.productRepository.findById(id);
+        if (product.isPresent()) {
+            return product.get();
+        } else {
+            throw new DataNotFoundException("product not found");
+        }
+    }
 
 }
