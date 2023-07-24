@@ -24,7 +24,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product create(String productName, String developer, String theme, Integer price, String content){
+    public Product create(String productName, String developer, String theme, String price, String content){
         Product product = new Product();
 
         product.setProductName(productName);

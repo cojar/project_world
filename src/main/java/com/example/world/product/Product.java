@@ -35,7 +35,7 @@ public class Product {
     private String theme;
     //게임 테마 (장르)
 
-    private Integer price;
+    private String price;
     // 상품 가격
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)

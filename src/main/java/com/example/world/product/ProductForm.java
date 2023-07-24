@@ -8,13 +8,14 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.List;
 
 @Getter
 @Setter
 public class ProductForm {
     @NotEmpty
-    private String name;
+    private String productName;
     // 게임 이름
     @NotEmpty
     private String developer;
@@ -23,23 +24,17 @@ public class ProductForm {
     private String theme;
     //게임 테마 (장르)
     @NotEmpty
-    private Integer price;
+    private String price;
     // 상품 가격
-
     private List<MacMinForm> macMinList;
     // 맥 최소 스펙
-
     private List<MacRecommendedForm> macRecommendedList;
     // 맥 권장 스펙
-
     private List<WindowMinForm> windowMinList;
     // 맥 최소 스펙
-
     private List<WindowRecommendedForm> windowRecommendedList;
     // 맥 권장 스펙
-
     @Column(columnDefinition = "text")
     private String content;
     // 상품 설명
-
 }
