@@ -34,7 +34,7 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/{id}")
-    public String orderCreate(OrderForm orderForm, @PathVariable("id") Integer id, Model model, BindingResult bindingResult, Principal principal) {
+    public String orderCreate(OrderForm orderForm, @PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
         Product product = this.productService.getProduct(id);
         model.addAttribute("product", product);
         model.addAttribute("user", siteUser);
@@ -43,7 +43,7 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}") // order/create/product.id
-    public String orderCreate(@Valid OrderForm orderForm, Model model, BindingResult bindingResult, @PathVariable("id") Integer id, Principal principal) {
+    public String orderCreate(@Valid OrderForm orderForm, Model model, BindingResult bindingResult, @PathVariable("id") Long id, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "Order_form";
         }
@@ -58,7 +58,7 @@ public class OrderController {
     }
 
     @GetMapping("/detail/{id}")
-    public String orderDetail(@PathVariable Integer id, BindingResult bindingResult, Model model, Principal principal) {
+    public String orderDetail(@PathVariable Long id, BindingResult bindingResult, Model model, Principal principal) {
         Product product = this.productService.getProduct(id);
         SiteUser user = this.userService.getUser(principal.getName());
         OrderForm orderForm = new OrderForm();
@@ -72,7 +72,7 @@ public class OrderController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id) {
+    public String delete(@PathVariable("id") Long id) {
         ProductOrder order = this.orderService.getOrder(id);
         this.orderService.delete(order);
         return "redirect:/";

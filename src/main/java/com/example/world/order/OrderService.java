@@ -29,7 +29,7 @@ public class OrderService {
         this.orderRepository.delete(order);
     }
 
-    public ProductOrder getOrder(Integer id) {
+    public ProductOrder getOrder(Long id) {
         Optional<ProductOrder> order = this.orderRepository.findById(id);
         return order.get();
     }
