@@ -34,39 +34,36 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/{id}")
-    public String orderCreate(OrderForm orderForm, @PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
+    public String showOrderForm(OrderForm orderForm, @PathVariable("id") Long id, Model model, Principal principal) {
         Product product = this.productService.getProduct(id);
+        SiteUser user = this.userService.getUser(principal.getName());
+        orderForm.setProduct(product);
+        orderForm.setUser(user);
         model.addAttribute("product", product);
-        model.addAttribute("user", siteUser);
+        model.addAttribute("user", user);
         return "Order_form";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}") // order/create/product.id
-    public String orderCreate(@Valid OrderForm orderForm, Model model, BindingResult bindingResult, @PathVariable("id") Long id, Principal principal) {
+    public String submitOrder(@Valid OrderForm orderForm,@PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "Order_form";
         }
         Product product = this.productService.getProduct(id);
-        orderForm.setProduct(product);
-        orderForm.setUser(siteUser);
-        orderForm.setEmail(orderForm.getEmail());
-        orderForm.setPayment(orderForm.getPayment());
-        this.orderService.create(orderForm);
+        SiteUser user = this.userService.getUser(principal.getName());
+        this.orderService.create(orderForm,product,user);
 
-        return "redirect:/order/create/" + id;
+        return "redirect:/";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/detail/{id}")
-    public String orderDetail(@PathVariable Long id, BindingResult bindingResult, Model model, Principal principal) {
-        Product product = this.productService.getProduct(id);
-        SiteUser user = this.userService.getUser(principal.getName());
-        OrderForm orderForm = new OrderForm();
-        orderForm.setEmail("");
-        model.addAttribute("orderProduct", product);
+    public String orderDetail(@PathVariable Long id, Principal principal, Model model) {
+        SiteUser user = userService.getUser(principal.getName());
+        ProductOrder productOrder = orderService.getOrder(id);
+        model.addAttribute("orderProduct", productOrder);
         model.addAttribute("username", user);
-        model.addAttribute("orderForm", orderForm);
-        model.addAttribute("customerName", "");
 
         return "Order_detail";
     }

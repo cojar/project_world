@@ -58,8 +58,6 @@ public class Product {
     private Integer viewCount;
     //조회수
 
-
-
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductReview> reviewList;
     // 상품과 연결된 리뷰들

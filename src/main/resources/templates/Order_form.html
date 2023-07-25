@@ -8,6 +8,7 @@
 <body>
 <nav th:replace="layout/navbar.html"></nav>
 <div class="container-box">
+  <form th:object="${orderForm}" method="post" class="form" enctype="multipart/form-data">
   <div class="content_box">
     <div class="title_box">
             <span class="order_title">
@@ -42,11 +43,11 @@
         </div>
         <div class="customer">
           <p>구매자명 :</p>
-          <input type="text" th:name="customerName" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
+          <input type="text" th:field="*{customerName}" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
         </div>
         <div class="customer">
           <p>e-mail :</p>
-          <input type="email" th:name="email" th:value="${user.username}" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
+          <input type="text" th:field="*{email}" th:value="${user.username}" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
         </div>
       </div>
     </div>
@@ -55,10 +56,10 @@
       <span class="product_title">payment</span>
       <div class="product">
         <label class="pay_check">
-          <input type="checkbox" name="payment" value="credit"> 신용카드
+          <input type="checkbox" 일 name="payment" value="credit"> 신용카드
         </label>
         <label class="pay_check">
-          <input type="checkbox" name="payment" value="cash"> 현금
+          <input type="checkbox" th:field="*{payment}" name="payment" value="cash"> 현금
         </label>
         <div class="pay_box">
           <div class="account_number">
@@ -73,53 +74,115 @@
     </div>
     <!--   결제정보 끝   -->
     <div class="bt_box">
-      <button type="button" class="order_button" id="btn_order" th:onclick="|location.href='/order/detail/${product.id}'|">주문하기</button>
+      <button type="submit" class="order_button" id="btn_order" >주문하기</button>
       <button type="button" class="exit_button" id="btn_back" th:onclick="|location.href='/order/create/${product.id}'|">뒤로가기</button>
     </div>
 
   </div>
+  </form>
 </div>
 
 <footer th:replace="layout/footer.html"></footer>
 
 <script>
-    // 체크박스 선택에 따라 계좌번호를 보이거나 숨기는 함수입니다.
-    function toggleAccountNumberVisibility() {
-        var checkbox = document.querySelector('input[name="payment"][value="cash"]');
-        var accountNumberDiv = document.querySelector('.account_number');
+  // 체크박스 선택에 따라 계좌번호를 보이거나 숨기는 함수입니다.
+  function toggleAccountNumberVisibility() {
+    var checkbox = document.querySelector('input[name="pay1"][value="무통장입금"]');
+    var accountNumberDiv = document.querySelector('.account_number');
 
-        if (checkbox.checked) {
-            accountNumberDiv.style.display = 'inline-block';
-        } else {
-            accountNumberDiv.style.display = 'none';
-        }
+    if (checkbox.checked) {
+      accountNumberDiv.style.display = 'inline-block';
+    } else {
+      accountNumberDiv.style.display = 'none';
     }
+  }
 
-    // 체크박스에 이벤트 리스너를 추가합니다.
-    document.addEventListener('DOMContentLoaded', function () {
-        var checkbox = document.querySelector('input[name="payment"][value="cash"]');
-        checkbox.addEventListener('change', toggleAccountNumberVisibility);
-    });
+  // 체크박스에 이벤트 리스너를 추가합니다.
+  document.addEventListener('DOMContentLoaded', function() {
+    var checkbox = document.querySelector('input[name="pay1"][value="무통장입금"]');
+    checkbox.addEventListener('change', toggleAccountNumberVisibility);
+  });
 </script>
 
-<script>
-    // 체크박스 선택에 따라 토스 간편결제를 보이거나 숨기는 함수입니다.
-    function toggleTossPayVisibility() {
-        var checkbox = document.querySelector('input[name="payment"][value="credit"]');
-        var tossPayDiv = document.querySelector('.toss_pay');
 
-        if (checkbox.checked) {
-            tossPayDiv.style.display = 'block';
-        } else {
-            tossPayDiv.style.display = 'none';
-        }
+<script>
+  // 체크박스 선택에 따라 토스 간편결제를 보이거나 숨기는 함수입니다.
+  function toggleTossPayVisibility() {
+    var checkbox = document.querySelector('input[name="pay2"][value="간편결제"]');
+    var tossPayDiv = document.querySelector('.toss_pay');
+
+    if (checkbox.checked) {
+      tossPayDiv.style.display = 'block';
+    } else {
+      tossPayDiv.style.display = 'none';
+    }
+  }
+
+  // 체크박스에 이벤트 리스너를 추가합니다.
+  document.addEventListener('DOMContentLoaded', function() {
+    var checkbox = document.querySelector('input[name="pay2"][value="간편결제"]');
+    checkbox.addEventListener('change', toggleTossPayVisibility);
+  });
+</script>
+
+
+
+<!-- 중복체크 방지 -->
+
+
+<script>
+  // 무통장 입금 체크박스 선택 여부를 확인하는 함수입니다.
+  function isBankTransferSelected() {
+    var bankTransferCheckbox = document.querySelector('input[name="pay1"][value="무통장입금"]');
+    return bankTransferCheckbox.checked;
+  }
+
+  // 간편결제 체크박스 선택 여부를 확인하는 함수입니다.
+  function isTossPaySelected() {
+    var tossPayCheckbox = document.querySelector('input[name="pay2"][value="간편결제"]');
+    return tossPayCheckbox.checked;
+  }
+
+  // 체크박스 선택에 따라 중복 체크를 방지하는 함수입니다.
+  function preventCheckboxOverlap() {
+    var bankTransferCheckbox = document.querySelector('input[name="pay1"][value="무통장입금"]');
+    var tossPayCheckbox = document.querySelector('input[name="pay2"][value="간편결제"]');
+
+    if (isBankTransferSelected() && isTossPaySelected()) {
+      bankTransferCheckbox.checked = false;
+      toggleAccountNumberVisibility();
+      alert("결제방법은 중복체크가 불가능합니다.");
+    } else if (!isBankTransferSelected() && !isTossPaySelected()) {
+      bankTransferCheckbox.checked = true;
+      toggleAccountNumberVisibility();
+      alert("결제방법은 중복체크가 불가능합니다.");
+    }else if (!isBankTransferSelected() && !isTossPaySelected()) {
+      tossPayCheckbox.checked = false;
+      toggleTossPayVisibility();
+      alert("결제방법은 중복체크가 불가능합니다.");
+    }else if (!isBankTransferSelected() && !isTossPaySelected()) {
+      tossPayCheckbox.checked = true;
+      toggleTossPayVisibility();
+      alert("결제방법은 중복체크가 불가능합니다.");
     }
 
-    // 체크박스에 이벤트 리스너를 추가합니다.
-    document.addEventListener('DOMContentLoaded', function () {
-        var checkbox = document.querySelector('input[name="payment"][value="credit"]');
-        checkbox.addEventListener('change', toggleTossPayVisibility);
+  }
+
+  // 체크박스에 이벤트 리스너를 추가합니다.
+  document.addEventListener('DOMContentLoaded', function() {
+    var bankTransferCheckbox = document.querySelector('input[name="pay1"][value="무통장입금"]');
+    var tossPayCheckbox = document.querySelector('input[name="pay2"][value="간편결제"]');
+
+    bankTransferCheckbox.addEventListener('change', function() {
+      preventCheckboxOverlap();
+      toggleAccountNumberVisibility();
     });
+
+    tossPayCheckbox.addEventListener('change', function() {
+      preventCheckboxOverlap();
+      toggleTossPayVisibility();
+    });
+  });
 </script>
 </body>
 </html>

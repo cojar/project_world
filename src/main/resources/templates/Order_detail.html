@@ -17,23 +17,23 @@
         <!--  상품정보    -->
         <div class="product_title_box">
             <span class="product_title">product</span>
-            <div class="product" >
+            <div class="product" th:if="${productOrder?.product != null}">
                 <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
                 <div class="product_detail">
                     <div>
                         <p>상품명 :</p>
-                        <p th:text="${product.productName}"></p>
+                        <p th:text="${productOrder.product.productName}"></p>
                     </div>
                     <div>
                         <p>가격 :</p>
-                        <p th:text="${product.price}"></p>
+                        <p th:text="${productOrder.product.price}"></p>
                         <p> won</p>
                     </div>
                 </div>
             </div>
         </div>
         <!--  구매자정보    -->
-        <div class="product_title_box">
+        <div class="product_title_box" th:if="${product != null}">
             <span class="product_title">customer</span>
             <div class="product" >
                 <div class="customer">
@@ -42,11 +42,11 @@
                 </div>
                 <div class="customer">
                     <p>구매자명 :</p>
-                    <p th:text="${customerName}"></p>
+                    <p th:field="*{customerName}"></p>
                 </div>
                 <div class="customer">
                     <p>e-mail :</p>
-                    <p th:text="${orderForm.getEmail()}"></p>
+                    <p th:field="*{email}"></p>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
             <div class="product" >
                 <div class="customer">
                     <p>결제방식 :</p>
-                    <p th:text="${orderForm.getPayment()}"></p>
+                    <p th:field="*{payment}"></p>
                     <br>
                     <p>카카오뱅크 3333-03-1659896 오택주</p>
                 </div>
@@ -69,15 +69,15 @@
             <div class="product" >
                 <div class="customer">
                     <p>발송 상태 :</p>
-                    <p th:text="${order.getOrderStatus()}"></p>
+                    <p th:field="*{orderStatus}"></p>
                 </div>
                 <div class="customer">
                     <p>발송 코드 :</p>
-                    <p th:text="${order.getCode()}"></p>
+                    <p th:field="*{code}"></p>
                 </div>
                 <div class="customer">
                     <p>주문 날짜 :</p>
-                    <p th:text="${order.getOrderDate()}"></p>
+                    <p th:field="*{orderDate}"></p>
                 </div>
             </div>
         </div>
@@ -88,10 +88,8 @@
             <button class="exit_button" type="submit" id="btn_search">주문취소</button>
         </div>
     </div>
-
 </div>
 <footer th:replace="layout/footer.html"></footer>
-
 
 </body>
 </html>
