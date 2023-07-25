@@ -34,7 +34,7 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/{id}")
-    public String orderCreate(OrderForm orderForm, BindingResult bindingResult, @PathVariable("id") Integer id, Model model, Principal principal) {
+    public String orderCreate(OrderForm orderForm, @PathVariable("id") Integer id, Model model, BindingResult bindingResult, Principal principal) {
         Product product = this.productService.getProduct(id);
         model.addAttribute("product", product);
         model.addAttribute("user", siteUser);
@@ -43,7 +43,7 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}") // order/create/product.id
-    public String orderCreate(@Valid OrderForm orderForm, BindingResult bindingResult, @PathVariable("id") Integer id,  Model model, Principal principal, HttpServletRequest request) {
+    public String orderCreate(@Valid OrderForm orderForm, Model model, BindingResult bindingResult, @PathVariable("id") Integer id, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "Order_form";
         }
@@ -54,11 +54,11 @@ public class OrderController {
         orderForm.setPayment(orderForm.getPayment());
         this.orderService.create(orderForm);
 
-        return "redirect:/order/detail";
+        return "redirect:/order/create/" + id;
     }
 
     @GetMapping("/detail/{id}")
-    public String orderDetail(@PathVariable("id") Integer id, Model model, Principal principal, BindingResult bindingResult, HttpServletRequest request) {
+    public String orderDetail(@PathVariable Integer id, BindingResult bindingResult, Model model, Principal principal) {
         Product product = this.productService.getProduct(id);
         SiteUser user = this.userService.getUser(principal.getName());
         OrderForm orderForm = new OrderForm();

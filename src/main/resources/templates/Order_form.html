@@ -73,9 +73,10 @@
     </div>
     <!--   결제정보 끝   -->
     <div class="bt_box">
-      <button class="order_button" type="submit" id="btn_search">주문하기</button>
-      <button class="exit_button" type="submit" id="btn_search">뒤로가기</button>
+      <button type="button" class="order_button" id="btn_order" th:onclick="|location.href='/order/detail/${product.id}'|">주문하기</button>
+      <button type="button" class="exit_button" id="btn_back" th:onclick="|location.href='/order/create/${product.id}'|">뒤로가기</button>
     </div>
+
   </div>
 </div>
 
