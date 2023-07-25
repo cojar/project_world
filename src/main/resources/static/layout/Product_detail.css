@@ -1,0 +1,109 @@
+@font-face {
+  font-family: "NeoDunggeunmoPro-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+section {
+  font-family: "NeoDunggeunmoPro-Regular";
+  font-size: 18px;
+  background: rgb(30, 30, 30);
+  padding-top:150px;
+  background: rgb(30, 30, 30);
+  margin: 0 auto;
+
+}
+.inner-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.image-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-panel img {
+  max-width: 100%;
+  height: auto;
+}
+
+.panel-Inner {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width:1000px;
+  height:600px;
+  background: rgb(30, 30, 30);
+  opacity: 0.5;
+}
+
+.panel-productName,
+.panel-developer,
+.panel-price {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.panel-productName{
+  position: absolute;
+  bottom: 220px;
+  left: 50px;
+}
+.panel-developer{
+  bottom: 170px;
+  left: 50px;
+}
+
+.panel-price{
+  bottom: 120px;
+  left: 50px;
+}
+
+.panel-btn {
+  font-size: 1.7rem;
+  font-weight: bold;
+  background: rgb(30, 30, 30);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  padding:10px 20px;
+}
+
+.product-detail-classification > .classify-btn-box{
+    display: flex;
+  justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.detail, .review, .inquiry{
+  font-size: 1.5rem;
+  background: rgb(30, 30, 30);
+  color:white;
+  font-weight:bold;
+  padding:0px 20px;
+  border-width: 0;
+}
+
+.detail, .review{
+  border-right-width: 3px;
+  border-color: white;
+}
+
+.detail-box{
+  color:white;
+  text-align:center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

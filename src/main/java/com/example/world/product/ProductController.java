@@ -158,5 +158,18 @@ public class ProductController {
         return "redirect:/product/list/All";
     }
 
+    @GetMapping("/{id}")
+    public String detail(Model model,
+                         @PathVariable("id") Long id) {
+
+        Product product = this.productService.getProduct(id);
+        model.addAttribute("product", product);
+//
+//        model.addAttribute("tKw", "");
+//        model.addAttribute("theme", "");
+
+        return "product_detail";
+    }
+
 
 }

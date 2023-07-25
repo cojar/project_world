@@ -12,9 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import jakarta.persistence.criteria.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product create(String productName, String developer, String theme, String price, String content){
+    public Product create(String productName, String developer, String theme, String price, String content) {
         Product product = new Product();
 
         product.setProductName(productName);
@@ -38,12 +38,12 @@ public class ProductService {
         return product;
     }
 
-    public Page<Product> getTheme(int page, String key){
+    public Page<Product> getTheme(int page, String key) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
-        return this.productRepository.findAll(spec,pageable);
+        return this.productRepository.findAll(spec, pageable);
     }
 
     public Specification<Product> searchTheme(String sortkey) {
@@ -56,20 +56,23 @@ public class ProductService {
                 Predicate seasonPredicate = criteriaBuilder.equal(seasonPath, sortkey);
                 predicates.add(seasonPredicate);
             }
+
             // 다른 조건들을 추가하고 싶다면 여기에 추가
+
             // 검색 조건들을 조합하여 최종 검색 조건 생성
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
 
-    public Page<Product> AllTheme(int page){
+    public Page<Product> AllTheme(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page,16);
+        Pageable pageable = PageRequest.of(page, 16);
         return this.productRepository.findAll(pageable);
     }
 
-    public Product getProduct(Integer id) {
+
+    public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
         if (product.isPresent()) {
             return product.get();
@@ -77,5 +80,6 @@ public class ProductService {
             throw new DataNotFoundException("product not found");
         }
     }
+
 
 }
