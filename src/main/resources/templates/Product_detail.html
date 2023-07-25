@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/layout/Product_detail.css"/>
+    <title>world</title>
+</head>
+<nav th:replace="layout/navbar.html"></nav>
+<section>
+    <div class="inner-container">
+        <div class="panel-Inner"></div>
+        <div class="image-panel">
+            <img src="https://picsum.photos/id/237/1000/600" alt="">
+        </div>
+        <div class="panel-productName">게임명
+          <span  th:text="${product.productName}"></span>
+        </div>
+        <div class="panel-developer">개발사
+          <span  th:text="${product.developer}"></span>
+        </div>
+        <div class="panel-price">금액
+          <span  th:text="${product.price}"></span>
+        </div>
+        <button class="panel-btn">BuyNow</button>
+    </div>
+
+    <div class="product-detail-classification">
+        <div class="classify-btn-box">
+            <button class="detail">DETAIL</button>
+            <button class="review">REVIEW </button>
+            <button class="inquiry">상품문의</button>
+        </div>
+    </div>
+
+    <div class="product-detail">
+        <div class="detail-box">
+            <div class="detail-productName">게임명</div>
+            <div class="detail-developer">개발사 </div>
+            <div class="detail-theme">장르</div>
+            <div class="detail-specification">시스템 요구사항</div>
+            <div class="detail-content">게임 설명</div>
+
+        </div>
+    </div>
+</section>
+<footer th:replace="layout/footer.html"></footer>
+<script>
+
+</script>
+</html>
