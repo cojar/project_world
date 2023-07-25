@@ -3,37 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script  src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/layout/layout.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
 </head>
 <body>
-<nav th:fragment="navbarFragment" class="max-w-full flex justify-around items-end  text-white">
-    <div class="left-box flex justify-evenly text-5xl relative w-2/5 font-bold">
-        <div class="menu1"><a href="">GAME</a>
-            <ul class="sub-menu absolute hidden top-50 left-30 bg-gray-700 text-gray-300 text-xl">
-                <li><a class="pl-3" href="">전체</a></li>
-                <li><a class="pl-3" href="">RPG</a></li>
-                <li><a class="pl-3" href="">FPS</a></li>
-                <li><a class="pl-3" href="">스릴러</a></li>
-                <li><a class="pl-3" href="">아케이드</a></li>
-                <li><a class="pl-3" href="">스포츠</a></li>
-                <li><a class="pl-3 pr-3" href="">시물레이션</a></li>
-                <li><a class="pl-3" href="">기타</a></li>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/}"><img class="w-72" src="https://ifh.cc/g/XWcpsl.png" alt=""></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Game <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/product/list}">전체</a></li>
+                        <li><a href="#">RPG</a></li>
+                        <li><a href="#">FPS</a></li>
+
+                        <li><a href="#">
+                            스릴러
+                        </a></li>
+
+                        <li><a href="#">아케이드</a></li>
+                        <li><a href="#">스포츠</a></li>
+                        <li><a href="#">시뮬레이션</a></li>
+                        <li><a href="#">기타</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Notice</a></li>
+                <li><a href="#">Launching</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a sec:authorize="isAuthenticated()"
+                       th:href="@{/user/logout}">LOG OUT</a></li>
+
+                <li><a sec:authorize="isAnonymous()"
+                       th:href="@{/user/login}">LOG IN</a></li>
+
+
+                <li><a sec:authorize="isAuthenticated()"
+                       th:href=“@{/mypage}”>MY PAGE</a></li>
+
+
+                <li><a ssec:authorize="isAnonymous()"
+                       th:href="@{/user/signup}">SIGN UP</a></li>
+                <li><a sec:authorize="isAuthenticated()"
+                       th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''SUPER_ADMIN'')')}" th:href="@{/admin/}">ADMIN</a></li>
+
             </ul>
         </div>
-        <div class="menu2"><a href="">NOTICE</a></div>
+        <!-- /.navbar-collapse -->
     </div>
-    <div class="logo-box box-border flex items-end">
-        <a href=""><img class="w-72" src="https://ifh.cc/g/XWcpsl.png" alt=""></a>
-    </div>
-    <div class="right-box w-2/5 flex justify-evenly text-5xl font-bold">
-        <div class="menu3"><a href="">CART</a></div>
-        <div class="user-box flex items-end text-sm">
-            <div class="text-lg"><a href="/user/login" sec:authorize="isAnonymous()">LOGIN</a></div>
-            <div class="text-lg"><a href="/user/logout" sec:authorize="isAuthenticated()">LOGOUT</a></div>
-            <div class="ml-5 text-lg"><a href="/user/signup">SIGNUP</a></div>
-        </div>
-    </div>
+    <!-- /.container-fluid -->
 </nav>
+<script>
+<!--    $('ul.nav li.dropdown').hover(function() {-->
+<!--  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);-->
+<!--}, function() {-->
+<!--  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);-->
+<!--});-->
+
+</script>
 </body>
 </html>

@@ -96,58 +96,44 @@ a{
 
 /* 스타일 시작 */
 
-nav{
-    margin:0 auto;
+/* bootstrap dropdown hover menu*/
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
 
-nav>.left-box>.menu1:hover>.sub-menu{
-    display:block;
+
+nav {
+  margin-top: 30px;
+  box-shadow: 5px 4px 5px #000;
+}
+.navbar-brand{
+  margin:0;
+  padding:0;
+  text-align:center;
+}
+.w-72{
+  padding-top:5px;
+  padding-left:10px;
+  width:160px;
+  margin-right:50px;
 }
 
-
-.sub-menu>li:hover{
-  border-bottom:2px solid white;
-}
-.sub-menu{
-  padding-bottom:10px;
-}
-
-.max-w-full{
+.navbar-inverse{
   position: fixed;
-  top: 2%;
-  /* width: 100% */
-  left: 0;
-  right: 0;
-  background-color: #ffffff;
-        background-color: rgba( 255, 255, 255, 0 );
+  left:5%;
+  right:5%;
+  width:90%;
 }
 
-.menu1{
+.navbar-nav>li>a{
   font-family: 'NeoDunggeunmoPro-Regular';
+  font-size:20px;
+
 }
 
-.menu2{
-  font-family: 'NeoDunggeunmoPro-Regular';
-}
-.menu3{
-  font-family: 'NeoDunggeunmoPro-Regular';
-}
-
-.menu1>a:hover{
-  color:gray;
-  border-bottom:2px solid white;
-  transition: 0.3s;
-}
-.menu2>a:hover{
-  color:gray;
-  border-bottom:2px solid white;
-  transition: 0.3s;
-}
-.menu3>a:hover{
-  color:gray;
-  border-bottom:2px solid white;
-  transition: 0.3s;
-}
 
 
 /*배경컬러 */
