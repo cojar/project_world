@@ -64,6 +64,7 @@ public class OrderController {
         ProductOrder productOrder = orderService.getOrder(id);
         model.addAttribute("orderProduct", productOrder);
         model.addAttribute("username", user);
+        model.addAttribute("product", productOrder.getProduct());
 
         return "Order_detail";
     }
