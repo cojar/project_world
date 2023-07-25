@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/layout/Order.css"/>
@@ -21,12 +21,12 @@
                 <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
                 <div class="product_detail">
                     <div>
-                        <p> 상품명 :</p>
-                        <p>디아블로(타임리프)</p>
+                        <p>상품명 :</p>
+                        <p th:text="${product.productName}"></p>
                     </div>
                     <div>
                         <p>가격 :</p>
-                        <p>35,000(타임리프)</p>
+                        <p th:text="${product.price}"></p>
                         <p> won</p>
                     </div>
                 </div>
@@ -38,15 +38,15 @@
             <div class="product" >
                 <div class="customer">
                     <p>회원 ID :</p>
-                    <p> admin1234(타임리프)</p>
+                    <p th:text="${user.username}"></p>
                 </div>
                 <div class="customer">
                     <p>구매자명 :</p>
-                    <p> admin1234(타임리프)</p>
+                    <p th:text="${customerName}"></p>
                 </div>
                 <div class="customer">
                     <p>e-mail :</p>
-                    <p> admin1234@test.test(타임리프)</p>
+                    <p th:text="${orderForm.getEmail()}"></p>
                 </div>
             </div>
         </div>
@@ -55,23 +55,29 @@
             <span class="product_title">payment</span>
             <div class="product" >
                 <div class="customer">
-                    <p> 무통장입금(타임리프)</p>
+                    <p>결제방식 :</p>
+                    <p th:text="${orderForm.getPayment()}"></p>
                     <br>
-                    <p> 카카오뱅크 3333-03-1659896 오택주</p>
+                    <p>카카오뱅크 3333-03-1659896 오택주</p>
                 </div>
             </div>
         </div>
         <!--   결제정보 끝   -->
         <!--   주문상태      -->
         <div class="product_title_box">
-            <span class="product_title">주문상태 </span>
+            <span class="product_title">주문상태</span>
             <div class="product" >
                 <div class="customer">
-                    <p> 발송완료(타임리프)</p>
+                    <p>발송 상태 :</p>
+                    <p th:text="${order.getOrderStatus()}"></p>
                 </div>
                 <div class="customer">
                     <p>발송 코드 :</p>
-                    <p> DSFD-J25M-MFJ1(타임리프)</p>
+                    <p th:text="${order.getCode()}"></p>
+                </div>
+                <div class="customer">
+                    <p>주문 날짜 :</p>
+                    <p th:text="${order.getOrderDate()}"></p>
                 </div>
             </div>
         </div>

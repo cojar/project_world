@@ -3,11 +3,13 @@ package com.example.world.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@Component
 public class SiteUser {
 
     @Id

@@ -5,7 +5,7 @@ spring:
     username: root
     url: jdbc:mariadb://localhost:3306/world?useUnicode=true&characterEncoding=utf8&serverTimeZone=Asia/Seoul
     driverClassName: org.mariadb.jdbc.Driver
-    password:
+    password: 'Dhepddldpdy01!'
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/
@@ -42,4 +42,4 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 server:
-  port: '9912'
+  port: '8080'

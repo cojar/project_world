@@ -91,11 +91,21 @@ form > div {
   text-align: center;
 }
 
-.signupSummitBtn1 .btnPrimary,
 .signupSummitBtn2 .btnPrimary {
   background: #000;
   width: 100%;
   padding: 15px;
+  border: 2px solid white;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+.signupSummitBtn1 .btnPrimary2 {
+  background: #000;
+  width: 100%;
+  padding: 4px;
   border: 2px solid white;
   margin-top: 20px;
   color: #fff;
