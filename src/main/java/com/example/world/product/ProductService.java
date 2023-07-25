@@ -72,6 +72,21 @@ public class ProductService {
 
 
 
+    public Page<Product> sortHighPrice(int page, String key){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("price"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Specification<Product> spec = searchTheme(key);
+        return this.productRepository.findAll(spec,pageable);
+    }
+
+    public Page<Product> sortLowPrice(int page, String key){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.asc("price"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Specification<Product> spec = searchTheme(key);
+        return this.productRepository.findAll(spec,pageable);
+    }
 
 
 

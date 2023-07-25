@@ -26,11 +26,14 @@
 
         <div class="sort-section">
             <ul class="flex justify-end text-white">
-                <li class="mr-3"><button>인기순</button></li>
-                <li class="mr-3"><button>높은 가격순</button></li>
-                <li class="mr-3"><button>낮은 가격순</button></li>
+                <li class="mr-3"><a href="#" id="popularButton">인기순</a></li>
+                <li class="mr-3"><a href="#" id="highPriceButton" data-theme="highPrice">높은 가격순</a></li>
+                <li class="mr-3"><a href="#" id="lowPriceButton" data-theme="lowPrice">낮은 가격순</a></li>
             </ul>
         </div>
+
+
+
         <div class="section w-full mt-8  flex justify-evenly flex-wrap">
             <section class="goods-list" th:each="product : ${paging}">
 
@@ -74,7 +77,78 @@
     </div>
 </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        // 인기순 버튼 클릭 시 AJAX 요청
+        $("#popularButton").click(function (e) {
+            e.preventDefault();
+            sortProducts("popular");
+        });
+
+        // 높은 가격순 버튼 클릭 시 AJAX 요청
+        $("#highPriceButton").click(function (e) {
+            e.preventDefault();
+            const theme = $(this).data("theme"); // 테마 값을 가져옴
+            sortProducts(theme);
+        });
+
+        // 낮은 가격순 버튼 클릭 시 AJAX 요청
+        $("#lowPriceButton").click(function (e) {
+            e.preventDefault();
+            const theme = $(this).data("theme"); // 테마 값을 가져옴
+            sortProducts(theme);
+        });
+
+        // AJAX 요청으로 상품들을 정렬하여 업데이트하는 함수
+        function sortProducts(sortOption) {
+            // 페이지 번호 가져오기
+            const currentPage = parseInt($(".pagination .active a").text()) - 1;
+
+            // AJAX 요청 설정
+            $.ajax({
+                type: "GET",
+                url: `/product/list/${sortOption}?page=${currentPage}`,
+                success: function (data) {
+                    // 서버로부터 받은 데이터로 상품 목록 업데이트
+                    $(".goods-list").empty();
+                    $.each(data.content, function (index, product) {
+                        const html = `
+                        <div class="goods w-72 align-top">
+                            <a href="/product/detail/${product.id}">
+                                <img class="w-full h-36" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
+                                <div class="info h-8 flex items-center text-white text-xs">
+                                    <p class="price inline-block ml-2">
+                                        <span>${product.price}</span> won
+                                    </p>
+                                </div>
+                            </a>
+                        </div>`;
+                        $(".goods-list").append(html);
+                    });
+
+                    // 페이징 업데이트
+                    $(".pagination").html(data.pagination);
+
+                    // 스크롤 위치 초기화
+                    $(window).scrollTop(0);
+                },
+                error: function (error) {
+                    console.error(error);
+                },
+            });
+        }
+    });
+</script>
+
+
 <footer th:replace="layout/footer.html"></footer>
+
+
+
+
+
+
 </body>
 
 </html>

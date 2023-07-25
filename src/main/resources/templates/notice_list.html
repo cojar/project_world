@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/notice_list.css}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+<div class="container-box">
+    <div class="content_box">
+        <div class="title_box">
+    <span class="order_title">
+      Notice
+    </span>
+        </div>
+        <!--  상품정보    -->
+
+        <tbody>
+        <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 5}">
+
+            <td >
+                <li class="tal2"> <a th:href="@{|/notice/detail/${notice.id}|}" class="tal" >
+                    <div class="notice" >
+                        <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                        <div class="notice_detail">
+                            <div>
+                                <p>제목 :</p>
+                                <p th:text="${notice.subject}"></p>
+                            </div>
+                            <div>
+                                <p>작성일 :</p>
+                                <p th:text="${notice.createDate}"></p>
+                            </div>
+                            <div>
+                                <p th:text="${notice.content}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </a></li>
+            </td>
+
+
+        </tr>
+        </tbody>
+
+    </div>
+
+    <!--페이징-->
+    <div class="pagination-1 flex justify-evenly mt-4" th:if="${paging}">
+        <div class="pagination text-white">
+            <ul class="page-list flex justify-around">
+                <li th:class="${!paging.hasPrevious} ? 'disabled'">
+                    <a class="page-link holy"
+                       th:href="${paging.hasPrevious} ? @{|?page=${paging.number+1}|} : @{|?page=0|}">
+                        <span class="text-lg mr-2">이전</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, paging.totalPages)}"
+                    th:if="${page >= paging.number-3 and page <= paging.number+3}"
+                    th:classappend="${page + 1 == paging.number} ? 'active' : ''"
+                    class="page-item text-lg">
+                    <a th:text="${page + 1}" class="page-link mr-1" th:href="@{|?page=${page}|}"></a>
+                </li>
+                <li th:class="${!paging.hasNext} ? 'disabled'">
+                    <a class="page-link holy"
+                       th:href="${paging.hasNext} ? @{|?page=${paging.number+1}|} : @{|?page=${paging.totalPages}|}">
+                        <span class="text-lg ml-2">다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+</body>
+</html>
