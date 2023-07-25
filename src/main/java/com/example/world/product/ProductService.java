@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 import jakarta.persistence.criteria.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +63,7 @@ public class ProductService {
         };
     }
 
-    public Page<Product> AllTheme(int page) {
+    public Page<Product> allTheme(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 16);
@@ -80,6 +79,24 @@ public class ProductService {
             throw new DataNotFoundException("product not found");
         }
     }
+
+    public Page<Product> sortHighPrice(int page, String key){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("price"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Specification<Product> spec = searchTheme(key);
+        return this.productRepository.findAll(spec,pageable);
+    }
+
+    public Page<Product> sortLowPrice(int page, String key){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.asc("price"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Specification<Product> spec = searchTheme(key);
+        return this.productRepository.findAll(spec,pageable);
+    }
+
+
 
 
 }
