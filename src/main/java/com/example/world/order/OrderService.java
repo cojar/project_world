@@ -34,6 +34,12 @@ public class OrderService {
         }
     }
 
+    public void cancleOrder(Long orderId) {
+        ProductOrder order = getOrder(orderId);
+        order.setOrderStatus("취소요청");
+        this.orderRepository.save(order);
+    }
+
     public void delete(ProductOrder order) {
         this.orderRepository.delete(order);
     }

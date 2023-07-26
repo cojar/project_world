@@ -69,6 +69,14 @@ public class OrderController {
         return "Order_detail";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/cancel/{id}")
+    public String cancleOrder(@PathVariable Long id) {
+        this.orderService.cancleOrder(id);
+
+        return "redirect:/order/detail/{id}";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         ProductOrder order = this.orderService.getOrder(id);
