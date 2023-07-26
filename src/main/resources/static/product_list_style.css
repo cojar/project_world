@@ -30,20 +30,35 @@ a{
 }
 
 
-.section>.goods-list .per{
-  color : #FA622F;
+*{
+  margin:0;
 }
 
-.section>.goods-list>.goods{
-    background-image: linear-gradient(to right, rgb(64,64,64), rgb(128,128,128));
+/* 리스트 스타일시작 */
+
+.list-wrap{
+  text-align:center;
+  margin-top:30px;
 }
 
-.section>.goods-list>.goods>a>.info>p{
-    background-color:rgb(30,30,30);
+.list-wrap>.list{
+  display:inline-block;
 }
 
-.section>.goods-list > div > p > span {
-  font-weight : bold;
+.list-wrap>.list>#holy{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(230px, 280px));
+  gap: 50px; /* 간격 설정 */
+}
+
+.list-wrap>.list>#holy>li>a>.product-price{
+    color:white;
+    background-image: linear-gradient(to right, rgb(64,64,64), rgb(192,192,192));
+    text-align:left;
+}
+
+.list-wrap>.list>#holy>li>a>.product-price>span{
+    margin-left:10px;
 }
 
 /*페이징*/
