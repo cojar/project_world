@@ -73,7 +73,6 @@ public class OrderController {
     @GetMapping("/cancel/{id}")
     public String cancleOrder(@PathVariable Long id) {
         this.orderService.cancleOrder(id);
-
         return "redirect:/order/detail/{id}";
     }
 

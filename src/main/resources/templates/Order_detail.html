@@ -84,10 +84,32 @@
         <!-- 주문상태 끝 -->
         <div class="bt_box">
             <a class="order_button" type="submit" id="btn_search" th:href="@{/}">쇼핑계속하기</a>
-            <a class="exit_button" type="submit" id="btn_search" th:href="@{/order/cancel/{id}(id=${orderProduct.id})}">주문취소</a>
+            <a class="exit_button" type="submit" id="btn_search" th:href="@{/order/cancel/{id}(id=${orderProduct.id})}" onclick="handleCancelClick(event)">주문취소</a>
         </div>
     </div>
 </div>
 <footer th:replace="layout/footer.html"></footer>
+
+<script th:inline="javascript">
+    const orderStatus = /*[[${orderProduct.orderStatus}]]*/; // 주문 상태 값 가져오기
+</script>
+
+<script>
+    function handleCancelClick(event) {
+        if (orderStatus === "주문완료") {
+            if (!confirm("주문을 취소하시겠습니까?")) {
+                event.preventDefault();
+            } else {
+                // 취소 요청이 확인되면 주문취소 버튼 스타일 변경
+                const cancelButton = event.currentTarget;
+                cancelButton.style.color = "white";
+                cancelButton.style.textDecoration = "none";
+            }
+        } else {
+            alert("주문 완료 상태에서만 취소 가능합니다.");
+            event.preventDefault();
+        }
+    }
+</script>
 </body>
 </html>
