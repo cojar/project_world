@@ -1,12 +1,14 @@
 package com.example.world.productReview;
 
 import com.example.world.product.Product;
+import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,7 +20,8 @@ public class ProductReview {
     private int id;
     //리뷰 번호
 
-    private LocalDate createDate;
+    private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
     @Size(max = 30)
     private String subject;
@@ -31,6 +34,11 @@ public class ProductReview {
     @ManyToOne
     private Product product;
     // 리뷰와 연결된 상품
+
+    @ManyToOne
+    private SiteUser siteUser;
+    @ManyToMany
+    Set<SiteUser> voter;
 
     private int score;
     // 해당 게임 평점

@@ -61,11 +61,11 @@
         <div class="form-container" id="window-Min">
             <div class="menu">Window 최소</div>
             <div class="windowMin" th:each="windowMin, loop : ${windowMinList}">
-                    <input type="text" th:value="${windowMin.operatingSystem}" th:field="*{windowMinList[__${loop.index}__].operatingSystem}" placeholder="운영체제">
-                    <input type="text" th:value="${windowMin.processor}" th:field="*{windowMinList[__${loop.index}__].processor}" placeholder="프로세서">
-                    <input type="text" th:value="${windowMin.memory}" th:field="*{windowMinList[__${loop.index}__].memory}" placeholder="RAM">
-                    <input type="text" th:value="${windowMin.graphics}" th:field="*{windowMinList[__${loop.index}__].graphics}" placeholder="그래픽">
-                    <input type="text" th:value="${windowMin.storage}" th:field="*{windowMinList[__${loop.index}__].storage}" placeholder="저장공간">
+                    <input type="text" th:value="${windowMin.operatingSystem}" th:field="*{windowMinList[__${loop.index}__].operatingSystem}" placeholder="운영체제*">
+                    <input type="text" th:value="${windowMin.processor}" th:field="*{windowMinList[__${loop.index}__].processor}" placeholder="프로세서*">
+                    <input type="text" th:value="${windowMin.memory}" th:field="*{windowMinList[__${loop.index}__].memory}" placeholder="RAM*">
+                    <input type="text" th:value="${windowMin.graphics}" th:field="*{windowMinList[__${loop.index}__].graphics}" placeholder="그래픽*">
+                    <input type="text" th:value="${windowMin.storage}" th:field="*{windowMinList[__${loop.index}__].storage}" placeholder="저장공간*">
                     <input type="text" th:value="${windowMin.directAccess}" th:field="*{windowMinList[__${loop.index}__].directAccess}" placeholder="DirectX">
                     <input type="text" th:value="${windowMin.network}" th:field="*{windowMinList[__${loop.index}__].network}" placeholder="네트워크">
 
@@ -75,11 +75,11 @@
         <div class="form-container" id="window-Recommended">
             <div class="menu">Window 권장</div>
             <div class="windowRecommended" th:each="windowRecommended, loop : ${windowRecommendedList}">
-                <input type="text" th:value="${windowRecommended.operatingSystem}" th:field="*{windowRecommendedList[__${loop.index}__].operatingSystem}" placeholder="운영체제">
-                <input type="text" th:value="${windowRecommended.processor}" th:field="*{windowRecommendedList[__${loop.index}__].processor}" placeholder="프로세서">
-                <input type="text" th:value="${windowRecommended.memory}" th:field="*{windowRecommendedList[__${loop.index}__].memory}" placeholder="RAM">
-                <input type="text" th:value="${windowRecommended.graphics}" th:field="*{windowRecommendedList[__${loop.index}__].graphics}" placeholder="그래픽">
-                <input type="text" th:value="${windowRecommended.storage}" th:field="*{windowRecommendedList[__${loop.index}__].storage}" placeholder="저장공간">
+                <input type="text" th:value="${windowRecommended.operatingSystem}" th:field="*{windowRecommendedList[__${loop.index}__].operatingSystem}" placeholder="운영체제*">
+                <input type="text" th:value="${windowRecommended.processor}" th:field="*{windowRecommendedList[__${loop.index}__].processor}" placeholder="프로세서*">
+                <input type="text" th:value="${windowRecommended.memory}" th:field="*{windowRecommendedList[__${loop.index}__].memory}" placeholder="RAM*">
+                <input type="text" th:value="${windowRecommended.graphics}" th:field="*{windowRecommendedList[__${loop.index}__].graphics}" placeholder="그래픽*">
+                <input type="text" th:value="${windowRecommended.storage}" th:field="*{windowRecommendedList[__${loop.index}__].storage}" placeholder="저장공간*">
                 <input type="text" th:value="${windowRecommended.directAccess}" th:field="*{windowRecommendedList[__${loop.index}__].directAccess}" placeholder="DirectX">
                 <input type="text" th:value="${windowRecommended.network}" th:field="*{windowRecommendedList[__${loop.index}__].network}" placeholder="네트워크">
             </div>
@@ -89,11 +89,11 @@
         <div class="form-container" id="Mac-Min">
             <div class="menu">Mac 최소</div>
             <div class="macMin" th:each="macMin, loop : ${macMinList}">
-                <input type="text" th:value="${macMin.operatingSystem}" th:field="*{macMinList[__${loop.index}__].operatingSystem}" placeholder="운영체제">
-                <input type="text" th:value="${macMin.processor}" th:field="*{macMinList[__${loop.index}__].processor}" placeholder="프로세서">
-                <input type="text" th:value="${macMin.memory}" th:field="*{macMinList[__${loop.index}__].memory}" placeholder="RAM">
-                <input type="text" th:value="${macMin.graphics}" th:field="*{macMinList[__${loop.index}__].graphics}" placeholder="그래픽">
-                <input type="text" th:value="${macMin.storage}" th:field="*{macMinList[__${loop.index}__].storage}" placeholder="저장공간">
+                <input type="text" th:value="${macMin.operatingSystem}" th:field="*{macMinList[__${loop.index}__].operatingSystem}" placeholder="운영체제*">
+                <input type="text" th:value="${macMin.processor}" th:field="*{macMinList[__${loop.index}__].processor}" placeholder="프로세서*">
+                <input type="text" th:value="${macMin.memory}" th:field="*{macMinList[__${loop.index}__].memory}" placeholder="RAM*">
+                <input type="text" th:value="${macMin.graphics}" th:field="*{macMinList[__${loop.index}__].graphics}" placeholder="그래픽*">
+                <input type="text" th:value="${macMin.storage}" th:field="*{macMinList[__${loop.index}__].storage}" placeholder="저장공간*">
                 <input type="text" th:value="${macMin.directAccess}" th:field="*{macMinList[__${loop.index}__].directAccess}" placeholder="DirectX">
                 <input type="text" th:value="${macMin.network}" th:field="*{macMinList[__${loop.index}__].network}" placeholder="네트워크">
 
@@ -103,19 +103,15 @@
         <div class="form-container" id="Mac-Recommended">
             <div class="menu">Mac 권장</div>
             <div class="macRecommended" th:each="macRecommended, loop : ${macRecommendedList}">
-                <input type="text" th:value="${macRecommended.operatingSystem}" th:field="*{macRecommendedList[__${loop.index}__].operatingSystem}" placeholder="운영체제">
-                <input type="text" th:value="${macRecommended.processor}" th:field="*{macRecommendedList[__${loop.index}__].processor}" placeholder="프로세서">
-                <input type="text" th:value="${macRecommended.memory}" th:field="*{macRecommendedList[__${loop.index}__].memory}" placeholder="RAM">
-                <input type="text" th:value="${macRecommended.graphics}" th:field="*{macRecommendedList[__${loop.index}__].graphics}" placeholder="그래픽">
-                <input type="text" th:value="${macRecommended.storage}" th:field="*{macRecommendedList[__${loop.index}__].storage}" placeholder="저장공간">
+                <input type="text" th:value="${macRecommended.operatingSystem}" th:field="*{macRecommendedList[__${loop.index}__].operatingSystem}" placeholder="운영체제*">
+                <input type="text" th:value="${macRecommended.processor}" th:field="*{macRecommendedList[__${loop.index}__].processor}" placeholder="프로세서*">
+                <input type="text" th:value="${macRecommended.memory}" th:field="*{macRecommendedList[__${loop.index}__].memory}" placeholder="RAM*">
+                <input type="text" th:value="${macRecommended.graphics}" th:field="*{macRecommendedList[__${loop.index}__].graphics}" placeholder="그래픽*">
+                <input type="text" th:value="${macRecommended.storage}" th:field="*{macRecommendedList[__${loop.index}__].storage}" placeholder="저장공간*">
                 <input type="text" th:value="${macRecommended.directAccess}" th:field="*{macRecommendedList[__${loop.index}__].directAccess}" placeholder="DirectX">
                 <input type="text" th:value="${macRecommended.network}" th:field="*{macRecommendedList[__${loop.index}__].network}" placeholder="네트워크">
             </div>
         </div>
-
-
-
-
 
         <div class="form-container">
             <div class="menu">게임 설명</div>
