@@ -25,4 +25,18 @@ public class AdminController {
     public String adminUser(){
         return "admin/admin_user";
     }
+
+    @GetMapping("ad/review")
+    public String adminReview(){
+        return "admin/admin_review";
+    }
+    @GetMapping("ad/qna")
+    public String adminQna(){
+        return "admin/admin_qna";
+    }
+
+    @GetMapping("ad/notice")
+    public String adminNotice(){
+        return "admin/admin_notice";
+    }
 }
