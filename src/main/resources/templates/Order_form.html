@@ -173,14 +173,40 @@
     });
   });
 
-  // 토스 결제하기 버튼 클릭 이벤트 핸들러
-  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     var tossPayButton = document.getElementById('payment-button');
     tossPayButton.addEventListener('click', function() {
-      // 여기에 토스 간편결제 실행 로직을 추가하세요.
+      // 여기에 토스 간편결제 실행 로직을 추가합니다.
       // 토스 결제 API를 호출하거나 필요한 스크립트를 추가할 수 있습니다.
+
+      // 테스트용 클라이언트 키
+      const testClientKey = 'test_ck_dP9BRQmyarYvxo5lPeL8J07KzLNk';
+
+      // 토스 간편결제 객체 생성
+      const tossPayments = TossPayments(testClientKey);
+
+      // 결제 요청 데이터 설정 (테스트 데이터, 실제 데이터로 교체 필요)
+      const paymentOptions = {
+        amount: 1, // 결제 금액 (테스트로 1원 설정)
+        orderId: 'order123', // 주문 번호 (테스트로 임의의 주문 번호 설정)
+        orderName: 'Test Order', // 주문명 (테스트로 임의의 주문명 설정)
+      };
+
+      // 토스 결제창 열기
+      tossPayments.requestPayment(paymentOptions)
+        .then((payment) => {
+          // 결제 성공 시 처리 로직
+          alert('결제가 성공적으로 완료되었습니다.');
+          console.log(payment);
+        })
+        .catch((error) => {
+          // 결제 실패 시 처리 로직
+          alert('결제가 실패하였습니다.');
+          console.error(error);
+        });
     });
   });
 </script>
+
 </body>
 </html>

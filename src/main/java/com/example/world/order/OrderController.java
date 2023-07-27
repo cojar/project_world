@@ -76,6 +76,11 @@ public class OrderController {
         return "redirect:/order/detail/{id}";
     }
 
+    @GetMapping("/toss/{id}")
+    public String tossPay() {
+        return "";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         ProductOrder order = this.orderService.getOrder(id);
