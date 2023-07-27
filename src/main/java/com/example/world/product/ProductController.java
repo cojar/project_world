@@ -8,14 +8,18 @@ import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowMin.WindowMinService;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedService;
+import com.example.world.user.SiteUser;
+import com.example.world.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +32,7 @@ public class ProductController {
     private final MacRecommendedService macRecommendedService;
     private final WindowMinService windowMinService;
     private final WindowRecommendedService windowRecommendedService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -85,12 +90,16 @@ public class ProductController {
         return "product_list";
     }
 
-
-// all priduct/list/
-
-
     @GetMapping("/create")
     public String create(Model model, ProductForm productForm) {
+//
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/create")
+//    public String create(Model model, ProductForm productForm, Principal principal) {
+
+
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
+//        productForm.setUsername(username.getUsername());
 
         List<WindowMinForm> windowMinList = new ArrayList<>();
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
@@ -108,17 +117,28 @@ public class ProductController {
         return "product_form";
     }
 
+//    @PreAuthorize("isAuthenticated()")
+//    @PostMapping("/create")
+//    public String create(Model model,
+//                         @Valid ProductForm productForm,
+//                         BindingResult bindingResult, Principal principal) {
+
     @PostMapping("/create")
     public String create(Model model,
                          @Valid ProductForm productForm,
                          BindingResult bindingResult) {
+//
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
 
-
+//
+//        // 상품 기본정보 저장
+//        Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
+//                productForm.getTheme(), productForm.getPrice(), productForm.getContent());
         // 상품 기본정보 저장
         Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
 
-        // windowMin
+        // windowMin 저장
         for (WindowMinForm windowMinForm : productForm.getWindowMinList()) {
             if (!windowMinForm.getOperatingSystem().isEmpty()
                     || !windowMinForm.getProcessor().isEmpty()
@@ -130,7 +150,7 @@ public class ProductController {
             }
         }
 
-        // windowRecommended
+        // windowRecommended 저장
         for (WindowRecommendedForm windowRecommendedForm : productForm.getWindowRecommendedList()) {
             if (!windowRecommendedForm.getOperatingSystem().isEmpty()
                     || !windowRecommendedForm.getProcessor().isEmpty()
@@ -142,7 +162,7 @@ public class ProductController {
             }
         }
 
-        // MacMin
+        // MacMin 저장
         for (MacMinForm macMinForm : productForm.getMacMinList()) {
             if (!macMinForm.getOperatingSystem().isEmpty()
                     || !macMinForm.getProcessor().isEmpty()
@@ -154,7 +174,7 @@ public class ProductController {
             }
         }
 
-        // MacRecommended
+        // MacRecommended 저장
         for (MacRecommendedForm macRecommendedForm : productForm.getMacRecommendedList()) {
             if (!macRecommendedForm.getOperatingSystem().isEmpty()
                     || !macRecommendedForm.getProcessor().isEmpty()
@@ -167,7 +187,7 @@ public class ProductController {
         }
 
 
-        return "redirect:/product/list/All";
+        return String.format("redirect:/product/%s", product.getId());
     }
 
     @GetMapping("/{id}")

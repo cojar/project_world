@@ -2,6 +2,7 @@ package com.example.world.product;
 
 
 import com.example.world.DataNotFoundException;
+import com.example.world.user.SiteUser;
 import org.springframework.data.jpa.domain.Specification;
 
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,12 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+//    public Product create(SiteUser username, String productName, String developer, String theme, String price, String content) {
 
     public Product create(String productName, String developer, String theme, String price, String content) {
         Product product = new Product();
 
+//        product.setUsername(username);
         product.setProductName(productName);
         product.setDeveloper(developer);
         product.setTheme(theme);

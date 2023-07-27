@@ -11,16 +11,13 @@
     <div class="inner-container">
         <div class="panel-Inner"></div>
         <div class="image-panel">
-            <img src="https://picsum.photos/id/237/1000/600" alt="">
+            <img src="https://cdn.gametoc.co.kr/news/photo/202303/71814_222692_543.jpg" alt="" style="width: 100%; height: 700px;">
         </div>
-        <div class="panel-productName">게임명
-          <span  th:text="${product.productName}"></span>
+        <div class="panel-productName" th:text="${product.productName}">
         </div>
-        <div class="panel-developer">개발사
-          <span  th:text="${product.developer}"></span>
+        <div class="panel-developer" th:text="${product.developer}">
         </div>
-        <div class="panel-price">금액
-          <span  th:text="${product.price}"></span>
+        <div class="panel-price" th:text="${product.price + ' won'}">
         </div>
         <button class="panel-btn">BuyNow</button>
     </div>
@@ -28,6 +25,7 @@
     <div class="product-detail-classification">
         <div class="classify-btn-box">
             <button class="detail">DETAIL</button>
+            <button class="specification">시스템 요구 사항</button>
             <button class="review">REVIEW </button>
             <button class="inquiry">상품문의</button>
         </div>
@@ -35,17 +33,177 @@
 
     <div class="product-detail">
         <div class="detail-box">
-            <div class="detail-productName">게임명</div>
-            <div class="detail-developer">개발사 </div>
-            <div class="detail-theme">장르</div>
-            <div class="detail-specification">시스템 요구사항</div>
-            <div class="detail-content">게임 설명</div>
-
+            <div >게임명:
+                <br>
+                <span class="detail-productName" th:text="${product.productName}"></span>
+            </div>
+            <div>개발사:
+                <br>
+                <span class="detail-developer" th:text="${product.developer}"></span>
+            </div>
+            <div>장르:
+                <br>
+                <span class="detail-theme" th:text="${product.theme}"></span>
+            </div>
+            <div>게임 설명:
+                <br>
+            <span class="detail-content" th:text="${product.content}"></span>
+            </div>
         </div>
     </div>
+
+    <div class="form-container">
+        <div class="menu">시스템 요구 사항</div>
+        <div class="radio-container">
+            <div class="radio-window">
+                <input type="radio" id="window" name="specification" checked>
+                <label for="window">Window</label>
+            </div>
+            <div class="radio-mac">
+                <input type="radio" id="Mac" name="specification">
+                <label for="Mac">Mac</label>
+            </div>
+        </div>
+    </div>
+
+        <table class="window-specification" th:if="${not #lists.isEmpty(product.windowMinList) or not #lists.isEmpty(product.windowRecommendedList)}">
+            <thead>
+            <tr>
+                <th colspan="2">Window 최소</th>
+                <th colspan="2">Window 권장</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="windowMin, index : ${product.windowMinList}">
+                <tr>
+                    <td class="text-only">운영체제</td>
+                    <td class="list-data" th:text="${windowMin.operatingSystem}"></td>
+                    <td class="text-only">운영체제</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].operatingSystem}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">프로세서</td>
+                    <td class="list-data" th:text="${windowMin.processor}"></td>
+                    <td class="text-only">프로세서</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].processor}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">RAM</td>
+                    <td class="list-data" th:text="${windowMin.memory}"></td>
+                    <td class="text-only">RAM</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].memory}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">그래픽</td>
+                    <td class="list-data" th:text="${windowMin.graphics}"></td>
+                    <td class="text-only">그래픽</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].graphics}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">저장공간</td>
+                    <td class="list-data" th:text="${windowMin.storage}"></td>
+                    <td class="text-only">저장공간</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].storage}"></td>
+                </tr>
+                <tr th:if="${windowMin.directAccess != null and windowMin.directAccess != ''}">
+                    <td class="text-only">DirectX</td>
+                    <td class="list-data" th:text="${windowMin.directAccess}"></td>
+                    <td class="text-only">DirectX</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].directAccess}"></td>
+                </tr>
+                <tr th:if="${windowMin.network != null and windowMin.network != ''}">
+                    <td class="text-only">네트워크</td>
+                    <td class="list-data" th:text="${windowMin.network}"></td>
+                    <td class="text-only">네트워크</td>
+                    <td class="list-data" th:text="${product.windowRecommendedList[__${index.index}__].network}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+        <table class="mac-specification" th:if="${not #lists.isEmpty(product.macMinList) or not #lists.isEmpty(product.macRecommendedList)}">
+            <thead>
+            <tr>
+                <th colspan="2">Mac 최소</th>
+                <th colspan="2">Mac 권장</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="macMin, index : ${product.macMinList}">
+                <tr>
+                    <td class="text-only">운영체제</td>
+                    <td class="list-data" th:text="${macMin.operatingSystem}"></td>
+                    <td class="text-only">운영체제</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].operatingSystem}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">프로세서</td>
+                    <td class="list-data" th:text="${macMin.processor}"></td>
+                    <td class="text-only">프로세서</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].processor}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">RAM</td>
+                    <td class="list-data" th:text="${macMin.memory}"></td>
+                    <td class="text-only">RAM</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].memory}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">그래픽</td>
+                    <td class="list-data" th:text="${macMin.graphics}"></td>
+                    <td class="text-only">그래픽</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].graphics}"></td>
+                </tr>
+                <tr>
+                    <td class="text-only">저장공간</td>
+                    <td class="list-data" th:text="${macMin.storage}"></td>
+                    <td class="text-only">저장공간</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].storage}"></td>
+                </tr>
+                <tr th:if="${macMin.directAccess != null and macMin.directAccess != ''}">
+                    <td class="text-only">DirectX</td>
+                    <td class="list-data" th:text="${macMin.directAccess}"></td>
+                    <td class="text-only">DirectX</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].directAccess}"></td>
+                </tr>
+                <tr th:if="${macMin.network != null and macMin.network != ''}">
+                    <td class="text-only">네트워크</td>
+                    <td class="list-data" th:text="${macMin.network}"></td>
+                    <td class="text-only">네트워크</td>
+                    <td class="list-data" th:text="${product.macRecommendedList[__${index.index}__].network}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
 </section>
 <footer th:replace="layout/footer.html"></footer>
 <script>
+$(document).ready(function() {
+    $(".mac-specification").hide();
+
+    $("#window").on('click', function() {
+        if ($(this).prop('checked')) {
+            $(".window-specification").show();
+            $(".mac-specification").hide();
+        }
+    });
+
+    $("#Mac").on('click', function() {
+        if ($(this).prop('checked')) {
+            $(".mac-specification").show();
+            $(".window-specification").hide();
+        }
+    });
+});
 
 </script>
 </html>

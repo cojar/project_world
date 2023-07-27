@@ -30,9 +30,9 @@ section {
 }
 
 .form-container select {
-  width: 15%;
-  height: 40px;
+  height: 30px;
   margin: 5px;
+  font-family: "NeoDunggeunmoPro-Regular";
 
 }
 
@@ -83,9 +83,6 @@ section {
   color: white;
   font-size: 20px;
 }
-.serch_line > button:hover {
-  background: gray;
-}
 
 .checkbox-container {
   display: flex;
@@ -100,6 +97,7 @@ section {
 }
 
 .checkbox-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
+    margin:0 5px;
 }

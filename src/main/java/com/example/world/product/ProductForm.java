@@ -14,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductForm {
+//    @NotEmpty
+//    private String username;
     @NotEmpty
     private String productName;
     // 게임 이름
