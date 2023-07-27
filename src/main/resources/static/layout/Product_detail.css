@@ -91,7 +91,7 @@ section {
     margin-top: 30px;
     margin-bottom: 30px;
 }
-.tab-btn{
+.detail, .specification, .review, .inquiry{
   font-size: 3rem;
   background: rgb(30, 30, 30);
   color:white;
@@ -100,12 +100,12 @@ section {
   border-width: 0;
 }
 
-#detail, #specification, #review{
+.detail, .specification, .review{
   border-right-width: 3px;
   border-color: white;
 }
 
-.detail-box{
+.detail-box, .windowMin-table{
   color:white;
   text-align:center;
   font-size: 2rem;
@@ -152,14 +152,11 @@ text-align:center;
 justify-content: center;
   display: flex;
   gap: 5%;
+  align-items: center;
 }
 
 .radio input[type="radio"] {
     width: 16px;
     height: 16px;
     margin:0 5px;
-}
-
-.hidden {
-    display: none;
 }

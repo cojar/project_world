@@ -1,44 +1,35 @@
-package com.example.world.productReview;
+package com.example.world.review;
 
 import com.example.world.product.Product;
-import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class ProductReview {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     //리뷰 번호
-
-    private LocalDateTime createDate;
-    private LocalDateTime modifyDate;
-
-    @Size(max = 30)
-    private String subject;
-    // 리뷰 제목
 
     @Column(columnDefinition = "text")
     private String content;
     //리뷰 내용
 
+    private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
+
     @ManyToOne
     private Product product;
     // 리뷰와 연결된 상품
 
-    @ManyToOne
-    private SiteUser siteUser;
-    @ManyToMany
-    Set<SiteUser> voter;
+//    @ManyToOne
+//    private SiteUser author;
 
     private int score;
     // 해당 게임 평점

@@ -24,14 +24,14 @@
 
     <div class="product-detail-classification">
         <div class="classify-btn-box">
-            <button class="tab-btn" id="detail" data-tab="detail">DETAIL</button>
-            <button class="tab-btn" id="specification" data-tab="specification">시스템 요구 사항</button>
-            <button class="tab-btn" id="review"data-tab="review">REVIEW </button>
-            <button class="tab-btn" id="inquiry"data-tab="inquiry">상품문의</button>
+            <button class="detail">DETAIL</button>
+            <button class="specification">시스템 요구 사항</button>
+            <button class="review">REVIEW </button>
+            <button class="inquiry">상품문의</button>
         </div>
     </div>
 
-    <div class="tab-content" data-tab="detail">
+    <div class="product-detail">
         <div class="detail-box">
             <div >게임명:
                 <br>
@@ -52,8 +52,8 @@
         </div>
     </div>
 
-    <div class="tab-content" data-tab="specification">
-        <div class="menu"></div>
+    <div class="form-container">
+        <div class="menu">시스템 요구 사항</div>
         <div class="radio-container">
             <div class="radio-window">
                 <input type="radio" id="window" name="specification" checked>
@@ -64,7 +64,7 @@
                 <label for="Mac">Mac</label>
             </div>
         </div>
-
+    </div>
 
         <table class="window-specification" th:if="${not #lists.isEmpty(product.windowMinList) or not #lists.isEmpty(product.windowRecommendedList)}">
             <thead>
@@ -177,31 +177,18 @@
         </table>
     </div>
 
+
+
+
+
+
+
+
 </section>
 <footer th:replace="layout/footer.html"></footer>
 <script>
 $(document).ready(function() {
-    $(".tab-content").hide();
-    $(".tab-content[data-tab='detail']").show();
-    $(".tab-btn").click(function() {
-        var tab_id = $(this).attr("data-tab");
-        $(".tab-btn").removeClass("current");
-        $(".tab-content").hide();
-        $(".tab-content[data-tab='" + tab_id + "']").show();
-        $(this).addClass("current");
-
-
-        // 시스템 사양 탭인 경우, 라디오 버튼에 따라 해당 테이블을 보이거나 숨김 처리
-        if (tab_id === "specification") {
-            if ($("#window").prop('checked')) {
-                $(".window-specification").show();
-                $(".mac-specification").hide();
-            } else {
-                $(".mac-specification").show();
-                $(".window-specification").hide();
-            }
-        }
-    });
+    $(".mac-specification").hide();
 
     $("#window").on('click', function() {
         if ($(this).prop('checked')) {
@@ -216,16 +203,7 @@ $(document).ready(function() {
             $(".window-specification").hide();
         }
     });
-
-    if ($(".window-specification tbody tr").length === 0) {
-        $(".radio-window").addClass("hidden");
-        $(".mac-specification").show();
-        $("#Mac").prop("checked", true);
-    } else if ($(".mac-specification tbody tr").length === 0) {
-        $(".radio-mac").addClass("hidden");
-        $(".window-specification").show();
-        $("#window").prop("checked", true);
-    }
 });
+
 </script>
 </html>

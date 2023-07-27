@@ -1,7 +1,6 @@
 package com.example.world.qna;
 
 import com.example.world.product.Product;
-import com.example.world.productReview.ProductReview;
 import com.example.world.qnaAnswer.QnaAnswer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
