@@ -17,10 +17,12 @@ public class ProductOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private SiteUser user;
 
     @Column(length = 200)
@@ -33,10 +35,10 @@ public class ProductOrder {
     private String payment;
 
     @Column(length = 200)
-    private String orderStatus;
+    private String orderStatus = "주문완료";
 
     @Column(length = 200)
-    private String code;
+    private String code = "NULL";
 
     private LocalDateTime orderDate;
 }

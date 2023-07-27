@@ -87,15 +87,15 @@ public class UserService {
         }
     }
 
-    public SiteUser getUser(String name) {
-        Optional<SiteUser> siteUser = this.userRepository.findByUsername(name);
+    public SiteUser getUser(String username) {
+        Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
         if (siteUser.isPresent()) {
             return siteUser.get();
         } else {
             throw new DataNotFoundException("siteUser not found");
         }
     }
-    public SiteUser getUserId(Long id) { // Integer 로 타입이 들어오면 null 값도 허용해줄 수 있음
+    public SiteUser getUserId(Long id) {
         Optional<SiteUser> siteUser = this.userRepository.findById(id);
         if (siteUser.isPresent()) {
             return siteUser.get();
