@@ -36,9 +36,12 @@ public class ProductController {
 
     @GetMapping("/list")
     public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        String themeName = "All";
         Page<Product> paging = this.productService.allTheme(page);
         model.addAttribute("paging", paging);
+        model.addAttribute("themeKey",themeName);
         return "product_list";
+
     }
 
 
