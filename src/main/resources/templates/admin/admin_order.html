@@ -19,9 +19,7 @@
   </div>
   <!-- navbar-header-->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-
-    </ul>
+    <ul class="nav navbar-nav"></ul>
   </div>
   <!-- bs-example-navbar-collapse-1 -->
 </nav>
@@ -29,7 +27,6 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-
       <li>
         <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
@@ -60,24 +57,19 @@
       <div class="row">
         <div class="col-lg-12">
           <h1>주문 관리</h1>
-
           <div class="date_content">
             <div class="date_title"><p>주문내역 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn"> 발송입력 </button>
-              <button type="button" class="date_btn"> 결제확인 </button>
-              <button type="button" class="date_btn"> 주문취소 </button>
+              <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
+              <button type="button" class="date_btn" onclick="confirmOrder()"> 결제확인 </button>
+              <button type="button" class="date_btn" onclick="cancelOrder()"> 취소요청 </button>
             </div>
-            <div class="code_input">
-              <input type="text" placeholder="발송할 코드를 입력해주세요"><button type="button">발송</button>
+            <div class="code_input" style="display: none;">
+              <input type="text" id="shipmentCode" placeholder="발송할 코드를 입력해주세요">
+              <button type="button" onclick="sendShipmentCode()">발송</button>
             </div>
-
             <div class="date_data">
               <!--    리스트 -->
-
-
-
-
               <table class="list_table">
                 <thead>
                 <tr>
@@ -90,27 +82,43 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order : ${orderList}">
-                  <td class="number" th:text="${order.id}">1</td>
+                <tr th:each="orderProduct, loop : ${paging}">
+                  <td class="number" th:text="${orderProduct.id}"></td>
                   <td class="title">
-                    <a
-                            th:href="@{|/order/detail/${order.id}|}"                         th:text="${order.product.name}"
-                    > 상품명</a>
+                    <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}"></a>
                   </td>
-                  <td class="nickname" th:text="${order.username}">주문자명</td>
-                  <td class="date" th:text=“${order.email}”>test@test.test</td>
-                  <td class="inquiry" th:text=“${order.state}”>주문상태</td>
+                  <td class="nickname" th:text="${orderProduct.customerName}"></td>
+                  <td class="date" th:text="${orderProduct.email}"></td>
+                  <td class="inquiry" th:text="${orderProduct.orderStatus}"></td>
                   <td class="button_menu">
-                    <label class=“order_check><input type="checkbox" name=“orderCheck”  > </label>
-
+                    <label class=“order_check><input type="checkbox" name="orderCheck" value="${orderProduct.id}"></label>
                   </td>
                 </tr>
                 </tbody>
               </table>
-
-
-
-              <!--    리스트 -->                   </div>
+              <!-- 페이징처리 시작 -->
+              <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+                      <span>이전</span>
+                    </a>
+                  </li>
+                  <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                      th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                      th:classappend="${page == paging.number} ? 'active'"
+                      class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                  </li>
+                  <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                      <span>다음</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- 페이징처리 끝 -->
+            </div>
           </div>
         </div>
       </div>
@@ -122,14 +130,86 @@
 <!-- /#wrapper -->
 <!-- jQuery -->
 
-<script>
-        $(document).ready(function () {
-            // 발송입력 버튼 클릭 시 이벤트 처리
-            $('.date_btn').on('click', function () {
-                // .code_input 요소의 display 속성을 'block'으로 변경
-                $('.code_input').css('display', 'block');
-            });
-        });
-    </script>
+<script th:inline="javascript">
+  function showCodeInput() {
+    $('.code_input').css('display', 'block');
+  }
+
+  function sendShipmentCode() {
+    const selectedOrderId = getSelectedOrderId();
+    const shipmentCode = document.getElementById("shipmentCode").value;
+
+    console.log("Selected Order ID:", selectedOrderId);
+    console.log("Shipment Code:", shipmentCode);
+
+    if (selectedOrderId !== null && shipmentCode !== "") {
+      $.ajax({
+        type: "POST",
+        url: "/ad/code",
+        data: {
+          orderId: selectedOrderId,
+          sendCode: shipmentCode,
+          orderStatus: "발송완료"
+        },
+        success: function (response) {
+          alert("발송 코드가 저장되었습니다.");
+          window.location.reload();
+        },
+        error: function () {
+          alert("발송 코드 저장에 실패하였습니다.");
+        }
+      });
+    } else {
+      alert("주문을 선택하고 발송 코드를 입력해주세요.");
+    }
+  }
+
+  function confirmOrder() {
+    const selectedOrderId = getSelectedOrderId();
+    if (selectedOrderId) {
+      $.ajax({
+        type: "POST",
+        url: "/ad/confirm/" + selectedOrderId,
+        success: function (response) {
+          console.log("주문이 성공적으로 확인되었습니다.");
+          window.location.reload();
+        },
+        error: function () {
+          alert("주문 확인에 실패하였습니다.");
+        }
+      });
+    } else {
+      alert("주문을 선택해주세요.");
+    }
+  }
+
+  function cancelOrder() {
+    const selectedOrderId = getSelectedOrderId();
+    if (selectedOrderId) {
+      $.ajax({
+        type: "POST",
+        url: "/ad/cancel/" + selectedOrderId,
+        success: function (response) {
+          console.log("주문이 취소되었습니다.");
+          window.location.reload();
+        },
+        error: function () {
+          alert("주문 취소에 실패하였습니다.");
+        }
+      });
+    } else {
+      alert("주문을 선택해주세요.");
+    }
+  }
+
+  function getSelectedOrderId() {
+    const checkedOrder = $("input[name='orderCheck']:checked");
+    if (checkedOrder.length === 1) {
+      return checkedOrder.val();
+    } else {
+      alert("하나의 주문을 선택해주세요.");
+      return null;
+    }
+  }</script>
 </body>
 </html>

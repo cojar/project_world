@@ -47,17 +47,6 @@ public class UserController {
         public String signup(@Valid UserCreateForm userCreateForm,
                              BindingResult bindingResult) {
 
-            System.out.println("loginId = " + userCreateForm.getUsername());
-            System.out.println("password = " + userCreateForm.getPassword1());
-            System.out.println("passwordCheck = " + userCreateForm.getPassword2());
-            System.out.println("nickname = " + userCreateForm.getNickname());
-            System.out.println("username = " + userCreateForm.getBirthDate());
-            System.out.println("phone = " + userCreateForm.getMailKey());
-            System.out.println("phone = " + userCreateForm.getGenMailKey());
-
-
-
-
             if (bindingResult.hasErrors()) {
                 return "signup_form";
             }
