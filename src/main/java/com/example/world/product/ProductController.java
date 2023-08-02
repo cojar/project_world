@@ -34,14 +34,19 @@ public class ProductController {
     private final WindowRecommendedService windowRecommendedService;
     private final UserService userService;
 
-    @GetMapping("/list")
-    public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        String themeName = "All";
-        Page<Product> paging = this.productService.allTheme(page);
-        model.addAttribute("paging", paging);
-        model.addAttribute("themeKey",themeName);
-        return "product_list";
+//    @GetMapping("/list")
+//    public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+//        String themeName = "All";
+//        Page<Product> paging = this.productService.allTheme(page);
+//        model.addAttribute("paging", paging);
+//        model.addAttribute("themeKey",themeName);
+//        return "product_list";
+//
+//    }
 
+    @GetMapping("/list")
+    public String root(){
+        return "redirect:/product/list/all";
     }
 
 
@@ -87,6 +92,11 @@ public class ProductController {
             String themeName = "ETC";
             Page<Product> paging = this.productService.getTheme(page, themeKey);
             model.addAttribute("paging", paging);
+            model.addAttribute("themeKey",themeName);
+        } else if (key.equals("all")){
+            String themeName = "all";
+            Page<Product> paging = this.productService.allTheme(page);
+            model.addAttribute("paging",paging);
             model.addAttribute("themeKey",themeName);
         }
 
@@ -207,6 +217,23 @@ public class ProductController {
     }
 
 
+
+    @GetMapping(value = "/list/{theme}/sort/high")
+    public String sortHigh(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Product> paging = this.productService.sortHigh(page, key);
+        model.addAttribute("paging", paging);
+        model.addAttribute("themeKey", key);
+
+        return "product_list";
+    }
+
+    @GetMapping(value = "/list/{theme}/sort/low")
+    public String sortLow(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Product> paging = this.productService.sortLow(page, key);
+        model.addAttribute("paging", paging);
+        model.addAttribute("themeKey", key);
+        return "product_list";
+    }
 
 
 }
