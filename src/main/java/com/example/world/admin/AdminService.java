@@ -26,12 +26,4 @@ public class AdminService {
         return this.adminRepository.findAll(pageable);
     }
 
-    public void updateOrderSendCode(Long id, String sendCode, String orderStatus) {
-        ProductOrder order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("주문을 찾을 수 없습니다."));
-        order.setCode(sendCode);
-        order.setOrderStatus(orderStatus);
-        orderRepository.save(order);
-    }
-
 }

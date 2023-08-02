@@ -70,7 +70,7 @@ public class UserController {
                         throw new IllegalArgumentException("미성년자는 가입할 수 없습니다.");
                     }
                     // 회원가입 처리
-                    UserRole role = userCreateForm.getUsername().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
+                    UserRole role = userCreateForm.getNickname().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
                     userService.create(
                             userCreateForm.getUsername(),
                             userCreateForm.getPassword1(),

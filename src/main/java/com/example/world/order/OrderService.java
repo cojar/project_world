@@ -55,6 +55,14 @@ public class OrderService {
         }
     }
 
+    public void updateOrderSendCode(Long id, String sendCode, String orderStatus) {
+        ProductOrder order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("주문을 찾을 수 없습니다."));
+        order.setCode(sendCode);
+        order.setOrderStatus(orderStatus);
+        this.orderRepository.save(order);
+    }
+
     public void cancleOrder(Long id) {
         ProductOrder productOrder = getOrder(id);
         productOrder.setOrderStatus("취소요청");
