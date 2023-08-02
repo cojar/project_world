@@ -48,25 +48,19 @@ public class AdminController {
     }
 
 
-    @PostMapping("/ad/code")
-    public String adminSendCode(@RequestParam(value = "id", required = false) Long id, @RequestParam(value = "sendCode", required = false) String sendCode, @RequestParam(value = "orderStatus", required = false) String orderStatus) {
+    @PostMapping("/ad/code/{id}")
+    public String adminSendCode(@PathVariable("id") Long id,
+                                @RequestParam(value = "sendCode", required = false) String sendCode,
+                                @RequestParam(value = "orderStatus", required = false) String orderStatus) {
         ProductOrder productOrder = this.orderService.getOrder(id);
+
         if (id != null && sendCode != null && !sendCode.isEmpty()) {
-            orderService.updateOrderSendCode(id, sendCode, orderStatus);
+            orderService.updateOrderSendCode(productOrder);
             return "redirect:/ad/order";
         } else {
             return "redirect:/ad/order";
         }
     }
-
-//    public Question getQuestion(Integer id) { // 낱개로 객체 하나만 return & Integer 은 null 값도 허용 & id 값으로 Question 데이터를 조회하는 getQuestion 메서드를 추가
-//        Optional<Question> question = this.questionRepository.findById(id);
-//        if (question.isPresent()) { // Question 객체는 Optional 객체이기 때문에 isPresent 메서드로 해당 데이터가 존재하는지 검사하는 로직 필요
-//            return question.get();
-//        } else {
-//            throw new DataNotFoundException("question not found");        }
-//    }
-
 
     @PostMapping("/ad/confirm/{id}")
     public String adminConfirmOrder(@PathVariable Long id) {
