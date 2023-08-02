@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/layout/mypage_list.css"/>
+  <title>My Page</title>
+</head>
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<div class="profilecont">
+
+  <div class="banner">
+    <div class="ava">
+      <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
+    </div>
+    <h4>사용자명(타임리프) <span>#회원번호(타임리프)</span></h4>
+
+  </div>
+  <div class="content">
+    <div class="main">
+      <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
+      <ul class="posts">
+        <li class="coding">
+          <a href="#">
+            <div class="icon">
+              <i class="fas fa-money-check-alt"></i>
+            </div>
+            <div class="txt">
+              <h5>My Order</h5>
+              <div class="sub">
+                <strong>주문내역</strong>
+                <span>&nbsp;-&nbsp;</span>
+
+                <span>
+                  <i class="fas fa-money-check-alt"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="crypto">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-shopping-cart"></i>
+            </div>
+            <div class="txt">
+              <h5>Wish List</h5>
+              <div class="sub">
+                <strong>찜목록</strong>               <span>&nbsp;-&nbsp;</span>
+                <span>
+                  <i class="fas fa-shopping-cart"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="coding">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-sticky-note"></i>
+            </div>
+            <div class="txt">
+              <h5>My Review</h5>
+              <div class="sub">
+                <strong>내가 쓴 리뷰</strong>
+                <span>&nbsp;-&nbsp;</span>
+
+                <span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="design">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-sticky-note"></i>
+            </div>
+            <div class="txt">
+              <h5>My Question</h5>
+              <div class="sub">
+                <strong>내 문의</strong>
+                <span>&nbsp;-&nbsp;</span>
+                <span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="general">
+          <a href="#">
+            <div class="icon">
+              <i class="fas fa-user-cog"></i>
+            </div>
+            <div class="txt">
+              <h5>User Edit</h5>
+              <div class="sub">
+                <strong>회원정보수정</strong>
+
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="side">
+      <h5>주문내역</h5>
+
+      <tbody>
+      <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 5}">
+
+        <td >
+          <li class="tal2"> <a href="" class="tal" >
+            <div class="product" >
+              <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+
+              <div>                     <p style="color:white;">상품명 :</p>
+                <p style="color:white;" th:text="${order.product.subject}">디아블로</p>
+              </div>
+
+              <div>                              <p style="color:white;">주문일 :</p>
+                <p style="color:white;" th:text="${order.createDate}">2023-07-30</p>
+              </div>
+              <div>
+                <p style="color:white;">주문금액 :</p>
+
+                <p style="color:white;" th:text="${order.product.price}">45,000</p>
+              </div>
+              <div>
+                <p style="color:white;">주문상태 :</p><p style="color:white;" th:text="${order.status}">주문완료</p>
+              </div>
+            </div>
+    </div>
+  </div>
+  </a></li>
+  </td>
+
+
+  </tr>
+  </tbody>
+
+</div>
+</div>
+</div>
+</body>
+</html>

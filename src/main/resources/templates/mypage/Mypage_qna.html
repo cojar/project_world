@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/layout/mypage_list.css"/>
+  <title>My Page</title>
+</head>
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<div class="profilecont">
+
+  <div class="banner">
+    <div class="ava">
+      <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
+    </div>
+    <h4>사용자명(타임리프) <span>#회원번호(타임리프)</span></h4>
+
+  </div>
+  <div class="content">
+    <div class="main">
+      <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
+      <ul class="posts">
+        <li class="coding">
+          <a href="#">
+            <div class="icon">
+              <i class="fas fa-money-check-alt"></i>
+            </div>
+            <div class="txt">
+              <h5>My Order</h5>
+              <div class="sub">
+                <strong>주문내역</strong>
+                <span>&nbsp;-&nbsp;</span>
+
+                <span>
+                  <i class="fas fa-money-check-alt"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="crypto">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-shopping-cart"></i>
+            </div>
+            <div class="txt">
+              <h5>Wish List</h5>
+              <div class="sub">
+                <strong>찜목록</strong>               <span>&nbsp;-&nbsp;</span>
+                <span>
+                  <i class="fas fa-shopping-cart"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="coding">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-sticky-note"></i>
+            </div>
+            <div class="txt">
+              <h5>My Review</h5>
+              <div class="sub">
+                <strong>내가 쓴 리뷰</strong>
+                <span>&nbsp;-&nbsp;</span>
+
+                <span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="design">
+          <a href="#">
+            <div class="icon">
+              <i class="	fas fa-sticky-note"></i>
+            </div>
+            <div class="txt">
+              <h5>My Question</h5>
+              <div class="sub">
+                <strong>내 문의</strong>
+                <span>&nbsp;-&nbsp;</span>
+                <span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;3(타임리프)
+                </span>
+                <span>&nbsp;건</span>
+
+
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="general">
+          <a href="#">
+            <div class="icon">
+              <i class="fas fa-user-cog"></i>
+            </div>
+            <div class="txt">
+              <h5>User Edit</h5>
+              <div class="sub">
+                <strong>회원정보수정</strong>
+
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="side">
+      <h5>내 상품문의</h5>
+
+      <table class="list_table">
+        <thead>
+        <tr>
+          <th class="number">상품번호</th>
+          <th class="title">상품명</th>
+          <th class="date">문의 제목</th>
+          <th class="inquiry">답변 수</th>
+          <th class="button_menu">상품페이지</th>
+
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderList}">
+          <td class="number" th:text="${order.id}">1</td>
+          <td class="title">
+            <a
+                    th:href=""                       th:text="${product.name}"
+            > 상품명</a>
+          </td>
+          <td class="date" th:text=“${order.email}”>test@test.test</td>
+          <td class="inquiry" >1</td>
+          <td class="button_menu">
+            <button type="button">상세보기</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
