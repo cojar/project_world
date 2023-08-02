@@ -90,16 +90,14 @@ public class ProductController {
         return "product_list";
     }
 
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String create(Model model, ProductForm productForm) {
-//
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/create")
-//    public String create(Model model, ProductForm productForm, Principal principal) {
+    public String create(Model model, ProductForm productForm, Principal principal) {
 
 
-//        SiteUser username = this.userService.getUserByUsername(principal.getName());
-//        productForm.setUsername(username.getUsername());
+        SiteUser username = this.userService.getUserByUsername(principal.getName());
+        productForm.setUsername(username.getUsername());
 
         List<WindowMinForm> windowMinList = new ArrayList<>();
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
@@ -117,25 +115,16 @@ public class ProductController {
         return "product_form";
     }
 
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping("/create")
-//    public String create(Model model,
-//                         @Valid ProductForm productForm,
-//                         BindingResult bindingResult, Principal principal) {
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String create(Model model,
                          @Valid ProductForm productForm,
-                         BindingResult bindingResult) {
-//
-//        SiteUser username = this.userService.getUserByUsername(principal.getName());
+                         BindingResult bindingResult, Principal principal) {
 
-//
+        SiteUser username = this.userService.getUserByUsername(principal.getName());
+
 //        // 상품 기본정보 저장
-//        Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
-//                productForm.getTheme(), productForm.getPrice(), productForm.getContent());
-        // 상품 기본정보 저장
-        Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
+        Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
 
         // windowMin 저장

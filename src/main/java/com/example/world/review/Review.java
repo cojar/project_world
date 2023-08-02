@@ -1,11 +1,13 @@
 package com.example.world.review;
 
 import com.example.world.product.Product;
+import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,8 +30,10 @@ public class Review {
     private Product product;
     // 리뷰와 연결된 상품
 
-//    @ManyToOne
-//    private SiteUser author;
+    @ManyToOne
+    private SiteUser author;
+    @ManyToMany
+    Set<SiteUser> voter;
 
     private int score;
     // 해당 게임 평점

@@ -1,33 +1,40 @@
 package com.example.world.qnaAnswer;
 
 
-import com.example.world.product.Product;
-import com.example.world.qna.Qna;
+import com.example.world.qna.Question;
+import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class QnaAnswer {
+public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     //질문답변 번호
-
-    private LocalDate createDate;
-
 
     @Column(columnDefinition = "text")
     private String content;
     //질문답변 내용
 
+    private LocalDateTime createDate;
+
     @ManyToOne
-    private Qna qna;
+    private Question question;
     // 답변과 연결된 질문
+
+    @ManyToOne
+    private SiteUser author;
+
+    private LocalDateTime modifyDate;
+
+    @ManyToMany
+    Set<SiteUser> voter;
 }

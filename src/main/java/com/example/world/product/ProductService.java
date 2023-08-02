@@ -24,12 +24,10 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-//    public Product create(SiteUser username, String productName, String developer, String theme, String price, String content) {
-
-    public Product create(String productName, String developer, String theme, String price, String content) {
+    public Product create(SiteUser username, String productName, String developer, String theme, String price, String content) {
         Product product = new Product();
 
-//        product.setUsername(username);
+        product.setUsername(username);
         product.setProductName(productName);
         product.setDeveloper(developer);
         product.setTheme(theme);

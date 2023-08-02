@@ -1,0 +1,107 @@
+@font-face {
+  font-family: "NeoDunggeunmoPro-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+section {
+  font-family: "NeoDunggeunmoPro-Regular";
+  font-size: 18px;
+  background: rgb(30, 30, 30);
+  margin: 0 auto;
+  color: white;
+
+}
+
+.list-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head, .list-data {
+    list-style: none;
+    padding: 0;
+}
+
+.head li, .list-data li {
+    padding: 10px;
+    border: 1px solid #ccc; /* 각 요소 사이에 구분선을 만들기 위해 테두리 추가 */
+}
+
+.head {
+    display: flex;
+}
+
+.list-data ul {
+    display: flex;
+    align-items: center;
+}
+
+.list-data li {
+    flex: 1; /* 각 데이터 열이 동일한 너비를 가지도록 설정 */
+}
+
+
+/* 테이블 스타일 추가 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+thead th {
+    background-color: #f2f2f2;
+}
+
+tbody tr {
+    background-color: #f9f9f9;
+}
+
+
+.list-foot {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.list-foot ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.list-foot li {
+    padding: 10px;
+}
+
+.list-foot a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.list-foot .active {
+    font-weight: bold;
+}
+
+.accordion-container {
+	max-width: 400px;
+	margin: auto;
+}
+
+.accordion-content {
+  display: none;
+  transition: all 1.4s;
+}
+
+.active {
+	display: block;
+	height: auto;
+}

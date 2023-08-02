@@ -6,7 +6,8 @@ import com.example.world.product.specification.macRecommended.MacRecommended;
 import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.review.Review;
-import com.example.world.qna.Qna;
+import com.example.world.qna.Question;
+import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +26,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //상품번호
-//    @ManyToOne
-//    private SiteUser username;
+    @ManyToOne
+    private SiteUser username;
 
     @Size(max = 30)
     private String productName;
@@ -66,7 +67,7 @@ public class Product {
     // 상품과 연결된 리뷰들
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private List<Qna> qnaList;
+    private List<Question> questionList;
     // 상품과 연결된 질문들
 
 

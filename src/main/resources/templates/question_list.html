@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="/question_list.css"/>
+<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<section th:fragment="question_listFragment" class="question-list-section">
+    <div class="create-box">
+        <a sec:authorize="isAuthenticated()" href="javascript:void(0)" onclick="openQuestionForm()" class="create-btn btn-sm">상품 Q&A 작성하기</a>
+        <a sec:authorize="isAnonymous()" th:onclick="_anonymous(this)" th:data-uri="|/question/create|" class="create-btn btn-sm a-hover">상품 Q&A 작성하기</a>
+    </div>
+
+    <div class="list-content">
+        <table>
+            <thead>
+            <tr>
+                <th class="no">번호</th>
+                <th class="state">답변상태</th>
+                <th class="subject">제목</th>
+                <th class="author">작성자</th>
+                <th class="create-date">작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question, loop : ${paging}">
+                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+                <td class="state">
+                    <span th:text="${question.answered ? '답변완료' : '답변대기'}"></span>
+                </td>
+                <td class="subject">
+                        <span th:text="${question.subject}"></span>
+                    <div class="accordion-content">
+                        <p th:text="${question.content}"></p>
+                    </div>
+                </td>
+                <td class="author">
+                    <span th:text="${question.author.nickname}"></span>
+                </td>
+                <td class="create-date">
+                    <span th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd')}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="list-foot" th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+<!--            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">-->
+<!--                <a class="page-link" href="javascript:void(0)" th:data-page="1">-->
+<!--                    <span>처음</span>-->
+<!--                </a>-->
+<!--            </li>-->
+            <li class="page-item" th:classappend="${paging.first} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number - 1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
+                th:if="${page >= paging.number - 4 and page <= paging.number + 5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${paging.last} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number + 1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+<!--            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">-->
+<!--                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.totalPages}">-->
+<!--                    <span>끝</span>-->
+<!--                </a>-->
+<!--            </li>-->
+        </ul>
+    </div>
+
+    <!-- 페이징처리 끝 -->
+    <form th:action="@{/question/list}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
+
+</section>
+
+<script>
+
+function openQuestionForm() {
+  var width = 700; // 새 창의 너비
+  var height = 500; // 새 창의 높이
+  var left = (window.screen.width - width) / 2; // 화면 가운데 정렬을 위한 좌표 계산
+  var top = (window.screen.height - height) / 2; // 화면 가운데 정렬을 위한 좌표 계산
+
+  var options = "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+  window.open("/question/create", "_blank", options);
+}
+
+$(document).ready(function () {
+
+
+  $(".subject").click(function () {
+    console.log("Clicked!"); // 클릭이 발생하면 콘솔에 "Clicked!"가 표시됩니다.
+    var $content = $(this).find(".accordion-content");
+
+    // 현재 클릭한 아코디언의 컨텐츠를 열거나 닫습니다.
+    $content.toggleClass("active");
+
+    // 현재 클릭한 아코디언을 제외한 다른 아코디언 컨텐츠를 숨깁니다.
+    $(".accordion-content").not($content).removeClass("active");
+  });
+});
+</script>
