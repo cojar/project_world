@@ -33,7 +33,7 @@ public class AdminController {
     }
 
     @GetMapping("/ad/order")
-    public String adminOrder(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+    public String adminOrder(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<ProductOrder> paging = this.adminService.getList(page, size);
         List<ProductOrder> orderProductList = this.orderService.getOrderList();
         model.addAttribute("paging", paging);

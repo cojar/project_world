@@ -61,8 +61,8 @@
             <div class="date_title"><p>주문내역 </p></div>
             <div class="btn_line">
               <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
-              <button type="button" class="date_btn" onclick="confirmOrder()"> 결제확인 </button>
-              <button type="button" class="date_btn" onclick="cancelOrder()"> 취소요청 </button>
+              <button type="button" class="date_btn"> 결제확인 </button>
+              <button type="button" class="date_btn"> 주문취소 </button>
             </div>
             <div class="code_input" style="display: none;">
               <input type="text" id="shipmentCode" placeholder="발송할 코드를 입력해주세요">
@@ -83,13 +83,13 @@
                 </thead>
                 <tbody>
                 <tr th:each="orderProduct, loop : ${paging}">
-                  <td class="number" th:text="${orderProduct.id}"></td>
+                  <td class="number" th:text="${orderProduct.id}">1</td>
                   <td class="title">
-                    <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}"></a>
+                    <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
                   </td>
-                  <td class="nickname" th:text="${orderProduct.customerName}"></td>
-                  <td class="date" th:text="${orderProduct.email}"></td>
-                  <td class="inquiry" th:text="${orderProduct.orderStatus}"></td>
+                  <td class="nickname" th:text="${orderProduct.customerName}">주문자명</td>
+                  <td class="date" th:text="${orderProduct.email}">test@test.test</td>
+                  <td class="inquiry" th:text="${orderProduct.orderStatus}">주문상태</td>
                   <td class="button_menu">
                     <label class=“order_check><input type="checkbox" name="orderCheck" value="${orderProduct.id}"></label>
                   </td>
@@ -130,12 +130,12 @@
 <!-- /#wrapper -->
 <!-- jQuery -->
 
-<script th:inline="javascript">
+<script>
   function showCodeInput() {
     $('.code_input').css('display', 'block');
   }
 
-  function sendShipmentCode() {
+function sendShipmentCode() {
     const selectedOrderId = getSelectedOrderId();
     const shipmentCode = document.getElementById("shipmentCode").value;
 
@@ -164,44 +164,6 @@
     }
   }
 
-  function confirmOrder() {
-    const selectedOrderId = getSelectedOrderId();
-    if (selectedOrderId) {
-      $.ajax({
-        type: "POST",
-        url: "/ad/confirm/" + selectedOrderId,
-        success: function (response) {
-          console.log("주문이 성공적으로 확인되었습니다.");
-          window.location.reload();
-        },
-        error: function () {
-          alert("주문 확인에 실패하였습니다.");
-        }
-      });
-    } else {
-      alert("주문을 선택해주세요.");
-    }
-  }
-
-  function cancelOrder() {
-    const selectedOrderId = getSelectedOrderId();
-    if (selectedOrderId) {
-      $.ajax({
-        type: "POST",
-        url: "/ad/cancel/" + selectedOrderId,
-        success: function (response) {
-          console.log("주문이 취소되었습니다.");
-          window.location.reload();
-        },
-        error: function () {
-          alert("주문 취소에 실패하였습니다.");
-        }
-      });
-    } else {
-      alert("주문을 선택해주세요.");
-    }
-  }
-
   function getSelectedOrderId() {
     const checkedOrder = $("input[name='orderCheck']:checked");
     if (checkedOrder.length === 1) {
@@ -210,6 +172,7 @@
       alert("하나의 주문을 선택해주세요.");
       return null;
     }
-  }</script>
+  }
+</script>
 </body>
 </html>
