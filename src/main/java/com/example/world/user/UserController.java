@@ -47,17 +47,6 @@ public class UserController {
         public String signup(@Valid UserCreateForm userCreateForm,
                              BindingResult bindingResult) {
 
-            System.out.println("loginId = " + userCreateForm.getUsername());
-            System.out.println("password = " + userCreateForm.getPassword1());
-            System.out.println("passwordCheck = " + userCreateForm.getPassword2());
-            System.out.println("nickname = " + userCreateForm.getNickname());
-            System.out.println("username = " + userCreateForm.getBirthDate());
-            System.out.println("phone = " + userCreateForm.getMailKey());
-            System.out.println("phone = " + userCreateForm.getGenMailKey());
-
-
-
-
             if (bindingResult.hasErrors()) {
                 return "signup_form";
             }
@@ -72,16 +61,8 @@ public class UserController {
                     LocalDate currentDate = LocalDate.now();
                     LocalDate birthDate = userCreateForm.getBirthDate();
 
-                    // 날짜 비교를 위해 현재 날짜에서 18년 전 날짜를 계산
-                    LocalDate legalAgeDate = currentDate.minusYears(18);
-
-                    // 미성년자인 경우 예외 처리
-                    if (birthDate.isAfter(legalAgeDate)) {
-                        // 미성년자 예외 처리 로직을 실행합니다.
-                        throw new IllegalArgumentException("미성년자는 가입할 수 없습니다.");
-                    }
                     // 회원가입 처리
-                    UserRole role = userCreateForm.getUsername().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
+                    UserRole role = userCreateForm.getNickname().startsWith("admin") ? UserRole.ADMIN : UserRole.USER;
                     userService.create(
                             userCreateForm.getUsername(),
                             userCreateForm.getPassword1(),
@@ -96,10 +77,6 @@ public class UserController {
                     return "signup_form";
                 }
 
-            } catch (IllegalArgumentException e) {
-                // 미성년자 예외 처리에 대한 예외 처리 로직을 추가
-                bindingResult.rejectValue("birthDate", "minorAge", "미성년자는 가입할 수 없습니다.");
-                return "signup_form";
             } catch (DataIntegrityViolationException e) {
                 e.printStackTrace();
                 bindingResult.reject("signupFailed", "이미 등록된 아이디입니다.");

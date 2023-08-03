@@ -29,7 +29,6 @@ public class OrderController {
 
     private final ProductService productService;
     private final UserService userService;
-    private final SiteUser siteUser;
     private final OrderService orderService;
 
     @PreAuthorize("isAuthenticated()")
@@ -46,7 +45,7 @@ public class OrderController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}") // order/create/product.id
-    public String submitOrder(@Valid OrderForm orderForm,@PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
+    public String submitOrder(@Valid OrderForm orderForm, @PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "Order_form";
         }

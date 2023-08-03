@@ -73,7 +73,8 @@
                 </div>
                 <div class="customer">
                     <p>발송 코드 :</p>
-                    <p th:text="${orderProduct.code}"></p>
+                    <p th:if="${orderProduct.code != null}" th:text="${orderProduct.code}"></p>
+                    <p th:if="${orderProduct.code == null}">발송 코드 없음</p>
                 </div>
                 <div class="customer">
                     <p>주문 날짜 :</p>

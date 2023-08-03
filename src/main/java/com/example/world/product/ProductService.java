@@ -86,8 +86,6 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, 16);
         return this.productRepository.findAll(pageable);
     }
-
-
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
         if (product.isPresent()) {
