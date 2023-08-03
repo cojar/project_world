@@ -50,8 +50,7 @@ public class AdminController {
 
     @PostMapping("/ad/code/{id}")
     public String adminSendCode(@PathVariable("id") Long id,
-                                @RequestParam(value = "sendCode", required = false) String sendCode,
-                                @RequestParam(value = "orderStatus", required = false) String orderStatus) {
+                                @RequestParam(value = "sendCode", required = false) String sendCode) {
         ProductOrder productOrder = this.orderService.getOrder(id);
 
         if (id != null && sendCode != null && !sendCode.isEmpty()) {

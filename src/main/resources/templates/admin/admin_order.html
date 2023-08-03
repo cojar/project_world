@@ -83,7 +83,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="orderProduct, loop : ${paging}">
-                  <td class="number" th:text="${orderProduct.id}">1</td>
+                  <td class="number" id="selectedOrderId" th:text="${orderProduct.id}">1</td>
                   <td class="title">
                     <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
                   </td>
@@ -91,7 +91,9 @@
                   <td class="date" th:text="${orderProduct.email}">test@test.test</td>
                   <td class="inquiry" th:text="${orderProduct.orderStatus}">주문상태</td>
                   <td class="button_menu">
-                    <label class=“order_check><input type="checkbox" name="orderCheck" value="${orderProduct.id}"></label>
+                    <label class=“order_check>
+                      <input type="checkbox" name="orderCheck" th:value="${orderProduct.id}">
+                    </label>
                   </td>
                 </tr>
                 </tbody>
@@ -125,12 +127,9 @@
     </div>
   </div>
 </div>
-<!-- /#page-content-wrapper -->
 </div>
-<!-- /#wrapper -->
-<!-- jQuery -->
 
-<script>
+<script th:inline="javascript">
   function showCodeInput() {
     $('.code_input').css('display', 'block');
   }
@@ -145,9 +144,9 @@ function sendShipmentCode() {
     if (selectedOrderId !== null && shipmentCode !== "") {
       $.ajax({
         type: "POST",
-        url: "/ad/code",
+        url: "/ad/code/${getSelectedOrderId()}",
         data: {
-          orderId: selectedOrderId,
+          id: selectedOrderId,
           sendCode: shipmentCode,
           orderStatus: "발송완료"
         },
