@@ -9,6 +9,7 @@ import com.example.world.review.Review;
 import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.validation.constraints.Size;
@@ -39,7 +40,8 @@ public class Product {
     private String theme;
     //게임 테마 (장르)
 
-    private String price;
+    @NotNull
+    private int price;
     // 상품 가격
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
