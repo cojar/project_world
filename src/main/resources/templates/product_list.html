@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -7,6 +7,7 @@
     <title>Title</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/product_list_style.css}" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" referrerpolicy="no-referrer" />
 </head>
 
@@ -21,19 +22,21 @@
             </div>
         </div>
 
-        <div class="title text-center mt-5 font-bold text-3xl text-white" th:text="${themeKey}"></div>
+        <div class="title text-center mt-5 font-bold text-3xl text-white themeKey" th:text="${themeKey}"></div>
 
 
-        <div class="sort-section">
-            <ul class="flex justify-end text-white">
-                <li class="mr-3"><button>인기순</button></li>
-                <li id="highPriceButton" class="mr-3"><button>높은 가격순</button></li>
-                <li id="lowPriceButton" class="mr-3"><button>낮은 가격순</button></li>
-            </ul>
-        </div>
+
 <!-- 리스트 페이지-->
         <div class="list-wrap">
+
             <div class="list">
+                <div class="sort-section">
+                    <ul class="flex justify-end text-white mb-5">
+                        <li class="mr-3"><button>인기순</button></li>
+                        <li class="mr-3"><a th:href="@{|/product/list/${themeKey}/sort/high?page=${paging.number}|}">높은 가격순</a></li>
+                        <li class="mr-3"><a th:href="@{|/product/list/${themeKey}/sort/low?page=${paging.number}|}">낮은 가격순</a></li>
+                    </ul>
+                </div>
                 <ul id="holy">
                     <li th:each="product : ${paging}">
                         <a th:href="@{|/product/detail/${product.id}|}">
@@ -82,68 +85,7 @@
 </div>
 <footer th:replace="layout/footer.html"></footer>
 
-<script>
-    $(document).ready(function () {
-        // 인기순 버튼 클릭 시 AJAX 요청
-        $("#popularButton").click(function (e) {
-            e.preventDefault();
-            sortProducts("popular");
-        });
 
-        // 높은 가격순 버튼 클릭 시 AJAX 요청
-        $("#highPriceButton").click(function (e) {
-            e.preventDefault();
-            const theme = $(this).data("theme"); // 테마 값을 가져옴
-            sortProducts(theme);
-        });
-
-        // 낮은 가격순 버튼 클릭 시 AJAX 요청
-        $("#lowPriceButton").click(function (e) {
-            e.preventDefault();
-            const theme = $(this).data("theme"); // 테마 값을 가져옴
-            sortProducts(theme);
-        });
-
-        // AJAX 요청으로 상품들을 정렬하여 업데이트하는 함수
-        function sortProducts(sortOption) {
-            // 페이지 번호 가져오기
-            const currentPage = parseInt($(".pagination .active a").text()) - 1;
-
-            // AJAX 요청 설정
-            $.ajax({
-                type: "GET",
-                url: `/product/list/${sortOption}?page=${currentPage}`,
-                success: function (data) {
-                    // 서버로부터 받은 데이터로 상품 목록 업데이트
-                    $(".goods-list").empty();
-                    $.each(data.content, function (index, product) {
-                        const html = `
-                        <div class="goods w-72 align-top">
-                            <a href="/product/detail/${product.id}">
-                                <img class="w-full h-36" src="https://cdn.cloudflare.steamstatic.com/steam/apps/2163330/header_292x136.jpg?t=1689267965" alt="">
-                                <div class="info h-8 flex items-center text-white text-xs">
-                                    <p class="price inline-block ml-2">
-                                        <span>${product.price}</span> won
-                                    </p>
-                                </div>
-                            </a>
-                        </div>`;
-                        $(".goods-list").append(html);
-                    });
-
-                    // 페이징 업데이트
-                    $(".pagination").html(data.pagination);
-
-                    // 스크롤 위치 초기화
-                    $(window).scrollTop(0);
-                },
-                error: function (error) {
-                    console.error(error);
-                },
-            });
-        }
-    });
-</script>
 
 </body>
 

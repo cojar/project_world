@@ -29,6 +29,7 @@ public class Notice {
     @Column(columnDefinition = "text")
     private String content;
 
+    @Column
     private int viewCount;
 
 

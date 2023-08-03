@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/notice_detail.css}" type="text/css">
 </head>
 <body>
-
+<nav th:replace="layout/navbar.html"></nav>
 <div class="container-box">
     <div class="content_box">
         <div class="title_box">
@@ -33,7 +33,7 @@
 
         <!--   주문상태 끝   -->
         <div class="bt_box">
-            <button class="order_button" type="submit" id="btn_search">목록보기</button>
+            <a class="button" th:href="@{|/notice/list|}">목록보기</a>
         </div>
     </div>
 
@@ -41,7 +41,6 @@
 
 
 
-
-
+<footer th:replace="layout/footer.html"></footer>
 </body>
 </html>

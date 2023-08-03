@@ -24,7 +24,7 @@ public class NoticeService {
     public Page<Notice> allNotice(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page,16);
+        Pageable pageable = PageRequest.of(page,10);
         return this.noticeRepository.findAll(pageable);
     }
 

@@ -1,10 +1,19 @@
 package com.example.world.admin;
 
+import com.example.world.notice.Notice;
+import com.example.world.notice.NoticeService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
+
+    private final NoticeService noticeService;
 
     @GetMapping("/ad")
     public  String adminMain(){
@@ -36,7 +45,9 @@ public class AdminController {
     }
 
     @GetMapping("ad/notice")
-    public String adminNotice(){
+    public String adminNotice(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
+        Page<Notice> paging = this.noticeService.allNotice(page);
+        model.addAttribute("paging",paging);
         return "admin/admin_notice";
     }
 }
