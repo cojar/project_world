@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html{
+  margin:0;
+}
+body {
+  background-color: #040404;
+  font-family: "Inter", sans-serif;
+  margin:0;
+}
+body .profilecont {
+  background-color: #0c0d0e;
+  width: 100%;
+  min-height: 500px;
+  border-radius: 4px;
+  position: relative;
+}
+
+body .profilecont .banner {
+  background: linear-gradient(90deg, #040ce6, #7a24d6);
+  width: 100%;
+  height: 200px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  position: relative;
+}
+
+body .profilecont .banner .ava {
+  position: absolute;
+  left: 45px;
+  bottom: -25px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  width:100px;
+}
+body .profilecont .banner .ava img {
+  width: 100%;
+}
+body .profilecont .banner h4 {
+  color: #fff;
+  margin: 0;
+  font-weight: 400;
+  font-size: 1.35em;
+  position: absolute;
+  bottom: 20px;
+  left: 160px;
+  display: flex;
+  align-items: center;
+}
+body .profilecont .banner h4 span {
+  font-size: 0.6em;
+  margin-left: 5px;
+  color: #cecfcf;
+  background-color: rgba(12, 13, 14, 0.45);
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+body .profilecont .content {
+  color: #e7e7e7;
+  display: flex;
+  align-items: flex-start;
+  padding: 45px 45px;
+}
+body .profilecont .content h5 {
+  font-weight: 400;
+  font-size: 1.25em;
+  margin: 0;
+  margin-bottom: 12px;
+}
+body .profilecont .content .main {
+  width: calc(100% - 270px);
+  flex-shrink: 0;
+}
+body .profilecont .content .posts {
+  margin: 0;
+  padding: 0;
+  margin-right: 30px;
+}
+body .profilecont .content .posts li {
+  list-style: none;
+  margin: 4px 0;
+}
+body .profilecont .content .posts li a {
+  color: unset;
+  text-decoration: unset;
+  display: flex;
+  align-items: center;
+  background-color: #111213;
+  border-radius: 5px;
+  padding: 8px 18px;
+  transition: 320ms ease;
+}
+body .profilecont .content .posts li a:hover {
+  background-color: #373838;
+}
+body .profilecont .content .posts li a .icon {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  margin-right: 18px;
+}
+body .profilecont .content .posts li a .icon i {
+  font-size: 1.5em;
+  color: #2e2f30;
+}
+body .profilecont .content .posts li a .txt {
+  display: flex;
+  flex-direction: column;
+}
+body .profilecont .content .posts li a .txt h5 {
+  font-size: 1.15em;
+  margin-bottom: 4px;
+  color: #e7e7e7;
+}
+body .profilecont .content .posts li a .txt .sub {
+  display: flex;
+  align-items: flex-end;
+}
+body .profilecont .content .posts li a .txt .sub span,
+body .profilecont .content .posts li a .txt .sub strong {
+  font-size: 0.75em;
+  color: #636465;
+  font-weight: 400;
+}
+body .profilecont .content .posts li.coding .icon i {
+  color: #f97d10;
+}
+body .profilecont .content .posts li.coding strong {
+  color: #f97d10 !important;
+}
+body .profilecont .content .posts li.crypto .icon i {
+  color: #4abbf3;
+}
+body .profilecont .content .posts li.crypto strong {
+  color: #4abbf3 !important;
+}
+body .profilecont .content .posts li.design .icon i {
+  color: #ba3ffc;
+}
+body .profilecont .content .posts li.design strong {
+  color: #ba3ffc !important;
+}
+body .profilecont .content .posts li.general .icon i {
+  color: #259676;
+}
+body .profilecont .content .posts li.general strong {
+  color: #259676 !important;
+}
+body .profilecont .content .side {
+  width: 270px;
+  flex-shrink: 0;
+}
+body .profilecont .content .side p {
+  color: #5a5a5b;
+  font-size: 0.9em;
+}
+h5{
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+
+
+
+/* 테이블 */
+.side>table{
+  width:100%;
+  text-align:center;
+}
+
+.list_table>thead>tr>th{
+  background: #373838;
+}
+.list_table>tbody>tr>td{
+  border:1px solid #373838;
+}
+.list_table>tbody>tr>td>button{
+  background: #373838;
+  color:white;
+}
