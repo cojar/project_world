@@ -6,6 +6,7 @@ import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +26,8 @@ public class ProductForm {
     @NotEmpty
     private String theme;
     //게임 테마 (장르)
-    @NotEmpty
-    private String price;
+    @NotNull
+    private int price;
     // 상품 가격
     private List<MacMinForm> macMinList;
     // 맥 최소 스펙
