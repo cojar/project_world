@@ -241,3 +241,16 @@ h5{
 li{
   list-style:none;
 }
+
+button{
+  background: #373838;
+  color:white;
+  margin-top:10px;
+  padding:0;
+  width:100px;
+  height:30px;
+}
+.button_menu{
+  position:absolute;
+  top:0;
+}

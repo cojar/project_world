@@ -129,7 +129,7 @@
       <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 5}">
 
         <td >
-          <li class="tal2"> <a href="" class="tal" >
+          <li class="tal2"> <div class="tal" >
             <div class="product" >
               <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
 
@@ -148,13 +148,16 @@
               <div>
                 <p style="color:white;">주문상태 :</p><p style="color:white;" th:text="${order.status}">주문완료</p>
               </div>
-            </div>
+        <td class="button_menu">
+          <div>
+            <a href="#"><button type="button">주문상세</button></a>
+            <a href="#"><button type="button">리뷰작성</button></a>
+          </div>
+        </td>
     </div>
   </div>
-  </a></li>
+  </li>
   </td>
-
-
   </tr>
   </tbody>
 
