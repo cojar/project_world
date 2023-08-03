@@ -91,12 +91,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 5}">
+                <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 10}">
                   <td class="number" th:text="${notice.id}"></td>
 
                   <td class="nickname" th:text="${notice.subject}"></td>
 
-                  <td class="date" th:text=“${notice.viewCount}”></td>
+                  <td class="date" th:text="${notice.viewCount}"></td>
                   <td class="inquiry" > <a href="#"><button>수정</button></a></td>
                   <td class="button_menu">
                     <label class="order_check"><input type="checkbox" name="orderCheck"  > </label>
