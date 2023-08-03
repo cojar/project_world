@@ -117,7 +117,7 @@ section {
 }
 
 table {
-  width: 60%;
+  width: 61%;
   border-color: white;
   text-align: center;
   margin:auto;
@@ -162,8 +162,87 @@ justify-content: center;
 }
 
 
+
+.review-create-btn{
+  margin-left: 6%;
+  margin-top: 10px;
+  height: 35px;
+  width: auto;
+  background: rgb(20, 20, 20);
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}
+
+.review-list-section{
+  width: 70%;
+}
+
+.review-list-content {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.review-container {
+  width: 100%;
+  margin: 10px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  padding: 10px;
+}
+
+.review-state,
+.review-author,
+.review-create-date {
+  text-align: center;
+  width: 15%;
+}
+.review-subject {
+  width: 55%;
+  cursor: pointer;
+}
+
+.review-content {
+  display: none;
+  margin: 0 auto;
+}
+
+.review-list-foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.review-list-foot ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.review-list-foot li {
+  padding: 10px;
+}
+
+.review-list-foot a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.review-list-foot .active {
+  font-weight: bold;
+}
+
+
+
 .question-create-btn{
   margin-left: 6%;
+  margin-top: 10px;
   height: 35px;
   width: auto;
   background: rgb(20, 20, 20);

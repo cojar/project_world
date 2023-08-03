@@ -1,12 +1,14 @@
 package com.example.world.order;
 
 import com.example.world.product.Product;
+import com.example.world.review.Review;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,4 +43,9 @@ public class ProductOrder {
     private String code = "NULL";
 
     private LocalDateTime orderDate;
+
+
+    @OneToMany(mappedBy = "productOrder", cascade = CascadeType.REMOVE)
+    private List<Review> reviewList;
+    // 상품과 연결된 리뷰들
 }

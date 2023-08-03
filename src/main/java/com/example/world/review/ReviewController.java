@@ -1,9 +1,7 @@
 package com.example.world.review;
 
-import com.example.world.product.Product;
-import com.example.world.product.ProductService;
-import com.example.world.qna.Question;
-import com.example.world.qna.QuestionForm;
+import com.example.world.order.OrderService;
+import com.example.world.order.ProductOrder;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import jakarta.validation.Valid;
@@ -23,7 +21,7 @@ import java.security.Principal;
 @RequiredArgsConstructor // 변수를 포함하는 생성자를 자동으로 생성.
 @Controller
 public class ReviewController {
-    private final ProductService productService;
+    private final OrderService orderService;
     private final UserService userService;
     private final ReviewService reviewService;
 
@@ -35,26 +33,18 @@ public class ReviewController {
         return "review_list";
     }
 
-
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm) {
-        return "question_form";
-    }
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")
     public String createReview(@PathVariable("id") Long id, @Valid ReviewForm reviewForm,
                                BindingResult bindingResult, Principal principal,
                                Model model) {
-        Product product = this.productService.getProduct(id);
+        ProductOrder productOrder = this.orderService.getOrder(id);
         if (bindingResult.hasErrors()) {
             return "review_form";
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.reviewService.create(product, reviewForm.getContent(), siteUser);
-        return "redirect:/question/list";
+        this.reviewService.create(productOrder, reviewForm.getContent(), siteUser);
+        return "redirect:/review/list";
     }
 
 
@@ -96,9 +86,8 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.reviewService.delete(review);
-        return String.format("redirect:/product/detail/%s", review.getProduct().getId());
+        return String.format("redirect:/productOrder/detail/%s", review.getProductOrder().getId());
     }
-
 
 
     @PreAuthorize("isAuthenticated()")
@@ -108,6 +97,6 @@ public class ReviewController {
         Review review = this.reviewService.getReview(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.reviewService.vote(review, siteUser);
-        return String.format("redirect:/question/detail/%s#answer_%s", review.getProduct().getId(), review.getId());
+        return String.format("redirect:/question/detail/%s#answer_%s", review.getProductOrder().getId(), review.getId());
     }
 }

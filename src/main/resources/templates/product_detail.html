@@ -177,11 +177,7 @@
         </table>
     </div>
 
-    <div class="product-review">
-        <div class="title-box">
-            <div class="title">리뷰 남기기</div>
-        </div>
-    </div>
+    <div id="review"></div>
 
     <div id="question"></div>
 
@@ -220,6 +216,9 @@ $(document).ready(function() {
         $("#window").prop("checked", true);
     }
 
+    $.get("/review/list", function(data) {
+        $("#review").html(data);
+    });
 
     $.get("/question/list", function(data) {
         $("#question").html(data);

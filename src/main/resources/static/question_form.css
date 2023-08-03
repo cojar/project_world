@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+section {
+  font-family: "NeoDunggeunmoPro-Regular";
+  font-size: 18px;
+  white:auto;
+
+}
+
+
+.title {
+  padding: 15px 30px;
+  background-color: #353b4c;
+  font-size: 18px;
+  letter-spacing: -1px;
+  color: #fff;
+  font-weight: normal;
+}
+
+
+.question-write-body{
+    width: 100%;
+    height: 110px;
+    border: 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: #222;
+    resize: none;
+}
+
+.question-write-body{
+  margin-top: 30px;
+  text-align: center;
+}
+
+#cancel_button {
+  height: 35px;
+  width: 80px;
+  background: gray;
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}
+
+#submit_button {
+  height: 35px;
+  width: 80px;
+  background: rgb(20, 20, 20);
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}

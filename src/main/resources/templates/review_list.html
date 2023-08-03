@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/layout/Product_detail.css"/>
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="review_listFragment" class="review-list-section">
-  <div class="create-box">
-    <button sec:authorize="isAuthenticated()" class="create-btn btn-sm">리뷰 작성하기</button>
-    <button sec:authorize="isAnonymous()" class="create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|">리뷰 작성하기</button>
+  <div class="review-create-box">
+    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm">리뷰 작성하기</button>
+    <button sec:authorize="isAnonymous()" class="review-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|">리뷰 작성하기</button>
   </div>
 
   <div class="review-list-content">
@@ -56,3 +56,47 @@
   </div>
 
 </section>
+
+<script>
+$(document).ready(function () {
+  $(".review-create-btn").click(function () {
+    var width = 700; // 새 창의 너비
+    var height = 500; // 새 창의 높이
+    var left = (window.screen.width - width) / 2;
+    var top = (window.screen.height - height) / 2;
+    var options =
+      "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+
+    window.open("/review/create", "_blank", options);
+  });
+
+  $(".review-container").click(function () {
+    var $reviewContent = $(this).find(".review-content");
+    $reviewContent.toggle();
+    $(".review-content").not($reviewContent).hide();
+  });
+
+  $(".review-modify").click(function () {
+        var reviewId = $(this).data("review-id");
+        var width = 700; // 새 창의 너비
+        var height = 500; // 새 창의 높이
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var options = "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+
+        // 새 창을 열고 review_form.html을 불러옵니다.
+        var newWindow = window.open("/review/modify/" + reviewId, "_blank", options);
+    });
+
+
+    $(".review-delete").click(function () {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            var uri = $(this).data("uri");
+            window.location.href = uri;
+        }
+    });
+
+});
+
+
+</script>

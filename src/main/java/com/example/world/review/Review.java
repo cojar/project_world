@@ -1,5 +1,6 @@
 package com.example.world.review;
 
+import com.example.world.order.ProductOrder;
 import com.example.world.product.Product;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
@@ -27,8 +28,8 @@ public class Review {
     private LocalDateTime modifyDate;
 
     @ManyToOne
-    private Product product;
-    // 리뷰와 연결된 상품
+    private ProductOrder productOrder;
+    // 리뷰와 연결된 주문
 
     @ManyToOne
     private SiteUser author;

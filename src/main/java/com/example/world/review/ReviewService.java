@@ -1,8 +1,7 @@
 package com.example.world.review;
 
 import com.example.world.DataNotFoundException;
-import com.example.world.product.Product;
-import com.example.world.qna.Question;
+import com.example.world.order.ProductOrder;
 import com.example.world.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +32,11 @@ public class ReviewService {
     }
 
 
-    public Review create(Product product, String content, SiteUser author) {
+    public Review create(ProductOrder productOrder, String content, SiteUser author) {
         Review review = new Review();
         review.setContent(content);
         review.setCreateDate(LocalDateTime.now());
-        review.setProduct(product);
+        review.setProductOrder(productOrder);
         review.setAuthor(author);
         this.reviewRepository.save(review);
         return review;

@@ -13,3 +13,35 @@
   </form>
 </section>
 <script>
+
+  $(document).ready(function () {
+  $("#saveBtn").click(function () {
+    var formData = $("#reviewForm").serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "/review/create",
+      data: formData,
+      success: function (data) {
+        // 성공적으로 서버로 데이터를 전송하고 응답을 받았을 때 실행되는 로직입니다.
+        // 서버에서 전달된 응답 데이터를 활용하여 기존 list를 업데이트합니다.
+        // data 변수를 사용하여 서버에서 받은 데이터를 처리합니다.
+        // ...
+
+        alert("문의 등록이 완료되었습니다.");
+        self.close();
+
+        // 기존 리스트 페이지를 새로고침합니다.
+        window.opener.location.reload();
+      },
+      error: function (error) {
+        // 서버로 데이터 전송이 실패했을 때 실행되는 로직입니다.
+        // 오류 처리를 수행하거나 사용자에게 메시지를 보여줄 수 있습니다.
+        console.log(error);
+      }
+    });
+  });
+
+});
+
+</script>

@@ -1,14 +1,15 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<link rel="stylesheet" href="/question_form.css"/>
 <section class="question-write-section">
-    <h3>문의하기</h3>
+    <div class="title">문의하기</div>
     <form th:object="${questionForm}" method="post" class="question-write-form">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div class="question-write-body">
             <textarea th:field="*{content}" placeholder="문의하실 내용을 입력하세요"></textarea>
         </div>
         <div class="write-btn-box">
-            <a href="/question" class="btn-sm cancel">취소</a>
-            <button type="submit" class="btn-sm" id="saveBtn">저장하기</button>
+            <a href="/question" class="btn-sm cancel" id="cancel_button">취소</a>
+            <button type="submit" class="btn-sm" id="submit_button">저장하기</button>
         </div>
     </form>
 </section>
