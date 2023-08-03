@@ -1,14 +1,15 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-<div>
-  <h5 class="my-3 border-bottom pb-2">리뷰 수정</h5>
-  <form th:object="${reviewForm}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-<!--    <div th:replace="~{form_errors :: formErrorsFragment}"></div>-->
-    <div class="mb-3">
-      <label class="form-label">내용</label>
-      <textarea th:field="*{content}" class="form-control" rows="3"></textarea>
+<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<section class="review-write-section">
+  <h3>리뷰</h3>
+  <form th:object="${reviewForm}" method="post" class="review-write-form">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <div class="review-write-body">
+      <textarea th:field="*{content}" placeholder="리뷰 내용을 입력하세요"></textarea>
     </div>
-    <input type="submit" value="저장하기" class="btn">
+    <div class="write-btn-box">
+      <a href="/review" class="btn-sm cancel">취소</a>
+      <button type="submit" class="btn-sm" id="saveBtn">저장하기</button>
+    </div>
   </form>
-</div>
-</html>
+</section>
+<script>

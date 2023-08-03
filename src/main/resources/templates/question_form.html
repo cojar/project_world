@@ -3,11 +3,8 @@
     <h3>문의하기</h3>
     <form th:object="${questionForm}" method="post" class="question-write-form">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <div class="question-write-header">
-            <input type="text" th:field="*{subject}" placeholder="제목">
-        </div>
         <div class="question-write-body">
-            <textarea th:field="*{content}"></textarea>
+            <textarea th:field="*{content}" placeholder="문의하실 내용을 입력하세요"></textarea>
         </div>
         <div class="write-btn-box">
             <a href="/question" class="btn-sm cancel">취소</a>

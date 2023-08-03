@@ -22,11 +22,6 @@ public class Question {
     private Long id;
     //질문 번호
 
-
-    @Size(max = 30)
-    private String subject;
-    // 질문 제목
-
     @Column(columnDefinition = "text")
     private String content;
     //질문 내용
@@ -44,8 +39,6 @@ public class Question {
 
     private LocalDateTime modifyDate;
 
-    @ManyToMany
-    Set<SiteUser> voter;
 
     private boolean answered;
 }

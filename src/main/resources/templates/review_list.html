@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/layout/Product_detail.css"/>
+<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<section th:fragment="review_listFragment" class="review-list-section">
+  <div class="create-box">
+    <button sec:authorize="isAuthenticated()" class="create-btn btn-sm">리뷰 작성하기</button>
+    <button sec:authorize="isAnonymous()" class="create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|">리뷰 작성하기</button>
+  </div>
+
+  <div class="review-list-content">
+    <div class="review-container" th:each="review, loop : ${paging}">
+      <div class="review-header">
+        <span class="review-author" th:text="${review.author.nickname}"></span>
+        <span class="review-score" th:text="${review.score}"></span>
+        <span class="review-create-date" th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd')}"></span>
+        <span class="review-voter" th:text="${review.voter}"></span>
+        <span class="review-subject" th:text="${#strings.length(review.content) > 30 ? #strings.substring(review.content, 0, 30) + '' : review.content.replaceAll('\n', ' ')}"> </span>
+      </div>
+      <div class="review-content">
+        <div class="accordion-content" style="width: 55%; margin-left: 16%">
+          <p th:text="${review.content}"></p>
+          <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
+                  th:data-review-id="${review.id}" class="review-modify">
+            수정
+          </button>
+          <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
+                  th:attr="data-uri=@{/review/delete/{id}(id=${review.id})}" class="review-delete">
+            삭제
+          </button>
+          <p> <hr> 답변내용</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="review-list-foot" th:if="${!paging.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${1}|}">
+          <span>처음</span>
+        </a>
+      </li>
+      <li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
+          th:if="${page >= paging.number - 4 and page <= paging.number + 5}"
+          th:classappend="${page == paging.number} ? 'active'"
+          class="page-item">
+        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+      </li>
+      <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${paging.totalPages}|}">
+          <span>끝</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</section>

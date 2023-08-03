@@ -181,75 +181,9 @@
         <div class="title-box">
             <div class="title">리뷰 남기기</div>
         </div>
-<!--        <div class="review-list" id="review-list" th:each="review : ${reviews}">-->
-<!--            <a th:id="|review_${review.id}|"></a>-->
-<!--            <div class="review-info">-->
-<!--                <div class="left-box">-->
-<!--                    &lt;!&ndash;                        <div class="profile-img">&ndash;&gt;-->
-<!--                    &lt;!&ndash;                            <img alt="" sec:authorize="isAuthenticated()" th:if="${userImg}" th:src="${userImg}"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;                            <img alt="" sec:authorize="isAuthenticated()" src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMyAg/MDAxNjA0MjI5NDA4NDMy.5zGHwAo_UtaQFX8Hd7zrDi1WiV5KrDsPHcRzu3e6b8Eg.IlkR3QN__c3o7Qe9z5_xYyCyr2vcx7L_W1arNFgwAJwg.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_%ED%8C%8C%EC%8A%A4%ED%85%94.jpg?type=w800"&ndash;&gt;-->
-<!--                    &lt;!&ndash;                                 th:unless="${userImg}"/>&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                    <div class="nick-name" th:text="${review.author.nickname}"></div> &lt;!&ndash;유저 닉네임&ndash;&gt;-->
-<!--                    &lt;!&ndash;수정버튼&ndash;&gt;-->
-<!--                    <a class="modify-btn"-->
-<!--                       sec:authorize="isAuthenticated()"-->
-<!--                       th:data-content="${review.content}"-->
-<!--                       th:data-form="|#review_modify_form_${review.id}|"-->
-<!--                       th:if="${review.author != null and #authentication.getPrincipal().getUsername() == review.author.username}"-->
-<!--                       th:onclick="toggleReviewModifyForm(this)"-->
-<!--                       th:text="수정"></a>-->
-<!--                    &lt;!&ndash;삭제버튼&ndash;&gt;-->
-<!--                    <a class="delete delete-btn" href="javascript:void(0);"-->
-<!--                       sec:authorize="isAuthenticated()" th:data-uri="@{|/review/delete/${review.id}|}"-->
-<!--                       th:if="${review.author != null and #authentication.getPrincipal().getUsername() == review.author.username}"-->
-<!--                       th:text="삭제"></a>-->
-<!--                </div>-->
-<!--                <div class="right-box">-->
-<!--                    <div class="product-name" th:each="product : ${product}" th:text="${product.name}"></div>-->
-<!--                    &lt;!&ndash;리뷰에 해당하는 제품 이름&ndash;&gt;-->
-<!--                    <div class="review-date"-->
-<!--                         th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd HH:mm')}"></div> &lt;!&ndash;리뷰 작성일&ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="review">-->
-<!--                <div class="review-text" th:utext="${@commonUtil.markdown(review.content)}"></div> &lt;!&ndash;리뷰 내용&ndash;&gt;-->
-<!--                <div class="modify-review-date"-->
-<!--                     th:if="${review.modifyDate != null}">-->
-<!--                    <div class="modified-at">리뷰 수정됨</div>-->
-<!--                    <div th:text="${#temporals.format(review.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <form class="review-modify hidden" method="post" th:action="@{|/review/modify/${review.id}|}"-->
-<!--                  th:id="|review_modify_form_${review.id}|" th:object="${reviewForm}">-->
-<!--                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>-->
-<!--&lt;!&ndash;                <div th:replace="~{form_errors :: formErrorsFragment}"></div>&ndash;&gt;-->
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">내용</label>-->
-<!--                    <textarea class="form-control" rows="3" th:field="*{content}"></textarea>-->
-<!--                </div>-->
-<!--                <input class="submit-btn" type="submit" value="저장하기">-->
-<!--            </form>-->
-<!--        </div>-->
-
-<!--        <div class="review-form" th:each="product : ${product}">-->
-<!--            <form method="post" name="review" th:action="@{|/review/create/${product.id}|}"-->
-<!--                  th:object="${reviewForm}">-->
-<!--&lt;!&ndash;                <div th:replace="~{form_errors :: formErrorsFragment}"></div>&ndash;&gt;-->
-<!--                <textarea cols="30" disabled name="content" rows="15"-->
-<!--                          sec:authorize="isAnonymous()" th:field="*{content}"></textarea>-->
-<!--                <textarea cols="30" name="content" rows="15" sec:authorize="isAuthenticated()"-->
-<!--                          th:field="*{content}"></textarea>-->
-<!--                <input type="submit" value="리뷰등록">-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    </div>-->
-
     </div>
 
-
+    <div id="question"></div>
 
 
 
@@ -274,6 +208,21 @@ $(document).ready(function() {
             $(".mac-specification").show();
             $(".window-specification").hide();
         }
+    });
+
+    if ($(".window-specification tbody tr").length === 0) {
+        $(".radio-window").addClass("hidden");
+        $(".mac-specification").show();
+        $("#Mac").prop("checked", true);
+    } else if ($(".mac-specification tbody tr").length === 0) {
+        $(".radio-mac").addClass("hidden");
+        $(".window-specification").show();
+        $("#window").prop("checked", true);
+    }
+
+
+    $.get("/question/list", function(data) {
+        $("#question").html(data);
     });
 });
 

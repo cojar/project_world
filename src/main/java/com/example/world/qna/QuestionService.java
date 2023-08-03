@@ -39,9 +39,8 @@ public class QuestionService {
         }
     }
 
-    public void create(String subject, String content, SiteUser user) {
+    public void create(String content, SiteUser user) {
         Question q = new Question();
-        q.setSubject(subject);
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
         q.setAuthor(user);
@@ -49,8 +48,7 @@ public class QuestionService {
         this.questionRepository.save(q);
     }
 
-    public void modify(Question question, String subject, String content) {
-        question.setSubject(subject);
+    public void modify(Question question, String content) {
         question.setContent(content);
         question.setModifyDate(LocalDateTime.now());
         this.questionRepository.save(question);
@@ -60,8 +58,4 @@ public class QuestionService {
         this.questionRepository.delete(question);
     }
 
-    public void vote(Question question, SiteUser siteUser) {
-        question.getVoter().add(siteUser);
-        this.questionRepository.save(question);
-    }
 }

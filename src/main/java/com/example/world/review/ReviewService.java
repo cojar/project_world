@@ -2,12 +2,18 @@ package com.example.world.review;
 
 import com.example.world.DataNotFoundException;
 import com.example.world.product.Product;
+import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +25,14 @@ public class ReviewService {
     @Autowired
     private final ReviewRepository reviewRepository;
 
-    public List<Review> getList () {
-        return this.reviewRepository.findAll();
+    public Page<Review> getList(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.reviewRepository.findAll(pageable);
     }
+
+
     public Review create(Product product, String content, SiteUser author) {
         Review review = new Review();
         review.setContent(content);
@@ -32,18 +43,14 @@ public class ReviewService {
         return review;
     }
 
-    public Review getReview(Long id) {// Integer 로 타입이 들어오면 null 값도 허용해줄 수 있음
+    public Review getReview(Long id) {
         Optional<Review> review = this.reviewRepository.findById(id);
         if (review.isPresent()) {
             return review.get();
         } else {
-            throw new DataNotFoundException("review not found"); // 예외처리로 에러(DataNotFoundException)를 표시
+            throw new DataNotFoundException("question not found");
         }
     }
-    public List<Review> getReviewsByAuthor(SiteUser author) {
-        return reviewRepository.findByAuthor(author);
-    }
-
 
     public List<Review> findAll() {
         return this.reviewRepository.findAll();
@@ -65,3 +72,5 @@ public class ReviewService {
     }
 
 }
+
+
