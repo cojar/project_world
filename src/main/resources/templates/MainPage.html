@@ -11,8 +11,8 @@
 <!-- 메인페이지  -->
 <div class="container-box">
   <div class="serch_line">
-    <input type="text" id="search_kw" class="searchBox" th:value="${kw}" placeholder="상품 검색">
-    <button class="search_button" type="submit" id="btn_search">search</button>
+    <input type="text" id="search_kw" class="searchBox" th:value="${kw}" placeholder="상품명, 개발사명 으로 검색 ">
+    <button class="search_button" type="button" id="btn_search">search</button>
   </div>
   <div class="mainbanner">
     <div class="banner-box">
@@ -64,12 +64,47 @@
   <div class="gameList">
     <div class="gameListTitle-box">
     <span class="gameListTitle">
-      인기게임
+      New Game
     </span>
+    </div>
+    <div class="list-wrap">
+
+      <div class="list">
+        <ul id="holy">
+          <li th:each="product : ${paging}">
+            <a th:href="@{|/product/${product.id}|}">
+              <div class=img-box>
+                <img src="https://cdn.akamai.steamstatic.com/steam/apps/751630/header_292x136.jpg?t=1685527850" alt="">
+              </div>
+              <div class="product-price"><span th:text="${product.price}">20000</span> won</div>
+            </a>
+          </li>
+
+        </ul>
+      </div>
     </div>
 
   </div>
 </div>
+<form th:action="@{/product/list}" method="get" id="searchForm">
+  <input type="hidden" id="kw" name="kw" th:value="${kw}">
+  <input type="hidden" id="page" name="page" th:value="${paging.number}">
+</form>
 <footer th:replace="layout/footer.html"></footer>
+<script layout:fragment="script" type='text/javascript'>
+const page_elements = document.getElementsByClassName("page-link");
+Array.from(page_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        document.getElementById('page').value = this.dataset.page;
+        document.getElementById('searchForm').submit();
+    });
+});
+const btn_search = document.getElementById("btn_search");
+btn_search.addEventListener('click', function() {
+    document.getElementById('kw').value = document.getElementById('search_kw').value;
+    document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+    document.getElementById('searchForm').submit();
+});
+</script>
 </body>
 </html>

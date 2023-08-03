@@ -31,18 +31,16 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Game <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/product/list}">전체</a></li>
-                        <li><a href="#">RPG</a></li>
-                        <li><a href="#">FPS</a></li>
+                        <li><a th:href="@{/product/list/all}">전체</a></li>
+                        <li><a th:href="@{/product/list/RPG}">RPG</a></li>
+                        <li><a th:href="@{/product/list/FPS}">FPS</a></li>
 
-                        <li><a href="#">
-                            스릴러
-                        </a></li>
+                        <li><a th:href="@{/product/list/all}">스릴러</a></li>
 
-                        <li><a href="#">아케이드</a></li>
-                        <li><a href="#">스포츠</a></li>
-                        <li><a href="#">시뮬레이션</a></li>
-                        <li><a href="#">기타</a></li>
+                        <li><a th:href="@{/product/list/all}">아케이드</a></li>
+                        <li><a th:href="@{/product/list/all}">스포츠</a></li>
+                        <li><a th:href="@{/product/list/all}">시뮬레이션</a></li>
+                        <li><a th:href="@{/product/list/all}">기타</a></li>
                     </ul>
                 </li>
                 <li><a th:href="@{/notice/list}">Notice</a></li>
@@ -61,7 +59,7 @@
                        th:href="@{/mypage}">MY PAGE</a></li>
 
 
-                <li><a ssec:authorize="isAnonymous()"
+                <li><a sec:authorize="isAnonymous()"
                        th:href="@{/user/signup}">SIGN UP</a></li>
                 <li><a sec:authorize="isAuthenticated()"
                        th:if="${#authorization.expression('hasRole(''ADMIN'') or hasRole(''SUPER_ADMIN'')')}" th:href="@{/admin/}">ADMIN</a></li>

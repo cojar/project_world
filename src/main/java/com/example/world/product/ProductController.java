@@ -44,11 +44,16 @@ public class ProductController {
 //
 //    }
 
-    @GetMapping("/list")
-    public String root(){
-        return "redirect:/product/list/all";
-    }
 
+
+    @GetMapping("/list")
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Product> paging = this.productService.getSearch(page, kw);
+        model.addAttribute("paging", paging);
+        model.addAttribute("themeKey", "검색어:"+kw);
+        return "product_list";
+    }
 
     @GetMapping(value = "/list/{theme}")
     public String productList(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {

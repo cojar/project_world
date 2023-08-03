@@ -42,6 +42,9 @@ public class ProductOrder {
     @Column(length = 200)
     private String code = "NULL";
 
+
+    @Column(name = "order_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime orderDate;
 
 

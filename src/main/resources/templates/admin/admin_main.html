@@ -63,23 +63,23 @@
 
           <div class="date_content">
             <div class="date_title"><p>기간별 조회. </p></div>
-            <form action="" class="date_form">
+            <form th:action="@{/ad}" th:object="${adminSearchForm}" method="POST" class="date_form">
               <div class="birthday">
                 <p>조회기간 :</p>
-                <input field="*{birthDate}" type="date" placeholder="" class="formdate-control" required="" value="">
+                <input type="datetime-local" th:field="*{start}">
                 <p>~</p>
-                <input field="*{birthDate}" type="date" placeholder="" class="formdate-control" required="" value="">
-                <button type="button" class="date_btn"> 조회하기 </button>
+                <input type="datetime-local" th:field="*{end}">
+                <button type="submit" class="date_btn"> 조회하기 </button>
               </div>
             </form>
             <div class="date_data"><div>
-              <p>판매 건 수 :</p>
-              <p>10(타임리프)</p>
+              <p >판매 건 수 :</p>
+              <p th:text="${listSize}">10(타임리프)</p>
               <p> 건</p>
             </div>
               <div>
                 <p>총 매출 :</p>
-                <p>2,000,000(타임리프)</p>
+                <p th:text="${allPrice}"></p>
                 <p>won</p>
               </div>
             </div>
@@ -100,19 +100,29 @@
 
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // type : 'bar' = 막대차트를 의미합니다.
-            type: 'bar', //
-            data: {
-                labels: ['2023-03','2023-04','2023-05','2023-06','2023-07','2023-08'],
-                datasets: [{
-                    label: '매출 (단위 : 백 만원)',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [1 ,3 ,9 ,2 ,10, 5]
-                }]
-            },
-        });
+    var priceM1 = [[${priceM1}]];
+    var priceM2 = [[${priceM2}]];
+    var priceM3 = [[${priceM3}]];
+    var priceM4 = [[${priceM4}]];
+    var priceM5 = [[${priceM5}]];
+    var month1 = [[${month1}]];
+    var month2 = [[${month2}]];
+    var month3 = [[${month3}]];
+    var month4 = [[${month4}]];
+    var month5 = [[${month5}]];
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [month5, month4, month3, month2, month1],
+            datasets: [{
+                label: '매출 (단위 : 원)',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [priceM5, priceM4, priceM3, priceM2, priceM1]
+            }]
+        },
+    });
 </script>
 </body>
 

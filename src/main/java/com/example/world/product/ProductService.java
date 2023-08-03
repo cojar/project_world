@@ -95,10 +95,34 @@ public class ProductService {
         }
     }
 
+//////////메인페이지 검색 , 페이징 구현 //////////////
+    public Page<Product> allThemeMain(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, 8);
+        return this.productRepository.findAll(pageable);
+    }
 
+    private Specification<Product> search(String kw) {
+        return new Specification<>() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Predicate toPredicate(Root<Product> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                query.distinct(true);  // 중복을 제거
+                return cb.or(cb.like(q.get("productName"), "%" + kw + "%"), // 제목
+                        cb.like(q.get("developer"), "%" + kw + "%"));     // 내용
 
+            }
+        };
+    }
 
+    public Page<Product> getSearch(int page, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
+        Specification<Product> spec = search(kw);
+        return this.productRepository.findAll(spec, pageable);
+    }
 
-
-
+    //////////////////여기까지 메인페이지 구현 ///
 }

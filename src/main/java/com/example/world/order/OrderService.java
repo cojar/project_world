@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -71,6 +72,12 @@ public class OrderService {
 
     public void delete(ProductOrder order) {
         this.orderRepository.delete(order);
+    }
+
+
+
+    public List<ProductOrder> getOrdersBetweenDates(LocalDateTime start, LocalDateTime end) {
+        return this.orderRepository.findByOrderDateBetween(start, end);
     }
 
 
