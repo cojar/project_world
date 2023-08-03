@@ -24,7 +24,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    public Product create(SiteUser username, String productName, String developer, String theme, String price, String content) {
+    public Product create(SiteUser username, String productName, String developer, String theme, int price, String content) {
         Product product = new Product();
 
         product.setUsername(username);
