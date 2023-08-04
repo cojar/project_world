@@ -61,8 +61,8 @@
             <div class="date_title"><p>주문내역 </p></div>
             <div class="btn_line">
               <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
-              <button type="button" class="date_btn"> 결제확인 </button>
-              <button type="button" class="date_btn"> 주문취소 </button>
+              <button type="button" class="date_btn" onclick="adminConfirmOrder()"> 결제확인 </button>
+              <button type="button" class="date_btn" onclick="adminCompleteCancelOrder()"> 주문취소 </button>
             </div>
             <div class="code_input" style="display: none;">
               <input type="text" id="shipmentCode" placeholder="발송할 코드를 입력해주세요">
@@ -83,7 +83,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="orderProduct, loop : ${paging}">
-                  <td class="number" id="selectedOrderId" th:text="${orderProduct.id}">1</td>
+                  <td class="number" id="selectedOrderId" th:text="${orderProduct.id}"></td>
                   <td class="title">
                     <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
                   </td>
@@ -134,6 +134,37 @@
       $('.code_input').css('display', 'block');
     }
 
+    function getSelectedOrderId() {
+        const checkedOrder = $("input[name='orderCheck']:checked");
+
+      if (checkedOrder.length === 1) {
+        return checkedOrder.val();
+      } else {
+        alert("하나의 주문을 선택해주세요.");
+        return null;
+      }
+  }
+
+    function adminConfirmOrder() {
+        const selectedOrderId = getSelectedOrderId();
+
+        if (selectedOrderId !== null) {
+            $.ajax({
+                type: "POST",
+                url: "/ad/confirm/" + selectedOrderId,
+                success: function (response) {
+                    alert("주문 상태가 결제완료로 변경되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("주문 상태 변경에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택해주세요.");
+        }
+    }
+
     function sendShipmentCode() {
         const selectedOrderId = getSelectedOrderId();
         const shipmentCode = document.getElementById("shipmentCode").value;
@@ -161,15 +192,25 @@
         }
     }
 
-  function getSelectedOrderId() {
-    const checkedOrder = $("input[name='orderCheck']:checked");
-    if (checkedOrder.length === 1) {
-      return checkedOrder.val();
-    } else {
-      alert("하나의 주문을 선택해주세요.");
-      return null;
+    function adminCompleteCancelOrder() {
+        const selectedOrderId = getSelectedOrderId();
+
+        if (selectedOrderId !== null) {
+            $.ajax({
+                type: "POST",
+                url: "/ad/completeCancel/" + selectedOrderId,
+                success: function (response) {
+                    alert("주문 상태가 취소완료로 변경되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("주문 상태 변경에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택해주세요.");
+        }
     }
-  }
 </script>
 </body>
 </html>

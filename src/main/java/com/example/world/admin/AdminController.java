@@ -9,6 +9,7 @@ import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
 import com.example.world.product.ProductService;
 import com.example.world.user.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,12 @@ public class AdminController {
         return "admin/admin_order";
     }
 
+    @PostMapping("/ad/confirm/{id}")
+    public ResponseEntity<String> adminConfirmOrder(@PathVariable Long id) {
+        orderService.updateOrderStatus(id, "결제완료");
+        return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
+    }
+
     @GetMapping("/ad/code/{id}")
     public String adminSendCode(@PathVariable("id") Long id, @RequestParam(value = "sendCode", defaultValue = "") String sendCode) {
         ProductOrder productOrder = orderService.getOrder(id);
@@ -55,20 +62,11 @@ public class AdminController {
         }
     }
 
-
-    @PostMapping("/ad/confirm/{id}")
-    public String adminConfirmOrder(@PathVariable Long id) {
-        orderService.updateOrderStatus(id, "결제완료");
-        return "redirect:/ad/order";
-    }
-
-
-    @PostMapping("/ad/cancel/{id}")
-    public String adminCancelOrder(@PathVariable Long id) {
+    @PostMapping("/ad/completeCancel/{id}")
+    public ResponseEntity<String> adminCompleteCancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "취소완료");
-        return "redirect:/ad/order";
+        return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
     }
-
 
     @GetMapping("/ad/product")
     public String adminProduct() {
