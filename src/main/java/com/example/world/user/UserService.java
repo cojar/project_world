@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import static com.example.world.user.UserRole.ADMIN;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -152,6 +154,13 @@ public class UserService {
             throw new Exception("유효하지 않은 이메일 또는 메일 키입니다.");
         }
     }
+
+//    public void adminPlus(Long id, String roleAdmin) {
+//        Optional<SiteUser> user = this.userRepository.findById(id);
+//        UserRole role = ADMIN;
+//        user.setRole(role);
+//
+//    }
 
 
     //    public CurrentUser updateUser(String newUsername, String newPassword) {

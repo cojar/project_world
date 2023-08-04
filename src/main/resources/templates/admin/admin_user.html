@@ -84,22 +84,16 @@
                   <th class="name">닉네임</th>
                   <th class="name">생년월일</th>
                   <th class="date">권한 상태</th>
-                  <th class="inquiry">회원정보수정</th>
                   <th class="button_menu">선택</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${productList}">
-                  <td class="number" th:text="${product.id}">1</td>
-                  <td class="title">
-                    <a
-                            th:href="@{|/product/detail/${product.id}|}"                         th:text="${product.name}"
-                    > test@test.test</a>
-                  </td>
-                  <td class="nickname" th:text="${product.theme}">아무개</td>
-                  <td class="nickname" th:text="${product.price}">2001.01.01</td>
-                  <td class="date" th:text=“${오더사이즈}”>1</td>
-                  <td class="inquiry" > <a href=""><button>수정</button></a></td>
+                <tr th:each="user : ${paging}">
+                  <td class="number" th:text="${user.id}">1</td>
+                  <td class="title" th:text="${user.username}"></td>
+                  <td class="nickname" th:text="${user.nickname}">아무개</td>
+                  <td class="nickname" th:text="${user.birthDate}">2001.01.01</td>
+                  <td class="date" th:text="${user.role.value}">1</td>
                   <td class="button_menu">
                     <label class="order_check"><input type="checkbox" name="orderCheck"  > </label>
 
@@ -107,7 +101,29 @@
                 </tr>
                 </tbody>
               </table>
-
+<!--        페이징     -->
+              <!-- 페이징처리 시작 -->
+              <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                    <a class="page-link" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                      <span>이전</span>
+                    </a>
+                  </li>
+                  <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                      th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                      th:classappend="${page == paging.number} ? 'active'"
+                      class="page-item">
+                    <a th:text="${page+1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                  </li>
+                  <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                      <span>다음</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- 페이징처리 끝 -->
 
 
               <!--    리스트 -->                   </div>

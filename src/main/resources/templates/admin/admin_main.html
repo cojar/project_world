@@ -73,12 +73,12 @@
               </div>
             </form>
             <div class="date_data"><div>
-              <p >판매 건 수 :</p>
+              <p >기간 내 판매 건 수 :</p>
               <p th:text="${listSize}">10(타임리프)</p>
               <p> 건</p>
             </div>
               <div>
-                <p>총 매출 :</p>
+                <p>기간 내 총 매출 :</p>
                 <p th:text="${allPrice}"></p>
                 <p>won</p>
               </div>
@@ -105,12 +105,13 @@
     var priceM3 = [[${priceM3}]];
     var priceM4 = [[${priceM4}]];
     var priceM5 = [[${priceM5}]];
-    var month1 = [[${month1}]];
-    var month2 = [[${month2}]];
-    var month3 = [[${month3}]];
-    var month4 = [[${month4}]];
-    var month5 = [[${month5}]];
+    var month1 = '[[${month1}]]';
+    var month2 = '[[${month2}]]';
+    var month3 = '[[${month3}]]';
+    var month4 = '[[${month4}]]';
+    var month5 = '[[${month5}]]';
 
+    console.log(month4.toString())
     var chart = new Chart(ctx, {
         type: 'bar',
         data: {

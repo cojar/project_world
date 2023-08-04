@@ -3,12 +3,15 @@ package com.example.world.admin;
 import com.example.world.order.OrderRepository;
 import com.example.world.order.ProductOrder;
 import com.example.world.product.Product;
+import com.example.world.user.SiteUser;
+import com.example.world.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +27,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
     public Page<ProductOrder> getList(int page, int size) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -55,4 +59,10 @@ public class AdminService {
         return yearMonth;
     }
 
+    public Page<SiteUser> getUserList(int page) {
+        List<Sort.Order> sorts= new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page,10,Sort.by(sorts));
+        return this.userRepository.findAll(pageable);
+    }
 }

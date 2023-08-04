@@ -4,6 +4,7 @@ import com.example.world.notice.Notice;
 import com.example.world.notice.NoticeForm;
 import com.example.world.notice.NoticeService;
 import com.example.world.product.Product;
+import com.example.world.user.SiteUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
 import com.example.world.product.ProductService;
 import com.example.world.user.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -94,11 +96,11 @@ public class AdminController {
         int priceM3 = this.adminService.requestMonthPrice(this.adminService.MonthMinus(2));
         int priceM4 = this.adminService.requestMonthPrice(this.adminService.MonthMinus(3));
         int priceM5 = this.adminService.requestMonthPrice(this.adminService.MonthMinus(4));
-        YearMonth month1 = YearMonth.now();
-        YearMonth month2 = this.adminService.MonthMinus(1);
-        YearMonth month3 = this.adminService.MonthMinus(2);
-        YearMonth month4 = this.adminService.MonthMinus(3);
-        YearMonth month5 = this.adminService.MonthMinus(4);
+        String month1 = YearMonth.now().toString();
+        String month2 = this.adminService.MonthMinus(1).toString();
+        String month3 = this.adminService.MonthMinus(2).toString();
+        String month4 = this.adminService.MonthMinus(3).toString();
+        String month5 = this.adminService.MonthMinus(4).toString();
 
         model.addAttribute("month1",month1);
         model.addAttribute("month2",month2);
@@ -114,6 +116,7 @@ public class AdminController {
         model.addAttribute("allPrice",formattedAllPrice);
         return "admin/admin_main";
     }
+
 
 
     @GetMapping("/ad/order")
@@ -161,10 +164,17 @@ public class AdminController {
 
 
     @GetMapping("/ad/user")
-    public String adminUser() {
+    public String adminUser(Model model , @RequestParam(value = "page",defaultValue = "0")int page) {
+        Page<SiteUser> userList = this.adminService.getUserList(page);
+        model.addAttribute("paging",userList);
         return "admin/admin_user";
     }
 
+    @PostMapping("/ad/user/adminPlus{id}")
+    public ResponseEntity<String> adminPlus(@PathVariable Long id) {
+        userService.adminPlus(id, "ROLE_ADMIN");
+        return ResponseEntity.ok("관리자가 성공적으로 추가되었습니다.");
+    }
 
     @GetMapping("/ad/review")
     public String adminReview() {
