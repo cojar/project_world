@@ -2,6 +2,7 @@ package com.example.world.admin;
 
 import com.example.world.notice.Notice;
 import com.example.world.notice.NoticeService;
+import com.example.world.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.example.world.order.OrderService;
@@ -10,10 +11,7 @@ import com.example.world.product.ProductService;
 import com.example.world.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,8 +23,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final OrderService orderService;
-    private final ProductService productService;
-    private final UserService userService;
+    private final OrderRepository orderRepository;
 
 
     @GetMapping("/ad")
@@ -45,19 +42,19 @@ public class AdminController {
         return "admin/admin_order";
     }
 
-
-    @PostMapping("/ad/code/{id}")
-    public String adminSendCode(@PathVariable("id") Long id,
-                                @RequestParam(value = "sendCode", required = false) String sendCode) {
-        ProductOrder productOrder = this.orderService.getOrder(id);
-
-        if (id != null && sendCode != null && !sendCode.isEmpty()) {
-            orderService.updateOrderSendCode(productOrder);
+    @GetMapping("/ad/code/{id}")
+    public String adminSendCode(@PathVariable("id") Long id, @RequestParam(value = "sendCode", defaultValue = "") String sendCode) {
+        ProductOrder productOrder = orderService.getOrder(id);
+        if (productOrder != null) {
+            productOrder.setCode(sendCode);
+            productOrder.setOrderStatus("발송완료");
+            orderRepository.save(productOrder);
             return "redirect:/ad/order";
         } else {
             return "redirect:/ad/order";
         }
     }
+
 
     @PostMapping("/ad/confirm/{id}")
     public String adminConfirmOrder(@PathVariable Long id) {

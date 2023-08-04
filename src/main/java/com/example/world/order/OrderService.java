@@ -55,13 +55,17 @@ public class OrderService {
         }
     }
 
-    public void updateOrderSendCode(ProductOrder productOrder) {
-        ProductOrder order = new ProductOrder();
-        order.setCode(productOrder.getCode());
-        order.setOrderStatus(productOrder.getOrderStatus());
-        this.orderRepository.save(order);
-        //id값에 해당하는 데이터베이스의 한 줄
+    public void updateOrderSendCode(Long id, String sendCode) {
+        ProductOrder productOrder = getOrder(id);
+        if (productOrder != null) {
+            productOrder.setCode(sendCode); // 발송 코드를 업데이트합니다.
+            productOrder.setOrderStatus("발송완료"); // 주문 상태도 설정합니다. 필요시 수정 가능합니다.
+            this.orderRepository.save(productOrder);
+        } else {
+            throw new IllegalArgumentException("주문을 찾을 수 없습니다. id: " + id);
+        }
     }
+
 
     public void cancleOrder(Long id) {
         ProductOrder productOrder = getOrder(id);

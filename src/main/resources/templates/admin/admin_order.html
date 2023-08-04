@@ -130,38 +130,36 @@
 </div>
 
 <script th:inline="javascript">
-  function showCodeInput() {
-    $('.code_input').css('display', 'block');
-  }
-
-function sendShipmentCode() {
-    const selectedOrderId = getSelectedOrderId();
-    const shipmentCode = document.getElementById("shipmentCode").value;
-
-    console.log("Selected Order ID:", selectedOrderId);
-    console.log("Shipment Code:", shipmentCode);
-
-    if (selectedOrderId !== null && shipmentCode !== "") {
-      $.ajax({
-        type: "POST",
-        url: "/ad/code/${getSelectedOrderId()}",
-        data: {
-          id: selectedOrderId,
-          sendCode: shipmentCode,
-          orderStatus: "발송완료"
-        },
-        success: function (response) {
-          alert("발송 코드가 저장되었습니다.");
-          window.location.reload();
-        },
-        error: function () {
-          alert("발송 코드 저장에 실패하였습니다.");
-        }
-      });
-    } else {
-      alert("주문을 선택하고 발송 코드를 입력해주세요.");
+    function showCodeInput() {
+      $('.code_input').css('display', 'block');
     }
-  }
+
+    function sendShipmentCode() {
+        const selectedOrderId = getSelectedOrderId();
+        const shipmentCode = document.getElementById("shipmentCode").value;
+
+        console.log("Selected Order ID:", selectedOrderId);
+        console.log("Shipment Code:", shipmentCode);
+
+        if (selectedOrderId !== null && shipmentCode !== "") {
+            $.ajax({
+                type: "GET",
+                url: `/ad/code/${selectedOrderId}`,
+                data: {
+                    sendCode: shipmentCode
+                },
+                success: function (response) {
+                    alert("발송 코드가 저장되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("발송 코드 저장에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택하고 발송 코드를 입력해주세요.");
+        }
+    }
 
   function getSelectedOrderId() {
     const checkedOrder = $("input[name='orderCheck']:checked");

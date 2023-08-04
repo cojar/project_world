@@ -40,7 +40,7 @@ public class ProductOrder {
     private String orderStatus = "주문완료";
 
     @Column(length = 200)
-    private String code = "NULL";
+    private String code;
 
     private LocalDateTime orderDate;
 
