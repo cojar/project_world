@@ -2,6 +2,8 @@ package com.example.world.product;
 
 
 import com.example.world.DataNotFoundException;
+import com.example.world.order.OrderRepository;
+import com.example.world.order.ProductOrder;
 import com.example.world.user.SiteUser;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
     public Product create(SiteUser username, String productName, String developer, String theme, int price, String content) {
         Product product = new Product();
 
@@ -95,10 +98,15 @@ public class ProductService {
         }
     }
 
+    public Page<Product> getList(int page, int size) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
+        return this.productRepository.findAll(pageable);
+    }
 
-
-
-
-
+    public List<Product> getProductList() {
+        return this.productRepository.findAll();
+    }
 
 }

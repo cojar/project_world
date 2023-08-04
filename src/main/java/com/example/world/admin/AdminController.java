@@ -3,6 +3,7 @@ package com.example.world.admin;
 import com.example.world.notice.Notice;
 import com.example.world.notice.NoticeService;
 import com.example.world.order.OrderRepository;
+import com.example.world.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.example.world.order.OrderService;
@@ -21,10 +22,10 @@ import java.util.List;
 public class AdminController {
 
     private final NoticeService noticeService;
-
     private final AdminService adminService;
     private final OrderService orderService;
     private final OrderRepository orderRepository;
+    private final ProductService productService;
 
 
     @GetMapping("/ad")
@@ -69,10 +70,19 @@ public class AdminController {
     }
 
     @GetMapping("/ad/product")
-    public String adminProduct() {
+    public String adminProduct(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        Page<Product> paging = this.productService.getList(page, size);
+        List<Product> productList = this.productService.getProductList();
+        long completedOrderCount = orderService.getCompletedOrderCount();
+        model.addAttribute("paging", paging);
+        model.addAttribute("productList", productList);
+        model.addAttribute("completedOrderCount", completedOrderCount);
+
+        System.out.println(completedOrderCount);
+
         return "admin/admin_product";
     }
-
 
     @GetMapping("/ad/user")
     public String adminUser() {

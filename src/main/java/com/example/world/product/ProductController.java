@@ -224,5 +224,4 @@ public class ProductController {
         return "product_list";
     }
 
-
 }
