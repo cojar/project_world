@@ -39,7 +39,7 @@ public class AdminController {
     private final UserService userService;
 
 
-    @GetMapping("/ad")
+    @GetMapping("/admin/")
     public String adminMain(Model model,AdminSearchForm adminSearchForm) {
         int num=0;
         int priceM1 = this.adminService.requestMonthPrice(YearMonth.now());
@@ -69,7 +69,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/ad")
+    @PostMapping("/admin/")
     public String adminMainSearsh(Model model, @Valid AdminSearchForm adminSearchForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/ad/order";
@@ -163,17 +163,22 @@ public class AdminController {
     }
 
 
-    @GetMapping("/ad/user")
+    @GetMapping("/admin/user")
     public String adminUser(Model model , @RequestParam(value = "page",defaultValue = "0")int page) {
         Page<SiteUser> userList = this.adminService.getUserList(page);
         model.addAttribute("paging",userList);
         return "admin/admin_user";
     }
 
-    @PostMapping("/ad/user/adminPlus{id}")
-    public ResponseEntity<String> adminPlus(@PathVariable Long id) {
-        userService.adminPlus(id, "ROLE_ADMIN");
+    @PostMapping("/admin/user/adminPlus/{id}")
+    public ResponseEntity<String> adminPlus(@PathVariable("id") Long id) throws Exception {
+        userService.adminPlus(id);
         return ResponseEntity.ok("관리자가 성공적으로 추가되었습니다.");
+    }
+    @PostMapping("/admin/user/adminMinus/{id}")
+    public ResponseEntity<String> adminMinus(@PathVariable("id") Long id) throws Exception {
+        userService.adminMinus(id);
+        return ResponseEntity.ok("관리자 권한이 성공적으로 회수 되었습니다.");
     }
 
     @GetMapping("/ad/review")

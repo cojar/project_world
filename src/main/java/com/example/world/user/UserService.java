@@ -2,6 +2,10 @@ package com.example.world.user;
 
 import com.example.world.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import static com.example.world.user.UserRole.ADMIN;
+import static com.example.world.user.UserRole.USER;
 
 @RequiredArgsConstructor
 @Service
@@ -155,13 +157,30 @@ public class UserService {
         }
     }
 
-//    public void adminPlus(Long id, String roleAdmin) {
-//        Optional<SiteUser> user = this.userRepository.findById(id);
-//        UserRole role = ADMIN;
-//        user.setRole(role);
-//
-//    }
-    //
+    public void adminPlus(Long id ) throws Exception {
+        SiteUser user = this.userRepository.getReferenceById(id);
+        user.setRole(ADMIN);
+        this.userRepository.save(user);
+
+        Optional<SiteUser> _siteUser = this.userRepository.findById(id);
+        if (_siteUser.isEmpty()) {
+            throw new UsernameNotFoundException("사용자를 찾을수 없습니다.");
+        }
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+
+    }
+
+    public void adminMinus(Long id ) throws Exception {
+        SiteUser user = this.userRepository.getReferenceById(id);
+        user.setRole(USER);
+        this.userRepository.save(user);
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
+
+    }
+
 
 
     //    public CurrentUser updateUser(String newUsername, String newPassword) {

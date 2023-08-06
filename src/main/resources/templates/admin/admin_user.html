@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="/layout/admin.css"/>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -15,7 +16,7 @@
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
       <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
     </button>
-    <a class="navbar-brand" href="#"><img class="rogoimg" src="https://i.postimg.cc/qRMyWWkr/image.png"/></a>
+    <a class="navbar-brand" th:href="@{/}"><img class="rogoimg" src="https://i.postimg.cc/qRMyWWkr/image.png"/></a>
   </div>
   <!-- navbar-header-->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -29,30 +30,30 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin/}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
+        <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
+        <a th:href="@{/admin/product}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
+        <a th:href="@{/admin/user}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
+        <a th:href="@{/admin/review}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
+        <a th:href="@{/admin/qna}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
+        <a th:href="@{/admin/notice}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
       </li>
     </ul>
   </div>
+
   <!-- /#sidebar-wrapper -->
   <!-- Page Content -->
   <div id="page-content-wrapper">
@@ -64,8 +65,8 @@
           <div class="date_content">
             <div class="date_title"><p>회원 관리 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn"> 관리자권한 부여 </button>
-              <button type="button" class="date_btn"> 관리자권한 회수 </button>
+              <button type="button" class="date_btn" id="adminPlus" > 관리자권한 부여 </button>
+              <button type="button" class="date_btn" id="adminMinus"> 관리자권한 회수 </button>
 
             </div>
 
@@ -89,13 +90,13 @@
                 </thead>
                 <tbody>
                 <tr th:each="user : ${paging}">
-                  <td class="number" th:text="${user.id}">1</td>
+                  <td class="number" th:text="${user.id}"></td>
                   <td class="title" th:text="${user.username}"></td>
                   <td class="nickname" th:text="${user.nickname}">아무개</td>
                   <td class="nickname" th:text="${user.birthDate}">2001.01.01</td>
                   <td class="date" th:text="${user.role.value}">1</td>
                   <td class="button_menu">
-                    <label class="order_check"><input type="checkbox" name="orderCheck"  > </label>
+                    <label class="order_check"><input type="checkbox" name="userCheck"  > </label>
 
                   </td>
                 </tr>
@@ -138,6 +139,72 @@
 <!-- /#wrapper -->
 <!-- jQuery -->
 
+<script>
+  $(document).ready(function () {
+    $("#adminPlus").on("click", function () {
+      adminConfirmOrder(); // 버튼이 클릭되면 adminConfirmOrder 함수를 실행합니다.
+    });
+  });
+
+
+  function getSelectedUserId() {
+    const checkedUsers = $("input[name='userCheck']:checked");
+    if (checkedUsers.length === 1) {
+      return checkedUsers.first().closest('tr').find('.number').text();
+    } else {
+      alert("하나의 유저를 선택해주세요.");
+      return null;
+    }
+  }
+
+  function adminConfirmOrder() {
+    const selectedUserId = getSelectedUserId();
+
+    if (selectedUserId !== null) {
+      $.ajax({
+        type: "POST",
+        url: "/admin/user/adminPlus/" + selectedUserId,
+        success: function (response) {
+          alert("관리자로 변경되었습니다.");
+          window.location.reload();
+        },
+        error: function () {
+          alert("관리자 변경이 실패했습니다.");
+        }
+      });
+    } else {
+      alert("변경할 회원을 선택해주세요.");
+    }
+  }
+ //마이너스
+
+  $(document).ready(function () {
+    $("#adminMinus").on("click", function () {
+      adminMinus(); // 버튼이 클릭되면 adminMinus 함수를 실행합니다.
+    });
+  });
+
+
+  function adminMinus() {
+    const selectedUserId = getSelectedUserId();
+
+    if (selectedUserId !== null) {
+      $.ajax({
+        type: "POST",
+        url: "/admin/user/adminMinus/" + selectedUserId,
+        success: function (response) {
+          alert("관리자 권한이 회수되었습니다.");
+          window.location.reload();
+        },
+        error: function () {
+          alert("관리자 변경이 실패했습니다.");
+        }
+      });
+    } else {
+      alert("변경할 회원을 선택해주세요.");
+    }
+  }
+</script>
 
 </body>
 </html>

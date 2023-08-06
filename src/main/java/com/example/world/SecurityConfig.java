@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.authorizeRequests(
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers("/admin/**").
-                                hasAnyRole("ADMIN", "SUPER_ADMIN")
+                                hasAnyRole("ROLE_ADMIN", "SUPER_ADMIN","ADMIN")
                                 .requestMatchers("/**")
                                 .permitAll()
                 )
