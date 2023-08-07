@@ -1,5 +1,6 @@
 package com.example.world.product;
 
+import com.example.world.order.ProductOrder;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
@@ -48,7 +49,6 @@ public class ProductController {
     public String root(){
         return "redirect:/product/list/all";
     }
-
 
     @GetMapping(value = "/list/{theme}")
     public String productList(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -103,14 +103,12 @@ public class ProductController {
         return "product_list";
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String create(Model model, ProductForm productForm, Principal principal) {
 
-
         SiteUser username = this.userService.getUserByUsername(principal.getName());
-        productForm.setUsername(username.getUsername());
+        //productForm.setUsername(username.getUsername());
 
         List<WindowMinForm> windowMinList = new ArrayList<>();
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
@@ -136,7 +134,6 @@ public class ProductController {
 
         SiteUser username = this.userService.getUserByUsername(principal.getName());
 
-//        // 상품 기본정보 저장
         Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
 
@@ -187,7 +184,6 @@ public class ProductController {
                         macRecommendedForm.getGraphics(), macRecommendedForm.getStorage(), macRecommendedForm.getDirectAccess(), macRecommendedForm.getNetwork(), product);
             }
         }
-
 
         return String.format("redirect:/product/%s", product.getId());
     }
