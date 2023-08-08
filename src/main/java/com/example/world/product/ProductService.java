@@ -230,5 +230,20 @@ public class ProductService {
         return this.productRepository.findAll(spec, pageable);
     }
 
+
     //////////////////여기까지 메인페이지 구현 ///
+
+    public Page<Product> sortHighMain(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("price"));
+        Pageable pageable = PageRequest.of(page, 16);
+        return this.productRepository.findAll(pageable);
+    }
+
+    public Page<Product> sortLowMain(int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.asc("price"));
+        Pageable pageable = PageRequest.of(page, 16);
+        return this.productRepository.findAll(pageable);
+    }
 }

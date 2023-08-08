@@ -14,7 +14,7 @@
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
-    <h4>사용자명(타임리프) <span>#회원번호(타임리프)</span></h4>
+    <h4><span th:text='${user.nickname}'></span><span th:text='${"#"+user.id}'>#회원번호(타임리프)</span></h4>
 
   </div>
   <div class="content">
@@ -22,7 +22,7 @@
       <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
       <ul class="posts">
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/order}">
             <div class="icon">
               <i class="fas fa-money-check-alt"></i>
             </div>
@@ -64,7 +64,7 @@
           </a>
         </li>
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/review}">
             <div class="icon">
               <i class="	fas fa-sticky-note"></i>
             </div>
@@ -86,7 +86,7 @@
           </a>
         </li>
         <li class="design">
-          <a href="#">
+          <a th:href="@{/mypage/qna}">
             <div class="icon">
               <i class="	fas fa-sticky-note"></i>
             </div>
@@ -107,7 +107,7 @@
           </a>
         </li>
         <li class="general">
-          <a href="#">
+          <a th:href="@{/mypage/user}">
             <div class="icon">
               <i class="fas fa-user-cog"></i>
             </div>
@@ -124,12 +124,12 @@
     </div>
     <div class="side">
       <h5>User E-mail</h5>
-      <p>이메일(타임리프)</p>
-      <h5>Date of enrollment</h5>
-      <p>가입일(타임리프)</p>
+      <p th:text='${user.username}'>이메일(타임리프)</p>
+      <h5>User BirthDate</h5>
+      <p th:text='${user.birthDate}'>생년월일(타임리프)</p>
     </div>
   </div>
 </div>
-
+<footer th:replace="layout/footer.html"></footer>
 </body>
 </html>
