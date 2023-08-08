@@ -1,5 +1,6 @@
 package com.example.world.product;
 
+import com.example.world.order.ProductOrder;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
@@ -44,15 +45,9 @@ public class ProductController {
 //
 //    }
 
-
-
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Product> paging = this.productService.getSearch(page, kw);
-        model.addAttribute("paging", paging);
-        model.addAttribute("themeKey", "검색어:"+kw);
-        return "product_list";
+    public String root(){
+        return "redirect:/product/list/all";
     }
 
     @GetMapping(value = "/list/{theme}")
@@ -108,14 +103,12 @@ public class ProductController {
         return "product_list";
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String create(Model model, ProductForm productForm, Principal principal) {
 
-
         SiteUser username = this.userService.getUserByUsername(principal.getName());
-        productForm.setUsername(username.getUsername());
+        //productForm.setUsername(username.getUsername());
 
         List<WindowMinForm> windowMinList = new ArrayList<>();
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
@@ -141,7 +134,6 @@ public class ProductController {
 
         SiteUser username = this.userService.getUserByUsername(principal.getName());
 
-//        // 상품 기본정보 저장
         Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
 
@@ -193,7 +185,6 @@ public class ProductController {
             }
         }
 
-
         return String.format("redirect:/product/%s", product.getId());
     }
 
@@ -228,6 +219,5 @@ public class ProductController {
         model.addAttribute("themeKey", key);
         return "product_list";
     }
-
 
 }

@@ -28,25 +28,25 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
+        <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
+        <a th:href="@{/admin/product}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
+        <a th:href="@{/admin/user}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
+        <a th:href="@{/admin/review}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
+        <a th:href="@{/admin/qna}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
+        <a th:href="@{/admin/notice}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
       </li>
     </ul>
   </div>
@@ -61,8 +61,8 @@
             <div class="date_title"><p>주문내역 </p></div>
             <div class="btn_line">
               <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
-              <button type="button" class="date_btn"> 결제확인 </button>
-              <button type="button" class="date_btn"> 주문취소 </button>
+              <button type="button" class="date_btn" onclick="adminConfirmOrder()"> 결제확인 </button>
+              <button type="button" class="date_btn" onclick="adminCompleteCancelOrder()"> 주문취소 </button>
             </div>
             <div class="code_input" style="display: none;">
               <input type="text" id="shipmentCode" placeholder="발송할 코드를 입력해주세요">
@@ -83,7 +83,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="orderProduct, loop : ${paging}">
-                  <td class="number" id="selectedOrderId" th:text="${orderProduct.id}">1</td>
+                  <td class="number" id="selectedOrderId" th:text="${orderProduct.id}"></td>
                   <td class="title">
                     <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
                   </td>
@@ -130,48 +130,87 @@
 </div>
 
 <script th:inline="javascript">
-  function showCodeInput() {
-    $('.code_input').css('display', 'block');
+    function showCodeInput() {
+      $('.code_input').css('display', 'block');
+    }
+
+    function getSelectedOrderId() {
+        const checkedOrder = $("input[name='orderCheck']:checked");
+
+      if (checkedOrder.length === 1) {
+        return checkedOrder.val();
+      } else {
+        alert("하나의 주문을 선택해주세요.");
+        return null;
+      }
   }
 
-function sendShipmentCode() {
-    const selectedOrderId = getSelectedOrderId();
-    const shipmentCode = document.getElementById("shipmentCode").value;
+    function adminConfirmOrder() {
+        const selectedOrderId = getSelectedOrderId();
 
-    console.log("Selected Order ID:", selectedOrderId);
-    console.log("Shipment Code:", shipmentCode);
-
-    if (selectedOrderId !== null && shipmentCode !== "") {
-      $.ajax({
-        type: "POST",
-        url: "/ad/code/${getSelectedOrderId()}",
-        data: {
-          id: selectedOrderId,
-          sendCode: shipmentCode,
-          orderStatus: "발송완료"
-        },
-        success: function (response) {
-          alert("발송 코드가 저장되었습니다.");
-          window.location.reload();
-        },
-        error: function () {
-          alert("발송 코드 저장에 실패하였습니다.");
+        if (selectedOrderId !== null) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/confirm/" + selectedOrderId,
+                success: function (response) {
+                    alert("주문 상태가 결제완료로 변경되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("주문 상태 변경에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택해주세요.");
         }
-      });
-    } else {
-      alert("주문을 선택하고 발송 코드를 입력해주세요.");
     }
-  }
 
-  function getSelectedOrderId() {
-    const checkedOrder = $("input[name='orderCheck']:checked");
-    if (checkedOrder.length === 1) {
-      return checkedOrder.val();
-    } else {
-      alert("하나의 주문을 선택해주세요.");
-      return null;
+    function sendShipmentCode() {
+        const selectedOrderId = getSelectedOrderId();
+        const shipmentCode = document.getElementById("shipmentCode").value;
+
+        console.log("Selected Order ID:", selectedOrderId);
+        console.log("Shipment Code:", shipmentCode);
+
+        if (selectedOrderId !== null && shipmentCode !== "") {
+            $.ajax({
+                type: "GET",
+                url: `/admin/code/${selectedOrderId}`,
+                data: {
+                    sendCode: shipmentCode
+                },
+                success: function (response) {
+                    alert("발송 코드가 저장되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("발송 코드 저장에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택하고 발송 코드를 입력해주세요.");
+        }
     }
-  }
+
+    function adminCompleteCancelOrder() {
+        const selectedOrderId = getSelectedOrderId();
+
+        if (selectedOrderId !== null) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/completeCancel/" + selectedOrderId,
+                success: function (response) {
+                    alert("주문 상태가 취소완료로 변경되었습니다.");
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("주문 상태 변경에 실패하였습니다.");
+                }
+            });
+        } else {
+            alert("주문을 선택해주세요.");
+        }
+    }
 </script>
 </body>
 </html>

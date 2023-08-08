@@ -8,7 +8,8 @@
 </head>
 <nav th:replace="layout/navbar.html"></nav>
 <section class="product-form-section">
-    <form class="product-form"  th:action="@{/product/create}" th:object="${productForm}" method="post">
+    <form class="product-form" th:object="${productForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="form-container">
             <div class="menu">게임명</div>
             <label for="productName">
