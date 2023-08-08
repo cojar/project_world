@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,8 @@ public class Notice {
     private String subject;
 
     private LocalDate createDate;
+
+    private LocalDate modifyDate;
 
     @Column(columnDefinition = "text")
     private String content;
