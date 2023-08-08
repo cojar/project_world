@@ -14,6 +14,7 @@ import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
+import com.example.world.review.Review;
 import com.example.world.user.SiteUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,13 +48,13 @@ public class AdminController {
     private final ProductService productService;
 
 
-    @GetMapping("/ad")
+    @GetMapping("/admin")
     public String adminMain() {
         return "admin/admin_main";
     }
 
 
-    @GetMapping("/ad/order")
+    @GetMapping("/admin/order")
     public String adminOrder(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<ProductOrder> paging = this.adminService.getList(page, size);
         List<ProductOrder> orderProductList = this.orderService.getOrderList();
@@ -63,18 +64,18 @@ public class AdminController {
         return "admin/admin_order";
     }
 
-    @PostMapping("/ad/confirm/{id}")
+    @PostMapping("/admin/confirm/{id}")
     public ResponseEntity<String> adminConfirmOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "결제완료");
         return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
     }
 
-    @GetMapping("/ad/code/{id}")
+    @GetMapping("/admin/code/{id}")
     public String adminSendCode(@PathVariable("id") Long id, @RequestParam(value = "sendCode", defaultValue = "") String sendCode) {
         ProductOrder productOrder = orderService.getOrder(id);
         if (productOrder != null) {
             productOrder.setCode(sendCode);
-            productOrder.setOrderStatus("발송완료");
+            productOrder.setOrderStatus("주문완료");
             orderRepository.save(productOrder);
             return "redirect:/ad/order";
         } else {
@@ -82,13 +83,13 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/ad/completeCancel/{id}")
+    @PostMapping("/admin/completeCancel/{id}")
     public ResponseEntity<String> adminCompleteCancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "취소완료");
         return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
     }
 
-    @GetMapping("/ad/product")
+    @GetMapping("/admin/product")
     public String adminProduct(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Page<Product> paging = this.productService.getList(page, size);
@@ -101,14 +102,17 @@ public class AdminController {
         return "admin/admin_product";
     }
 
-    @DeleteMapping("/ad/product/delete/{id}")
-    public String adminProductDelete(@PathVariable("id") Long id) {
-        Product product = this.productService.getProduct(id);
-        this.productService.delete(product);
-        return "redirect:/ad/product";
-    }
+//    @GetMapping("/ad/product/delete/{id}")
+//    public String adminProductDelete(@PathVariable("id") Long id) {
+//        Product product = this.productService.getProduct(id);
+//        ProductOrder order = this.orderService.getOrder(id);
+//        this.orderService.delete(order);
+//        this.productService.delete(product);
+//        System.out.println("가져온 상품 :" + productService.getProduct(id));
+//        return "redirect:/ad/product";
+//    }
 
-    @GetMapping("/ad/product/modify/{id}")
+    @GetMapping("/admin/product/modify/{id}")
     public String adminProductModify(ProductForm productForm, @PathVariable("id") Long id, Model model) {
         Product product = productService.getProduct(id);
         if (product == null) {
@@ -186,7 +190,7 @@ public class AdminController {
         return "product_form";
     }
 
-    @PostMapping("/ad/product/modify/{id}")
+    @PostMapping("/admin/product/modify/{id}")
     public String adminProductModify(@ModelAttribute("productForm") @Valid ProductForm productForm,
                                      BindingResult bindingResult,
                                      @PathVariable("id") Long id,
@@ -215,23 +219,23 @@ public class AdminController {
         return String.format("redirect:/product/%s", product.getId());
     }
 
-    @GetMapping("/ad/user")
+    @GetMapping("/admin/user")
     public String adminUser() {
         return "admin/admin_user";
     }
 
-    @GetMapping("/ad/review")
+    @GetMapping("/admin/review")
     public String adminReview() {
         return "admin/admin_review";
     }
 
 
-    @GetMapping("/ad/qna")
+    @GetMapping("/admin/qna")
     public String adminQna() {
         return "admin/admin_qna";
     }
 
-    @GetMapping("ad/notice")
+    @GetMapping("admin/notice")
     public String adminNotice(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
         Page<Notice> paging = this.noticeService.allNotice(page);
         model.addAttribute("paging",paging);

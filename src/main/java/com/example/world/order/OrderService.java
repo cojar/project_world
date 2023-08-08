@@ -1,15 +1,8 @@
 package com.example.world.order;
 
-import com.example.world.DataNotFoundException;
 import com.example.world.product.Product;
-import com.example.world.review.Review;
 import com.example.world.user.SiteUser;
-import jakarta.persistence.criteria.Order;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +14,8 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    public void create(OrderForm orderForm,Product product, SiteUser user) {
+
+    public void create(OrderForm orderForm, Product product, SiteUser user) {
         ProductOrder order = new ProductOrder();
         order.setProduct(product);
         order.setUser(user);
@@ -51,23 +45,15 @@ public class OrderService {
 
     public void updateOrderStatus(Long id, String orderStatus) {
         ProductOrder productOrder = getOrder(id);
-        if (productOrder != null) {
-            productOrder.setOrderStatus(orderStatus);
-            this.orderRepository.save(productOrder);
-        } else {
-            throw new IllegalArgumentException("주문을 찾을 수 없습니다. id: " + id);
-        }
+        productOrder.setOrderStatus(orderStatus);
+        this.orderRepository.save(productOrder);
     }
 
     public void updateOrderSendCode(Long id, String sendCode) {
         ProductOrder productOrder = getOrder(id);
-        if (productOrder != null) {
-            productOrder.setCode(sendCode);
-            productOrder.setOrderStatus("발송완료");
-            this.orderRepository.save(productOrder);
-        } else {
-            throw new IllegalArgumentException("주문을 찾을 수 없습니다. id: " + id);
-        }
+        productOrder.setCode(sendCode);
+        productOrder.setOrderStatus("발송완료");
+        this.orderRepository.save(productOrder);
     }
 
 

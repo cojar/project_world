@@ -30,25 +30,25 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
       <li>
-        <a th:href="@{/ad}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
-        <a th:href="@{/ad/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
+        <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
       </li>
       <li>
-        <a th:href="@{/ad/product}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
+        <a th:href="@{/admin/product}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
       </li>
       <li>
-        <a th:href="@{/ad/user}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
+        <a th:href="@{/admin/user}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
       </li>
       <li>
-        <a th:href="@{/ad/review}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
+        <a th:href="@{/admin/review}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
       </li>
       <li>
-        <a th:href="@{/ad/qna}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
+        <a th:href="@{/admin/qna}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
       </li>
       <li>
-        <a th:href="@{/ad/notice}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
+        <a th:href="@{/admin/notice}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
       </li>
     </ul>
   </div>
@@ -63,13 +63,11 @@
             <div class="date_title"><p>상품 관리 </p></div>
             <div class="btn_line">
               <a th:href="@{/product/create}"><button type="button" class="date_btn" style="color: black;">상품등록</button></a>
-              <a href="javascript:void(0);" th:data-uri="@{/ad/product/delete/{id}(id=${product?.id})}" onclick="confirmDelete(event)">
-                <button type="button" class="date_btn" style="color: black;">삭제</button>
-              </a>
+<!--              <a href="javascript:void(0);" th:href="@{/ad/product/delete/{id}(id=${product?.id})}"-->
+<!--                 class="delete-btn" onclick="confirmDelete(event)">-->
+<!--                <button type="button" class="date_btn" style="color: black;">삭제</button>-->
+<!--              </a>-->
             </div>
-<!--            <div class="code_input">-->
-<!--              <input type="text" placeholder="발송할 코드를 입력해주세요"><button type="button" style="color: black;">발송</button>-->
-<!--            </div>-->
             <div class="date_data">
               <table class="list_table">
                 <thead>
@@ -80,7 +78,7 @@
                   <th class="name">가격</th>
                   <th class="date">판매 건 수</th>
                   <th class="inquiry">수정</th>
-                  <th class="button_menu">선택</th>
+<!--                  <th class="button_menu">선택</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -91,13 +89,13 @@
                   </td>
                   <td class="nickname" th:text="${product.theme}">테마</td>
                   <td class="nickname" th:text="${product.price}">가격</td>
-                  <td class="date" th:text="${completedOrderCount}">1</td>
-                  <td class="inquiry"><a th:href="@{/ad/product/modify/{id}(id=${product?.id})}"><button>수정</button></a></td>
-                  <td class="button_menu">
-                    <label class="order_check">
-                      <input type="checkbox" name="orderCheck" th:value="${product.id}">
-                    </label>
-                  </td>
+                  <td class="date" th:text="${completedOrderCount}">판매건수</td>
+                  <td class="inquiry"><a th:href="@{/admin/product/modify/{id}(id=${product?.id})}"><button>수정</button></a></td>
+<!--                  <td class="button_menu">-->
+<!--                    <label class="order_check">-->
+<!--                      <input type="checkbox" name="orderCheck" th:value="${product.id}">-->
+<!--                    </label>-->
+<!--                  </td>-->
                 </tr>
                 </tbody>
               </table>

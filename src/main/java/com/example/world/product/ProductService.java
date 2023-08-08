@@ -196,4 +196,6 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
+    public void deleteProductById(Long id) {
+    }
 }
