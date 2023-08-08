@@ -2,8 +2,8 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="review_listFragment" class="review-list-section">
   <div class="review-create-box">
-    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm">리뷰 작성하기</button>
-    <button sec:authorize="isAnonymous()" class="review-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|">리뷰 작성하기</button>
+    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
+    <button sec:authorize="isAnonymous()" class="review-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
   </div>
 
   <div class="review-list-content">
@@ -11,19 +11,19 @@
       <div class="review-header">
         <span class="review-author" th:text="${review.author.nickname}"></span>
         <span class="review-score" th:text="${review.score}"></span>
-        <span class="review-create-date" th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd')}"></span>
         <span class="review-voter" th:text="${review.voter}"></span>
         <span class="review-subject" th:text="${#strings.length(review.content) > 30 ? #strings.substring(review.content, 0, 30) + '' : review.content.replaceAll('\n', ' ')}"> </span>
+        <span class="review-create-date" th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd')}"></span>
       </div>
       <div class="review-content">
         <div class="accordion-content" style="width: 55%; margin-left: 16%">
           <p th:text="${review.content}"></p>
           <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
-                  th:data-review-id="${review.id}" class="review-modify">
+                  th:data-review-id="${review.id}" class="review-modify" style="font-family: NeoDunggeunmoPro-Regular;">
             수정
           </button>
           <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
-                  th:attr="data-uri=@{/review/delete/{id}(id=${review.id})}" class="review-delete">
+                  th:attr="data-uri=@{/review/delete/{id}(id=${review.id})}" class="review-delete" style="font-family: NeoDunggeunmoPro-Regular;">
             삭제
           </button>
           <p> <hr> 답변내용</p>
@@ -35,31 +35,45 @@
 
 
   <div class="review-list-foot" th:if="${!paging.isEmpty()}">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${1}|}">
+    <ul class="review-pagination">
+      <li class="review-page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+        <a class="review-page-link" th:href="@{|?page=${1}|}">
           <span>처음</span>
         </a>
       </li>
       <li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
           th:if="${page >= paging.number - 4 and page <= paging.number + 5}"
           th:classappend="${page == paging.number} ? 'active'"
-          class="page-item">
+          class="review-page-item">
         <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
       </li>
-      <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-        <a class="page-link" th:href="@{|?page=${paging.totalPages}|}">
+      <li class="review-page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+        <a class="review-page-link" th:href="@{|?page=${paging.totalPages}|}">
           <span>끝</span>
         </a>
       </li>
     </ul>
   </div>
+<!--  <input type="hidden" name="productOrderId" value="주문 아이디">-->
 
 </section>
 
 <script>
 $(document).ready(function () {
-  $(".review-create-btn").click(function () {
+var productId = localStorage.getItem("productId");
+console.log(productId);
+
+  $(".review-create-btn").click(function() {
+        var productOrderId = $("#productOrderId").val(); // 주문 ID를 가져옴
+        console.log(productOrderId);
+        $.ajax({
+            url: "/review/create", // 리뷰 생성 엔드포인트
+            type: "POST",
+            data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄
+        success: function(data) {
+            // 리뷰 작성 성공 처리
+            console.log("리뷰 작성 성공");
+            if (productId !== null) {
     var width = 700; // 새 창의 너비
     var height = 500; // 새 창의 높이
     var left = (window.screen.width - width) / 2;
@@ -67,8 +81,20 @@ $(document).ready(function () {
     var options =
       "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
 
-    window.open("/review/create", "_blank", options);
+    var url = "/review/create?productOrderId=" + productOrderId + "&productId=" + productId;
+  window.open(url, "_blank");
+    } else {
+      console.error("상품 ID를 찾지 못했습니다.");
+    }
+
+
+        },
+        error: function() {
+            console.error("리뷰 작성 실패");
+        }
+    });
   });
+
 
   $(".review-container").click(function () {
     var $reviewContent = $(this).find(".review-content");
@@ -88,7 +114,6 @@ $(document).ready(function () {
         var newWindow = window.open("/review/modify/" + reviewId, "_blank", options);
     });
 
-
     $(".review-delete").click(function () {
         if (confirm("정말로 삭제하시겠습니까?")) {
             var uri = $(this).data("uri");
@@ -97,6 +122,4 @@ $(document).ready(function () {
     });
 
 });
-
-
 </script>

@@ -194,9 +194,6 @@ public class ProductController {
 
         Product product = this.productService.getProduct(id);
         model.addAttribute("product", product);
-//
-//        model.addAttribute("tKw", "");
-//        model.addAttribute("theme", "");
 
         return "product_detail";
     }

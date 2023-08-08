@@ -1,5 +1,7 @@
 package com.example.world.qna;
 
+import com.example.world.product.Product;
+import com.example.world.product.ProductService;
 import com.example.world.qnaAnswer.AnswerForm;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
@@ -22,13 +24,18 @@ import java.security.Principal;
 public class QuestionController {
     private final QuestionService questionService;
     private final UserService userService;
+    private final ProductService productService;
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="1") int page) {
-        Page<Question> paging = this.questionService.getList(page-1);
+
+    @GetMapping("/list/{productId}")
+    public String list(Model model,
+                       @PathVariable("productId") Long productId,
+                       @RequestParam(value = "page", defaultValue = "1") int page) {
+        Page<Question> paging = this.questionService.getListByProductId(productId, page - 1);
         model.addAttribute("paging", paging);
         return "question_list";
     }
+
 
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id, AnswerForm answerForm) {
@@ -39,7 +46,18 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm) {
+    public String questionCreate(@RequestParam Long productId, Model model) {
+        // productId를 사용하여 ProductService에서 Product 정보를 가져옴
+        Product product = productService.getProduct(productId);
+
+        // QuestionForm 생성 후 product.id 값 추가
+        QuestionForm questionForm = new QuestionForm();
+        questionForm.setProductId(productId);
+
+        // Thymeleaf 템플릿으로 QuestionForm과 Product를 함께 전달
+        model.addAttribute("questionForm", questionForm);
+        model.addAttribute("product", product);
+
         return "question_form";
     }
 
@@ -51,7 +69,7 @@ public class QuestionController {
             return "question_form";
         }
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.questionService.create(questionForm.getContent(), siteUser);
+        this.questionService.create(questionForm.getContent(), siteUser, questionForm.getProductId());
         return "redirect:/question/list";
     }
 
@@ -90,6 +108,6 @@ public class QuestionController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.questionService.delete(question);
-        return "redirect:/question/list";
+        return "redirect:/product/list";
     }
 }

@@ -7,13 +7,13 @@
 }
 
 section {
-  font-family: "NeoDunggeunmoPro-Regular";
   font-size: 18px;
   background: rgb(30, 30, 30);
   margin: 0 auto;
   color: white;
 
 }
+
 .inner-container {
   max-width: 100%;
   margin: 0 auto;
@@ -91,6 +91,9 @@ section {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+
+
 .detail, .specification, .review, .inquiry{
   font-size: 3rem;
   background: rgb(30, 30, 30);
@@ -105,11 +108,12 @@ section {
   border-color: white;
 }
 
-.detail-box, .windowMin-table{
+.detail-box, .form-container{
   color:white;
   text-align:center;
   font-size: 2rem;
   font-weight: bold;
+
 }
 
 .detail-box > div{
@@ -161,13 +165,16 @@ justify-content: center;
     margin:0 5px;
 }
 
+.question-modify, .question-delete,
+.review-modify, .review-delete{
+  color:black;
+}
 
 
 .review-create-btn{
-  margin-left: 6%;
+  margin-left: 5%;
   margin-top: 10px;
-  height: 35px;
-  width: auto;
+  width: 100px;
   background: rgb(20, 20, 20);
   border: 2px solid white;
   color: white;
@@ -175,7 +182,7 @@ justify-content: center;
 }
 
 .review-list-section{
-  width: 70%;
+  width: 68%;
 }
 
 .review-list-content {
@@ -237,12 +244,7 @@ justify-content: center;
 .review-list-foot .active {
   font-weight: bold;
 }
-
-
-
-.question-create-btn{
-  margin-left: 6%;
-  margin-top: 10px;
+.review-modify, .review-delete{
   height: 35px;
   width: auto;
   background: rgb(20, 20, 20);
@@ -251,8 +253,20 @@ justify-content: center;
   font-size: 20px;
 }
 
+
+
+.question-create-btn{
+  margin-left: 5%;
+    margin-top: 10px;
+    width: 100px;
+    background: rgb(20, 20, 20);
+    border: 2px solid white;
+    color: white;
+    font-size: 20px;
+}
+
 .question-list-section{
-  width: 70%;
+  width: 68%;
 }
 
 .question-list-content {
@@ -314,3 +328,20 @@ justify-content: center;
 .question-list-foot .active {
   font-weight: bold;
 }
+
+.question-modify, .question-delete{
+  height: 35px;
+  width: auto;
+  background: rgb(20, 20, 20);
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+}
+
+
+.custom-hr {
+    width: 80%;
+    border-top: 1px solid white;
+    display:flex;
+    justify-content: center;
+  }

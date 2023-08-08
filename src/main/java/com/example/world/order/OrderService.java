@@ -36,6 +36,17 @@ public class OrderService {
         }
     }
 
+
+    public boolean isOrderValid(Long orderId) {
+        Optional<ProductOrder> productOrder = orderRepository.findById(orderId);
+        return productOrder.isPresent();
+    }
+
+    public ProductOrder getProductOrderByProduct(Product product) {
+        return orderRepository.findByProduct(product)
+                .orElseThrow(() -> new DataNotFoundException("Product order not found"));
+    }
+
     public List<ProductOrder> getOrderList() {
         return this.orderRepository.findAll();
     }

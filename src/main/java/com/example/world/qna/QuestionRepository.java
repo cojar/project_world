@@ -14,4 +14,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Question findByContent(String content);
     Page<Question> findAll(Pageable pageable);
+    Page<Question> findByProduct_Id(Long productId, Pageable pageable);
+
 }
