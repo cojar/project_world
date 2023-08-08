@@ -53,7 +53,7 @@ public class OrderController {
         SiteUser user = this.userService.getUser(principal.getName());
         this.orderService.create(orderForm,product,user);
 
-        return "redirect:/";
+        return String.format("redirect:/order/detail/%s", id);
     }
 
     @PreAuthorize("isAuthenticated()")

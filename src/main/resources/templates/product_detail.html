@@ -18,7 +18,7 @@
         </div>
         <div class="panel-developer" th:text="${product.developer}">
         </div>
-        <div class="panel-price" th:text="${product.price + ' won'}">
+        <div class="panel-price" th:text="|${#numbers.formatInteger(product.price, 0, 'COMMA')} won|">
         </div>
         <button class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">BuyNow</button>
     </div>
@@ -53,9 +53,6 @@
                 </div>
             </div>
         </div>
-        <hr>
-
-        <div class="custom-hr"></div>
 
         <div class="form-container">
             <div class="menu">시스템 요구 사항</div>
@@ -181,12 +178,10 @@
             </tbody>
         </table>
     </div>
-    <hr>
 
     <div id="review"></div>
 
     <div id="question"></div>
-    <hr>
     </div>
     </div>
 

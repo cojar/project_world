@@ -200,9 +200,6 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
-    public void deleteProductById(Long id) {
-    }
-}
 
     //////////메인페이지 검색 , 페이징 구현 //////////////
     public Page<Product> allThemeMain(int page) {

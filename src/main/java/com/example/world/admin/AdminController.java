@@ -1,35 +1,27 @@
 package com.example.world.admin;
 
 import com.example.world.notice.Notice;
-import com.example.world.notice.NoticeForm;
 import com.example.world.notice.NoticeService;
 import com.example.world.product.Product;
 import com.example.world.user.SiteUser;
+import com.example.world.user.UserService;
 import jakarta.validation.Valid;
 import com.example.world.order.OrderRepository;
-import com.example.world.product.Product;
 import com.example.world.product.ProductForm;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
-import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommended;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
 import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
-import com.example.world.review.Review;
-import com.example.world.user.SiteUser;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
 import com.example.world.product.ProductService;
-import com.example.world.user.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,17 +29,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.io.File;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +48,8 @@ public class AdminController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
     private final ProductService productService;
+
+    private final UserService userService;
 
 
     @GetMapping("/admin/")
@@ -281,6 +271,7 @@ public class AdminController {
     public String adminUser(Model model , @RequestParam(value = "page",defaultValue = "0")int page) {
         Page<SiteUser> userList = this.adminService.getUserList(page);
         model.addAttribute("paging", userList);
+        return "admin/admin_user";
     }
 
     @PostMapping("/admin/product/modify/{id}")
@@ -312,10 +303,7 @@ public class AdminController {
         return String.format("redirect:/product/%s", product.getId());
     }
 
-    @GetMapping("/admin/user")
-    public String adminUser() {
-        return "admin/admin_user";
-    }
+
 
     @PostMapping("/admin/user/adminPlus/{id}")
     public ResponseEntity<String> adminPlus(@PathVariable("id") Long id) throws Exception {
@@ -328,7 +316,6 @@ public class AdminController {
         return ResponseEntity.ok("관리자 권한이 성공적으로 회수 되었습니다.");
     }
 
-    @GetMapping("/ad/review")
     @GetMapping("/admin/review")
     public String adminReview() {
         return "admin/admin_review";
