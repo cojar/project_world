@@ -1,0 +1,47 @@
+<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<link rel="stylesheet" href="/answer_form.css"/>
+<section class="question-write-section">
+    <div class="title">답변하기</div>
+    <form th:object="${answerForm}" method="post" class="answer-write-form">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div class="write-body">
+            <textarea class="content" th:field="*{content}" placeholder="답변하실 내용을 입력하세요"></textarea>
+        </div>
+        <div class="write-btn-box">
+            <button type="button" class="btn-cancel" id="cancel_button">취소</button>
+            <button type="submit" class="btn-sm" id="submit_button">저장하기</button>
+        </div>
+    </form>
+</section>
+<script>
+    $(document).ready(function () {
+      $("#cancel_button").click(function () {
+        window.close()
+      });
+
+      $("#submit_button").click(function () {
+        var formData = $("#answerForm").serialize();
+        var content = $(".content").val();
+        if (content.length === 0) {
+          alert("내용을 입력해주세요.");
+          return false;
+        }
+
+        $.ajax({
+          type: "POST",
+          url: "/answer/create",
+          data: formData,
+          success: function (data) {
+
+            alert("답변 등록이 완료되었습니다.");
+            self.close();
+
+            window.opener.location.reload();
+          },
+          error: function (error) {
+            console.log(error);
+          }
+        });
+      });
+    });
+</script>

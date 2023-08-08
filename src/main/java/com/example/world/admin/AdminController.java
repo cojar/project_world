@@ -3,6 +3,10 @@ package com.example.world.admin;
 import com.example.world.notice.Notice;
 import com.example.world.notice.NoticeService;
 import com.example.world.product.Product;
+import com.example.world.qna.Question;
+import com.example.world.qna.QuestionService;
+import com.example.world.qnaAnswer.AnswerForm;
+import com.example.world.qnaAnswer.AnswerService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import jakarta.validation.Valid;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -48,9 +53,9 @@ public class AdminController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
     private final ProductService productService;
-
+    private final QuestionService questionService;
     private final UserService userService;
-
+    private final AnswerService answerService;
 
     @GetMapping("/admin/")
     public String adminMain(Model model,AdminSearchForm adminSearchForm) {
@@ -152,11 +157,11 @@ public class AdminController {
         ProductOrder productOrder = orderService.getOrder(id);
         if (productOrder != null) {
             productOrder.setCode(sendCode);
-            productOrder.setOrderStatus("주문완료");
+            productOrder.setOrderStatus("발송완료");
             orderRepository.save(productOrder);
-            return "redirect:/ad/order";
+            return "redirect:/admin/order";
         } else {
-            return "redirect:/ad/order";
+            return "redirect:/admin/order";
         }
     }
 
@@ -303,8 +308,6 @@ public class AdminController {
         return String.format("redirect:/product/%s", product.getId());
     }
 
-
-
     @PostMapping("/admin/user/adminPlus/{id}")
     public ResponseEntity<String> adminPlus(@PathVariable("id") Long id) throws Exception {
         userService.adminPlus(id);
@@ -323,8 +326,30 @@ public class AdminController {
 
 
     @GetMapping("/admin/qna")
-    public String adminQna() {
+    public String adminQna(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+
+        Page<Question> paging = this.questionService.getList(page, size);
+        List<Question> questionList = this.questionService.getQuestionList();
+        model.addAttribute("paging", paging);
+        model.addAttribute("questionList", questionList);
         return "admin/admin_qna";
+    }
+
+    @GetMapping("/admin/qna/answer/{id}")
+    public String adminAnswer(@PathVariable Long id, Model model, AnswerForm answerForm) {
+        Question question = this.questionService.getQuestion(id);
+        answerForm.setContent(answerForm.getContent());
+        model.addAttribute("question", question);
+        return "admin/answer_form";
+    }
+
+    @PostMapping("/admin/qna/answer/{id}")
+    public String adminAnswer(@PathVariable Long id, @RequestParam String content, Principal principal) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser adminUser = this.userService.getUser(principal.getName());
+        this.answerService.create(question, content, adminUser);
+
+        return "redirect:/admin/qna";
     }
 
     @GetMapping("admin/notice")

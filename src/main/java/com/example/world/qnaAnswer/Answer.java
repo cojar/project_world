@@ -26,7 +26,7 @@ public class Answer {
 
     private LocalDateTime createDate;
 
-    @ManyToOne
+    @OneToOne
     private Question question;
     // 답변과 연결된 질문
 

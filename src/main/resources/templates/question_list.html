@@ -5,7 +5,6 @@
         <button sec:authorize="isAuthenticated()" class="question-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
         <button sec:authorize="isAnonymous()" class="question-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/question/create|" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
     </div>
-
     <div class="question-list-content">
         <div class="question-container" th:each="question, loop : ${paging}">
             <div class="question-header">
@@ -25,14 +24,13 @@
                             th:attr="data-uri=@{/question/delete/{id}(id=${question.id})}" class="question-delete" style="font-family: NeoDunggeunmoPro-Regular;">
                         삭제
                     </button>
-                    <p> <hr> 답변내용</p>
+                    <div th:if="${question.answerList}">
+                        <p><hr><span th:text="${question.answerList[0].content}"></span></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div class="question-list-foot" th:if="${!paging.isEmpty()}">
         <ul class="question-pagination">
             <li class="question-page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
@@ -53,9 +51,7 @@
             </li>
         </ul>
     </div>
-
 </section>
-
 <script>
 $(document).ready(function () {
 
@@ -103,10 +99,5 @@ var productId = localStorage.getItem("productId");
             window.location.href = uri;
         }
     });
-
-
-
-
-
 });
 </script>

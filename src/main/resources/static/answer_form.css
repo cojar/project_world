@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+section {
+  font-family: "NeoDunggeunmoPro-Regular";
+  font-size: 18px;
+  white:auto;
+}
+.title {
+  padding: 15px 30px;
+  background-color: #353b4c;
+  font-size: 18px;
+  letter-spacing: -1px;
+  color: #fff;
+  font-weight: normal;
+}
+.write-body{
+  position: relative;
+  padding: 18px 18px 30px;
+  border: 1px solid #cfcfcf;
+  margin-top: 30px;
+  text-align: center;
+}
+.content{
+   width: 100%;
+  height: 150px;
+  border: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #222;
+  resize: none;
+}
+.write-btn-box{
+  margin-top: 30px;
+  text-align: center;
+}
+.write-btn-box button {
+  height: 40px;
+  width: 110px;
+  border: 2px solid white;
+  color: white;
+  font-size: 20px;
+  font-family: "NeoDunggeunmoPro-Regular";
+}
+#cancel_button {
+  background: gray;
+}
+#submit_button {
+  background: rgb(20, 20, 20);
+}
