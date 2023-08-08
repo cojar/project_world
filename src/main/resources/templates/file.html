@@ -1,0 +1,9 @@
+<section>
+    <form th:action="@{|/file/upload|}" th:object=${fileForm} method="post" enctype="multipart/form-data">
+        <input type="file" th:field="*{file}">
+        <input type="submit">
+    </form>
+    <div>
+        <!--            <img th:attr="src=${path}" alt="">-->
+    </div>
+</section>

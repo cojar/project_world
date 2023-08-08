@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/layout/Product_detail.css"/>
+    <link rel="stylesheet" href="/layout/Product_detail.css" />
     <title>world</title>
 </head>
 <nav th:replace="layout/navbar.html"></nav>
@@ -19,52 +20,56 @@
         </div>
         <div class="panel-price" th:text="${product.price + ' won'}">
         </div>
-        <button class="panel-btn">BuyNow</button>
+        <button class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">BuyNow</button>
     </div>
-
-    <div class="product-detail-classification">
-        <div class="classify-btn-box">
-            <button class="detail">DETAIL</button>
-            <button class="specification">시스템 요구 사항</button>
-            <button class="review">REVIEW </button>
-            <button class="inquiry">상품문의</button>
-        </div>
-    </div>
-
-    <div class="product-detail">
-        <div class="detail-box">
-            <div >게임명:
-                <br>
-                <span class="detail-productName" th:text="${product.productName}"></span>
-            </div>
-            <div>개발사:
-                <br>
-                <span class="detail-developer" th:text="${product.developer}"></span>
-            </div>
-            <div>장르:
-                <br>
-                <span class="detail-theme" th:text="${product.theme}"></span>
-            </div>
-            <div>게임 설명:
-                <br>
-            <span class="detail-content" th:text="${product.content}"></span>
+    <div class="product-detail-width">
+        <div class="product-detail-width">
+        <div class="product-detail-classification">
+            <div class="classify-btn-box" style="font-family: NeoDunggeunmoPro-Regular;">
+                <button class="detail">DETAIL</button>
+                <button class="specification">시스템 요구 사항</button>
+                <button class="review">REVIEW </button>
+                <button class="inquiry">상품문의</button>
             </div>
         </div>
-    </div>
 
-    <div class="form-container">
-        <div class="menu">시스템 요구 사항</div>
-        <div class="radio-container">
-            <div class="radio-window">
-                <input type="radio" id="window" name="specification" checked>
-                <label for="window">Window</label>
-            </div>
-            <div class="radio-mac">
-                <input type="radio" id="Mac" name="specification">
-                <label for="Mac">Mac</label>
+        <div class="product-detail">
+            <div class="detail-box">
+                <div>게임명:
+                    <br>
+                    <span class="detail-productName" th:text="${product.productName}"></span>
+                </div>
+                <div>개발사:
+                    <br>
+                    <span class="detail-developer" th:text="${product.developer}"></span>
+                </div>
+                <div>장르:
+                    <br>
+                    <span class="detail-theme" th:text="${product.theme}"></span>
+                </div>
+                <div>게임 설명:
+                    <br>
+                    <span class="detail-content" th:text="${product.content}"></span>
+                </div>
             </div>
         </div>
-    </div>
+        <hr>
+
+        <div class="custom-hr"></div>
+
+        <div class="form-container">
+            <div class="menu">시스템 요구 사항</div>
+            <div class="radio-container" style="font-family: NeoDunggeunmoPro-Regular;">
+                <div class="radio-window">
+                    <input type="radio" id="window" name="specification" checked>
+                    <label for="window">Window</label>
+                </div>
+                <div class="radio-mac" style="font-family: NeoDunggeunmoPro-Regular;">
+                    <input type="radio" id="Mac" name="specification">
+                    <label for="Mac">Mac</label>
+                </div>
+            </div>
+        </div>
 
         <table class="window-specification" th:if="${not #lists.isEmpty(product.windowMinList) or not #lists.isEmpty(product.windowRecommendedList)}">
             <thead>
@@ -176,31 +181,56 @@
             </tbody>
         </table>
     </div>
+    <hr>
 
     <div id="review"></div>
 
     <div id="question"></div>
-
-
-
-
-
+    <hr>
+    </div>
+    </div>
 
 </section>
 <footer th:replace="layout/footer.html"></footer>
 <script>
+
 $(document).ready(function() {
+  function getCurrentPageUrl() {
+    return window.location.href;
+  }
+
+  // 현재 페이지 URL에서 상품 ID를 추출하는 함수
+  function extractProductIdFromUrl() {
+    var url = getCurrentPageUrl();
+    var idPattern = /\/product\/(\d+)/;
+    var match = url.match(idPattern);
+
+    if (match && match[1]) {
+      var productId = parseInt(match[1]);
+      return productId;
+    }
+
+    return null; // 상품 ID를 찾지 못한 경우
+  }
+  var productId = extractProductIdFromUrl();
+  localStorage.setItem("productId", productId);//쿠키에 productId 저장
+
+  $("#orderButton").click(function() {
+      var url = "/order/create/" + productId;
+      window.location.href = url; // 페이지 이동
+  });
+
     $(".mac-specification").hide();
 
-    $("#window").on('click', function() {
-        if ($(this).prop('checked')) {
+    $("#window").on("click", function() {
+        if ($(this).prop("checked")) {
             $(".window-specification").show();
             $(".mac-specification").hide();
         }
     });
 
-    $("#Mac").on('click', function() {
-        if ($(this).prop('checked')) {
+    $("#Mac").on("click", function() {
+        if ($(this).prop("checked")) {
             $(".mac-specification").show();
             $(".window-specification").hide();
         }
@@ -216,13 +246,25 @@ $(document).ready(function() {
         $("#window").prop("checked", true);
     }
 
-    $.get("/review/list", function(data) {
+        function getCurrentPageUrl() {
+    return window.location.href;
+  }
+    $("#order-btn").on("click", function (){
+      var OrderUrl = "/order/create/" + productId;
+      window.location.href = OrderUrl;
+    });
+
+    var reviewUrl = "/review/list/" + productId;
+    $.get(reviewUrl, function(data) {
         $("#review").html(data);
     });
 
-    $.get("/question/list", function(data) {
+    var questionUrl = "/question/list/" + productId;
+    $.get(questionUrl, function(data) {
         $("#question").html(data);
     });
+
+
 });
 
 </script>

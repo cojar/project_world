@@ -1,7 +1,11 @@
 package com.example.world.review;
 
 import com.example.world.DataNotFoundException;
+import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
+import com.example.world.product.Product;
+import com.example.world.product.ProductService;
+import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +25,24 @@ import java.util.Optional;
 @Service
 public class ReviewService {
 
-    @Autowired
     private final ReviewRepository reviewRepository;
+    private final ProductService productService;
+    private final OrderService orderService;
 
-    public Page<Review> getList(int page) {
+    public Page<Review> getListByProductId(Long productId, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.reviewRepository.findAll(pageable);
+        return reviewRepository.findByProductOrder_Product_Id(productId, pageable);
     }
 
 
-    public Review create(ProductOrder productOrder, String content, SiteUser author) {
+    public Review create(String content, SiteUser user, ProductOrder productOrder) {
         Review review = new Review();
         review.setContent(content);
         review.setCreateDate(LocalDateTime.now());
         review.setProductOrder(productOrder);
-        review.setAuthor(author);
+        review.setAuthor(user);
         this.reviewRepository.save(review);
         return review;
     }
@@ -47,7 +52,7 @@ public class ReviewService {
         if (review.isPresent()) {
             return review.get();
         } else {
-            throw new DataNotFoundException("question not found");
+            throw new DataNotFoundException("review not found");
         }
     }
 

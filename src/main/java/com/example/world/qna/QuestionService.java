@@ -1,6 +1,8 @@
 package com.example.world.qna;
 
 import com.example.world.DataNotFoundException;
+import com.example.world.product.Product;
+import com.example.world.product.ProductService;
 import com.example.world.qnaAnswer.Answer;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.criteria.*;
@@ -22,12 +24,13 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final ProductService productService;
 
-    public Page<Question> getList(int page) {
+    public Page<Question> getListByProductId(Long productId, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.questionRepository.findAll(pageable);
+        return this.questionRepository.findByProduct_Id(productId, pageable);
     }
 
     public Question getQuestion(Long id) {
@@ -39,12 +42,14 @@ public class QuestionService {
         }
     }
 
-    public void create(String content, SiteUser user) {
+    public void create(String content, SiteUser user, Long productId) {
+        Product product = productService.getProduct(productId);
         Question q = new Question();
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
         q.setAuthor(user);
         q.setAnswered(false);
+        q.setProduct(product);
         this.questionRepository.save(q);
     }
 

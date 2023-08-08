@@ -2,8 +2,8 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="question_listFragment" class="question-list-section">
     <div class="question-create-box">
-        <button sec:authorize="isAuthenticated()" class="question-create-btn btn-sm">상품 Q&A 작성하기</button>
-        <button sec:authorize="isAnonymous()" class="question-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/question/create|">상품 Q&A 작성하기</button>
+        <button sec:authorize="isAuthenticated()" class="question-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
+        <button sec:authorize="isAnonymous()" class="question-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/question/create|" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
     </div>
 
     <div class="question-list-content">
@@ -18,11 +18,11 @@
                 <div class="accordion-content" style="width: 55%; margin-left: 16%">
                     <p th:text="${question.content}"></p>
                     <button th:if="${question.author != null and #authentication.isAuthenticated() and #authentication.name == question.author.username}"
-                            th:data-question-id="${question.id}" class="question-modify">
+                            th:data-question-id="${question.id}" class="question-modify" style="font-family: NeoDunggeunmoPro-Regular;">
                         수정
                     </button>
                     <button th:if="${question.author != null and #authentication.isAuthenticated() and #authentication.name == question.author.username}"
-                            th:attr="data-uri=@{/question/delete/{id}(id=${question.id})}" class="question-delete">
+                            th:attr="data-uri=@{/question/delete/{id}(id=${question.id})}" class="question-delete" style="font-family: NeoDunggeunmoPro-Regular;">
                         삭제
                     </button>
                     <p> <hr> 답변내용</p>
@@ -58,18 +58,27 @@
 
 <script>
 $(document).ready(function () {
+
+var productId = localStorage.getItem("productId");
+
   $(".question-create-btn").click(function () {
-    var width = 700; // 새 창의 너비
-    var height = 500; // 새 창의 높이
-    var left = (window.screen.width - width) / 2;
-    var top = (window.screen.height - height) / 2;
-    var options =
+    if (productId !== null) {
+       var width = 700; // 새 창의 너비
+       var height = 500; // 새 창의 높이
+       var left = (window.screen.width - width) / 2;
+       var top = (window.screen.height - height) / 2;
+       var options =
       "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
 
-    window.open("/question/create", "_blank", options);
+      var url = "/question/create?productId=" + productId;
+
+      window.open(url, "_blank", options);
+    } else {
+      console.error("상품 ID를 찾지 못했습니다.");
+    }
   });
 
-  $(".question-container").click(function () {
+   $(".question-container").click(function () {
     var $questionContent = $(this).find(".question-content");
     $questionContent.toggle();
     $(".question-content").not($questionContent).hide();
@@ -95,7 +104,9 @@ $(document).ready(function () {
         }
     });
 
+
+
+
+
 });
-
-
 </script>
