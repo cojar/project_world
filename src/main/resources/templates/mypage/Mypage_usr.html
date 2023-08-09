@@ -11,6 +11,7 @@
 <div class="profilecont">
 
   <div class="banner">
+    <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
@@ -22,7 +23,7 @@
       <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
       <ul class="posts">
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/order}">
             <div class="icon">
               <i class="fas fa-money-check-alt"></i>
             </div>
@@ -34,7 +35,7 @@
 
                 <span>
                   <i class="fas fa-money-check-alt"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${orderCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 
@@ -64,7 +65,7 @@
           </a>
         </li>
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/review}">
             <div class="icon">
               <i class="	fas fa-sticky-note"></i>
             </div>
@@ -76,7 +77,7 @@
 
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${reviewCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 
@@ -86,7 +87,7 @@
           </a>
         </li>
         <li class="design">
-          <a href="#">
+          <a th:href="@{/mypage/qna}">
             <div class="icon">
               <i class="	fas fa-sticky-note"></i>
             </div>
@@ -97,7 +98,7 @@
                 <span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${questionCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 
@@ -107,7 +108,7 @@
           </a>
         </li>
         <li class="general">
-          <a href="#">
+          <a th:href="@{/mypage/user}">
             <div class="icon">
               <i class="fas fa-user-cog"></i>
             </div>
@@ -127,11 +128,11 @@
       <form action="" class="usrmodify">
         <div>
           <span>USER ID :</span>
-          <span class="usremail">(타임리프 이메일)</span>
+          <span class="usremail" th:text='${user.username}'></span>
         </div>
         <div>
           <span>New NickName : </span>
-          <input type="text" placeholder="기존닉네임(타임리프)">
+          <input type="text" th:placeholder="${user.nickname}" th:defaultValue="${user.nickname}">
         </div>
         <div>
           <span>New PW : </span>
@@ -149,5 +150,6 @@
     </div>
   </div>
 </div>
+<footer th:replace="layout/footer.html"></footer>
 </body>
 </html>

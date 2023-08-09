@@ -90,4 +90,7 @@ public class QuestionService {
         questionRepository.delete(question);
     }
 
+    public List<Question> getAuthor(SiteUser siteUser) {
+        return this.questionRepository.findByAuthor(siteUser);
+    }
 }

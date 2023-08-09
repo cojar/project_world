@@ -1,6 +1,12 @@
 package com.example.world.mypage;
 
 
+import com.example.world.order.OrderService;
+import com.example.world.order.ProductOrder;
+import com.example.world.qna.Question;
+import com.example.world.qna.QuestionService;
+import com.example.world.review.Review;
+import com.example.world.review.ReviewService;
 
 import com.example.world.review.Review;
 import com.example.world.review.ReviewService;
@@ -21,12 +27,26 @@ import java.util.List;
 public class MypageController {
 
     private final UserService userService;
-
+    private final OrderService orderService;
     private final ReviewService reviewService;
+    private final QuestionService questionService;
+
+    private
 
     @GetMapping("")
     public String mypageMain(Model model , Principal principal){
         SiteUser siteUser = this.userService.getUser(principal.getName());
+        List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
+        List<Review> reviews = this.reviewService.getAuthor(siteUser);
+        List<Question> questions = this.questionService.getAuthor(siteUser);
+
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
         model.addAttribute("user",siteUser);
         return "/mypage/Mypage_main";
     }
@@ -39,7 +59,6 @@ public class MypageController {
     public String myqna(){
         return "/mypage/Mypage_qna";
     }
-
     @GetMapping("/review")
     public String myReview(Model model, Principal principal){
         SiteUser siteUser = this.userService.getUser(principal.getName());
@@ -49,9 +68,21 @@ public class MypageController {
 
         return "/mypage/Mypage_review";
     }
-
     @GetMapping("/user")
-    public String myStatus(){
+    public String myStatus(Model model , Principal principal){
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
+        List<Review> reviews = this.reviewService.getAuthor(siteUser);
+        List<Question> questions = this.questionService.getAuthor(siteUser);
+
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
+        model.addAttribute("user",siteUser);
         return "/mypage/Mypage_usr";
     }
 }
