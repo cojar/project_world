@@ -1,5 +1,6 @@
 package com.example.world.product;
 
+//import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
 import com.example.world.product.specification.windowMin.WindowMinForm;
@@ -35,6 +36,8 @@ public class ProductForm {
     private List<WindowMinForm> windowMinList;
     // 맥 최소 스펙
     private List<WindowRecommendedForm> windowRecommendedList;
+    // 맥 권장 스펙
+//    private List<ProductImageForm> productImageList;
     // 맥 권장 스펙
     @Column(columnDefinition = "text")
     private String content;

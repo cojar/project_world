@@ -1,6 +1,9 @@
 package com.example.world.product;
 
 import com.example.world.order.ProductOrder;
+//import com.example.world.product.productImage.ProductImage;
+//import com.example.world.product.productImage.ProductImageForm;
+//import com.example.world.product.productImage.ProductImageService;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
@@ -20,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,7 @@ public class ProductController {
     private final WindowMinService windowMinService;
     private final WindowRecommendedService windowRecommendedService;
     private final UserService userService;
+//    private final ProductImageService productImageService;
 
 //    @GetMapping("/list")
 //    public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -107,34 +112,46 @@ public class ProductController {
     @GetMapping("/create")
     public String create(Model model, ProductForm productForm, Principal principal) {
 
-        SiteUser username = this.userService.getUserByUsername(principal.getName());
-        //productForm.setUsername(username.getUsername());
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
+//        productForm.setUsername(username.getUsername());
 
         List<WindowMinForm> windowMinList = new ArrayList<>();
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
         List<MacMinForm> macMinList = new ArrayList<>();
         List<MacRecommendedForm> macRecommendedList = new ArrayList<>();
+//        List<ProductImageForm> productImageList = new ArrayList<>();
 
         windowMinList.add(new WindowMinForm());
         windowRecommendedList.add(new WindowRecommendedForm());
         macMinList.add(new MacMinForm());
         macRecommendedList.add(new MacRecommendedForm());
+//        productImageList.add(new ProductImageForm());
+
+
         model.addAttribute("windowMinList", windowMinList);
         model.addAttribute("windowRecommendedList", windowRecommendedList);
         model.addAttribute("macMinList", macMinList);
         model.addAttribute("macRecommendedList", macRecommendedList);
+//        model.addAttribute("productImageList", productImageList);
+
         return "product_form";
     }
+
+
+
+
+
+
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String create(Model model,
                          @Valid ProductForm productForm,
-                         BindingResult bindingResult, Principal principal) {
+                         BindingResult bindingResult, Principal principal) throws IOException {
 
-        SiteUser username = this.userService.getUserByUsername(principal.getName());
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
 
-        Product product = this.productService.create(username ,productForm.getProductName(), productForm.getDeveloper(),
+        Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
 
         // windowMin 저장
@@ -184,6 +201,14 @@ public class ProductController {
                         macRecommendedForm.getGraphics(), macRecommendedForm.getStorage(), macRecommendedForm.getDirectAccess(), macRecommendedForm.getNetwork(), product);
             }
         }
+
+//        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
+//            if (!productImageForm.getName().equals("") && productImageForm.getImage() != null) {
+//                this.productImageService.create(productImageForm.getName(), productImageForm.getImage(), product);
+//            }
+//        }
+
+
 
         return String.format("redirect:/product/%s", product.getId());
     }
