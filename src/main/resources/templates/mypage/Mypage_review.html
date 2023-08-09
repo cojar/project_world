@@ -140,7 +140,7 @@
           <td class="number" th:text="${order.id}">1</td>
           <td class="title">
             <a
-                    th:href=""                       th:text="${product.name}"
+                    th:href="@{|/product/${product.id}|}" th:text="${product.name}"
             > 상품명</a>
           </td>
           <td class="date" th:text=“${order.email}”>test@test.test</td>

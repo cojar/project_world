@@ -2,6 +2,7 @@ package com.example.world.review;
 
 import com.example.world.order.ProductOrder;
 import com.example.world.qna.Question;
+import com.example.world.user.SiteUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findById(Review review);
     Page<Review> findAll(Pageable pageable);
     Page<Review> findByProductOrder_Product_Id(Long productId, Pageable pageable);
+
+    List<Review> findByAuthor(SiteUser author);
 }
