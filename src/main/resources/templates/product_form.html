@@ -8,18 +8,18 @@
 </head>
 <nav th:replace="layout/navbar.html"></nav>
 <section class="product-form-section">
-    <form class="product-form" th:object="${productForm}" method="post">
+    <form class="product-form" th:object="${productForm}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div class="form-container">
             <div class="menu">게임명</div>
             <label for="productName">
-            <input type="text" id="productName" th:field="*{productName}">
+            <input type="text" id="productName" th:field="*{productName}" placeholder="게임명을 입력해주세요">
             </label>
         </div>
         <div class="form-container">
             <div class="menu">개발사</div>
             <label for="developer">
-            <input type="text" id="developer" th:field="*{developer}">
+            <input type="text" id="developer" th:field="*{developer}" placeholder="개발사를 입력해주세요">
             </label>
         </div>
         <div class="form-container">
@@ -41,7 +41,7 @@
         <div class="form-container">
             <div class="menu">가격</div>
             <label for="price">
-            <input type="number" id="price" pattern="\d*" th:field="*{price}">
+            <input type="number" id="price" value="" th:field="*{price}" placeholder="금액을 입력해주세요">
             </label>
         </div>
 
@@ -117,9 +117,18 @@
         <div class="form-container">
             <div class="menu">게임 설명</div>
             <label for="content">
-            <textarea id="content" rows="5" th:field="*{content}"></textarea>
+            <textarea id="content" rows="5" th:field="*{content}" placeholder="게임설명을 입력해주세요"></textarea>
             </label>
         </div>
+
+<!--        <div class="main-imgUrl" style="color:white;">-->
+<!--            <div class="uploaded-file-name">배너 사진을 업로드해주세요</div>-->
+<!--            <input type="file" th:value="${profileImage}" th:field="*{profileImage}"-->
+<!--                   placeholder="배너 사진을 업로드 해주세요" th:onchange="_getFileName(this)">-->
+<!--            <label th:for="profileImage"><i class="fa-solid fa-cloud-arrow-up"></i></label>-->
+<!--        </div>-->
+
+
         <div class="product-form-btn">
             <button class="cancel_button" type="button" id="btn_cancel">취소</button>
             <button class="submit_button" type="submit" id="btn_submit">등록</button>
@@ -129,6 +138,7 @@
 <footer th:replace="layout/footer.html"></footer>
 <script>
 $(document).ready(function() {
+    $("#price").val("");
     $("#Mac-Min, #Mac-Recommended").hide().prop('disabled', true);
 
     $("#window").on('click', function() {
@@ -146,6 +156,16 @@ $(document).ready(function() {
             $("#Mac-Min, #Mac-Recommended").hide().prop('disabled', true);
         }
     });
+
+    function _getFileName(_this) {
+        var fileValue = $(_this).val().split("\\");
+        var fileName = fileValue[fileValue.length - 1];
+
+        $(_this).siblings(".uploaded-file-name").html(fileName).addClass("active");
+    }
+
+
+
     $("#btn_cancel").click(function() {
         window.location.href = "/product/list";
     });

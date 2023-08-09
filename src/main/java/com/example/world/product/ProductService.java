@@ -4,6 +4,8 @@ package com.example.world.product;
 import com.example.world.DataNotFoundException;
 import com.example.world.order.OrderRepository;
 import com.example.world.order.ProductOrder;
+//import com.example.world.product.productImage.ProductImage;
+//import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommended;
@@ -40,10 +42,10 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    public Product create(SiteUser username, String productName, String developer, String theme, int price, String content) {
+    public Product create(String productName, String developer, String theme, int price, String content) {
         Product product = new Product();
 
-        product.setUsername(username);
+//        product.setUsername(username);
         product.setProductName(productName);
         product.setDeveloper(developer);
         product.setTheme(theme);
@@ -191,6 +193,17 @@ public class ProductService {
             macRecommendedList.add(macRecommended);
         }
         product.setMacRecommendedList(macRecommendedList);
+
+//        List<ProductImage> productImageList = new ArrayList<>();
+//        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
+//            ProductImage productImage = new ProductImage();
+//
+//            productImage.setName(productImageForm.getName());
+//            productImage.setImage(productImage.getImage());
+//            productImageList.add(productImage);
+//        }
+//        product.setProductImageList(productImageList);
+
 
         //product = productRepository.save(product);
         this.productRepository.save(product);

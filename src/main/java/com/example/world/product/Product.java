@@ -1,6 +1,8 @@
 package com.example.world.product;
 
 
+import com.example.world.file.UploadedFile;
+//import com.example.world.product.productImage.ProductImage;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macRecommended.MacRecommended;
 import com.example.world.product.specification.windowMin.WindowMin;
@@ -27,8 +29,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //상품번호
-    @ManyToOne
-    private SiteUser username;
+//    @ManyToOne
+//    private SiteUser username;
 
     @Size(max = 30)
     private String productName;
@@ -52,6 +54,11 @@ public class Product {
     private List<WindowMin> windowMinList;
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<WindowRecommended> windowRecommendedList;
+
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+//    private List<ProductImage> productImageList;
+    @OneToOne
+    private UploadedFile profileImage;
 
     @Column(columnDefinition = "text")
     private String content;
