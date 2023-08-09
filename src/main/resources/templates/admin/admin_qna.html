@@ -61,7 +61,7 @@
           <div class="date_content">
             <div class="date_title"><p>문의사항 관리 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn"> 선택 삭제 </button>
+              <button type="button" class="date_btn" id="deleteButton">문의 삭제</button>
             </div>
             <div class="date_data">
               <table class="list_table">
@@ -80,7 +80,7 @@
                 <tr th:each="question : ${questionList}">
                   <td class="number" th:text="${question.id}">문의 번호</td>
                   <td class="title">
-                    <a th:text="${question.author}">작성자 e-mail</a>
+                    <span th:text="${question.author.username}">작성자 e-mail</span>
                   </td>
                   <td class="nickname" th:text="${question.content}">문의 내용</td>
                   <td class="nickname" th:text="${question.product?.productName}">상품명</td>
@@ -91,28 +91,30 @@
                     </a>
                   </td>
                   <td class="button_menu">
-                    <label class="order_check"><input type="checkbox" name="orderCheck"></label>
+                    <label class="order_check">
+                      <input type="checkbox" name="orderCheck" th:value="${question.id}">
+                    </label>
                   </td>
                 </tr>
                 </tbody>
               </table>
               <!-- 페이징처리 시작 -->
               <div th:if="${!paging.isEmpty()}" style="text-align: center;">
-                <ul class="pagination justify-content-center">
+                <ul class="pagination1 justify-content-center">
                   <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                    <a class="page-link" th:href="@{|?page=${paging.number-1}|}">
-                      <span>이전</span>
+                    <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                      <span><</span>
                     </a>
                   </li>
                   <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
                       th:if="${page >= paging.number-5 and page <= paging.number+5}"
                       th:classappend="${page == paging.number} ? 'active'"
                       class="page-item">
-                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                    <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
                   </li>
                   <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
-                      <span>다음</span>
+                    <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+                      <span>></span>
                     </a>
                   </li>
                 </ul>
@@ -125,11 +127,35 @@
     </div>
   </div>
 </div>
-<!-- /#page-content-wrapper -->
 </div>
-<!-- /#wrapper -->
-<!-- jQuery -->
+<script>
+  $(document).ready(function() {
+      $("#deleteButton").click(function() {
+          var selectedIds = [];
+          $("input[name='orderCheck']:checked").each(function() {
+              selectedIds.push($(this).val());
+          });
 
-
+          if (selectedIds.length > 0) {
+              if (confirm("선택한 문의사항을 삭제하시겠습니까?")) {
+                  // 선택한 ID 목록을 서버로 전송하고 삭제 요청 처리
+                  $.ajax({
+                      type: "POST",
+                      url: "/admin/qna/delete",
+                      data: { 'ids' : selectedIds },
+                      success: function(data) {
+                          location.reload();
+                      },
+                      error: function(error) {
+                          console.log(error);
+                      }
+                  });
+              }
+          } else {
+              alert("삭제할 문의사항을 선택해주세요.");
+          }
+      });
+  });
+</script>
 </body>
 </html>

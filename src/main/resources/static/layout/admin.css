@@ -245,5 +245,29 @@
    width: 300px;
 }
 
+.page-link1{
+  background-color: rgb(30, 30, 30);
+  border:2px solid #999;
+  color:#999;
+  font-size:20px;
+  padding-right:10px;
+  padding-left:10px;
+  margin-right:5px;
+  margin:left:5px;
+  font-family: 'NeoDunggeunmoPro-Regular';
+}
+
+.page-link1:hover{
+background-color: white;
+color:rgb(30, 30, 30);
+}
+.pagination1{
+margin:0;}
+
+.page-item{
+ Display:inline-block;
+}
+
+
 
 
