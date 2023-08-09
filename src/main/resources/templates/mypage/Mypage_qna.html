@@ -14,7 +14,7 @@
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
-    <h4>사용자명(타임리프) <span>#회원번호(타임리프)</span></h4>
+    <h4><span th:text='${user.nickname}'></span><span th:text='${"#"+user.id}'>#회원번호(타임리프)</span></h4>
 
   </div>
   <div class="content">

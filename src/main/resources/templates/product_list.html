@@ -18,11 +18,11 @@
     <div class="wrap w-full">
         <div class="banner-section">
             <div class="banner text-center">
-                <img class="inline-block w-full" src="https://ifh.cc/g/6xAKMx.jpg" alt="">
+                <video class="inline-block w-full" src="https://cdn.akamai.steamstatic.com/steam/apps/256878899/movie480_vp9.webm?t=1655416823" autoplay muted loop></video>
             </div>
         </div>
 
-        <div class="title text-center mt-5 font-bold text-3xl text-white themeKey" th:text="${themeKey}"></div>
+        <div class="title text-center mt-5 font-bold text-3xl text-white themeKey" ><span class="keytitle"th:text="${themeKey}"></span></div>
 
 
 
@@ -53,30 +53,28 @@
 
     </div>
         <!--페이징-->
-        <div class="pagination-1 flex justify-center mt-4" th:if="${paging}">
-            <div class="pagination text-white">
-                <ul class="page-list">
-                    <li th:class="${!paging.hasPrevious} ? 'disabled'">
-                        <a class="page-link holy"
-                           th:href="${paging.hasPrevious} ? @{|?page=${paging.number+1}|} : @{|?page=1|}">
-                            <span class="text-lg">이전</span>
-                        </a>
-                    </li>
-                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                        th:classappend="${page == paging.number} ? 'active'"
-                        class="page-item">
-                        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-                    </li>
-                    <li th:class="${!paging.hasNext} ? 'disabled'">
-                        <a class="page-link holy"
-                           th:href="${paging.hasNext} ? @{|?page=${paging.number+1}|} : @{|?page=${paging.totalPages}|}">
-                            <span class="text-lg">다음</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+        <ul class="pagination1 justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                    <span><</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+                    <span>></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝-->
 
 
 
