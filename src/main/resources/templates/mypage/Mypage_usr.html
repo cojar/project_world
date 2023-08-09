@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="/layout/mypage_list.css"/>
   <title>My Page</title>
 </head>
@@ -125,25 +126,25 @@
     </div>
     <div class="side">
       <h5>회원정보수정</h5>
-      <form action="" class="usrmodify">
+      <form  class="usrmodify" th:action="@{/mypage/user/modify}" th:object="${userForm}" method="post">
         <div>
           <span>USER ID :</span>
           <span class="usremail" th:text='${user.username}'></span>
         </div>
         <div>
           <span>New NickName : </span>
-          <input type="text" th:placeholder="${user.nickname}" th:defaultValue="${user.nickname}">
+          <input type="text"   th:field="*{nickname}">
         </div>
         <div>
           <span>New PW : </span>
-          <input type="text">
+          <input type="password" th:field="*{password1}">
         </div>
         <div>
           <span>Re-New Pw : </span>
-          <input type="text">
+          <input type="password" th:field="*{password2}">
         </div>
         <div>
-          <button type="submit">Reset</button>
+          <button type="submit" id="submitButton">Reset</button>
         </div>
       </form>
 
@@ -151,5 +152,27 @@
   </div>
 </div>
 <footer th:replace="layout/footer.html"></footer>
+<script>
+ $(document).ready(function() {
+    $(".usrmodify").submit(function(event) {
+        event.preventDefault(); // 폼 제출 방지
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            data: $(this).serialize(),
+            success: function(response) {
+                alert(response); // 서버에서 반환된 메시지를 alert로 표시
+                if (response === "성공적으로 수정되었습니다.") {
+                    location.reload(); // 페이지 리로드
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
