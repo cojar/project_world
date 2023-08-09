@@ -29,27 +29,26 @@
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin/}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
+        <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
       </li>
       <li>
-        <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
+        <a th:href="@{/admin/product}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>상품 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
+        <a th:href="@{/admin/user}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>회원 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
+        <a th:href="@{/admin/review}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>리뷰 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
+        <a th:href="@{/admin/qna}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>문의사항 관리</a>
       </li>
       <li>
-        <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
+        <a th:href="@{/admin/notice}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>공지사항 관리</a>
       </li>
     </ul>
   </div>
@@ -64,8 +63,8 @@
           <div class="date_content">
             <div class="date_title"><p>공지사항 관리 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn"> 선택 삭제 </button>
-              <button type="button" class="date_btn"> 글쓰기 </button>
+              <button type="button" id="deleteButton" class="date_btn"> 선택 삭제</button>
+              <button type="button" class="date_btn"><a th:href="@{|/notice/create|}">글쓰기</a> </button>
 
 
 
@@ -91,20 +90,43 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 10}">
+                <tr class="notice-list" th:each="notice, stat : ${paging}" th:if="${stat.index < 10}">
                   <td class="number" th:text="${notice.id}"></td>
 
-                  <td class="nickname" th:text="${notice.subject}"></td>
+                  <td class="nickname"><a th:href="@{|/notice/detail/${notice.id}|}" th:text="${notice.subject}"></a></td>
 
                   <td class="date" th:text="${notice.viewCount}"></td>
-                  <td class="inquiry" > <a href="#"><button>수정</button></a></td>
+                  <td class="inquiry" ><a th:href="@{|/notice/modify/${notice.id}|}"><button>수정</button></a></td>
                   <td class="button_menu">
-                    <label class="order_check"><input type="checkbox" name="orderCheck"  > </label>
+                    <label class="order_check"><input type="checkbox" name="orderCheck" th:value="${notice.id}"  > </label>
 
                   </td>
                 </tr>
                 </tbody>
               </table>
+
+              <!— 페이징처리 시작 —>
+              <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                    <a class="page-link" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                      <span>이전</span>
+                    </a>
+                  </li>
+                  <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                      th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                      th:classappend="${page == paging.number} ? 'active'"
+                      class="page-item">
+                    <a th:text="${page+1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                  </li>
+                  <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                      <span>다음</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!— 페이징처리 끝 —>
 
 
 
@@ -119,6 +141,59 @@
 </div>
 <!-- /#wrapper -->
 <!-- jQuery -->
+<script th:inline="javascript">
+
+
+   function getSelectedOrderIds() {
+
+    const selectedOrderIds = [];
+    $("input[name='orderCheck']:checked").each(function(){
+       selectedOrderIds.push($(this).val());
+
+    })
+
+      if (selectedOrderIds.length >= 1) {
+      console.log(selectedOrderIds);
+        return selectedOrderIds;
+
+      } else {
+        alert("공지사항을 선택해주세요.");
+        return [];
+      }
+
+  }
+
+
+   $("#deleteButton").click(function() {
+    adminConfirmOrder();
+   });
+
+
+    function adminConfirmOrder() {
+    const selectedOrderIds = getSelectedOrderIds();
+          console.log(selectedOrderIds)
+    if (selectedOrderIds.length > 0) {
+
+        $.ajax({
+            type: "GET",
+            url: "/notice/delete",
+            data: { orderIds : selectedOrderIds },
+            dataType:'text',
+            success: function (response) {
+                alert("삭제하시겠습니까?");
+                window.location.reload();
+            },
+            error: function () {
+                alert("삭제에 실패하였습니다.");
+            }
+        });
+    } else {
+        alert("삭제할 공지사항을 선택해주세요.");
+    }
+}
+
+
+</script>
 
 
 </body>

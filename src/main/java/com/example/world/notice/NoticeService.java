@@ -10,8 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +37,13 @@ public class NoticeService {
         }
     }
 
+    public List<Notice> getNoticesByIds(Integer[] orderIds) {
+        return noticeRepository.findByIdIn(orderIds);
+    }
+
+
+
+
     public void create(String subject, String content) {
         Notice notice = new Notice();
         notice.setSubject(subject);
@@ -44,4 +51,17 @@ public class NoticeService {
         notice.setCreateDate(LocalDate.now());
         this.noticeRepository.save(notice);
     }
+
+    public void modify(Notice notice, String subject, String content){
+        notice.setSubject(subject);
+        notice.setContent(content);
+        notice.setModifyDate(LocalDate.now());
+        this.noticeRepository.save(notice);
+    }
+
+    public void delete(List<Integer> orderIds) {
+        noticeRepository.deleteByIds(orderIds);
+    }
+
+
 }
