@@ -64,17 +64,15 @@
   margin-right:30px;
   text-align:right;
 }
-.bt_box>.button{
+.bt_box>a>button{
   height:35px;
   width:150px;
-  background: rgb(20, 20, 20);
-  border:2px solid white;
+  background: #373838;
   color:white;
   font-size:20px;
   font-family: 'NeoDunggeunmoPro-Regular';
-  padding :5px;
 }
-.bt_box>.button:hover{
+.bt_box>a>button:hover{
   background: gray;
 }
 

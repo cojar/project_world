@@ -10,18 +10,21 @@
 .serch_line{
 
   text-align:center;
+  margin-top:100px;
+  margin-bottom:70px;
 }
 
 .serch_line>input{
-  width:500px;
-  height:30px;
+  width:600px;
+  height:50px;
+  margin-right:10px;
+  font-size:15px;
 }
 .serch_line>button{
-  height:35px;
+  height:50px;
   width:80px;
-  background: rgb(20, 20, 20);
-  border:2px solid white;
-  color:white;
+   background: #373838;
+    color:white;
   font-size:20px;
   font-family: 'NeoDunggeunmoPro-Regular';
 }
@@ -29,9 +32,14 @@
   background: gray;
 }
 
+.searchBox{
+background-color:rgb(30,30,30);
+border:1px solid gray;
+color:white;
+}
+
 /*메인배너 */
 .mainbanner{
-  margin-top:30px;
   display:block;
   text-align:center;
 }
@@ -43,12 +51,11 @@
 .banner-box>a>video{
   margin:0;
     padding:0;
-    width:1400px;
-    height:600px;
+    width:1440px;
 }
 .banner-box{
   display:inline-block;
-  width:95%;
+  width:100%;
   margin:0;
   padding:0;
 }
@@ -60,6 +67,10 @@ margin:0;
 }
 
 /**아이콘박스**/
+.icon{
+text-align:center;
+margin-bottom:100px;
+}
 .icon-box>a>div>img{
   width:100px;
   height:100px;
@@ -142,6 +153,7 @@ margin:20px;
 .gameList{
   margin-top:30px;
   text-align:center;
+  padding-bottom:50px;
 }
 .gameListTitle-box{
   display:inline-block;
@@ -192,3 +204,8 @@ margin:20px;
     margin-left:10px;
 }
 
+
+.container-box1{
+  background: rgb(30, 30, 30);
+  width:100%;
+}

@@ -136,6 +136,13 @@ nav {
   font-size:20px;
 
 }
+.userli{
+display:inline-block;
+margin-right:50px;
+}
+.member-name , .member-role{
+display:inline-block;
+}
 
 
 

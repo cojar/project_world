@@ -69,11 +69,9 @@ section {
 .panel-btn {
   font-size: 2rem;
   font-weight: bold;
-  background: rgb(30, 30, 30);
+  background: rgb(30,30,30);
   color: white;
-  border: none;
   width:150px;
-  border-radius: 5px;
   position: absolute;
   bottom: 50px;
   left: 70px;

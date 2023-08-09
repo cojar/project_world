@@ -7,21 +7,27 @@
 </head>
 <body>
 <nav th:replace="layout/navbar.html"></nav>
-
 <!-- 메인페이지  -->
-<div class="container-box">
+<div class="container-box1">
+  <div class="mainbanner">
+    <div class="banner-box">
+      <a href="">
+        <video src="https://cdn.akamai.steamstatic.com/steam/apps/256921566/movie480_vp9.webm?t=1671696058" autoplay muted loop>
+          <span> 상품 바로가기 </span>
+        </video>
+      </a>
+    </div>
+  </div>
   <div class="serch_line">
     <input type="text" id="search_kw" class="searchBox" th:value="${kw}" placeholder="상품명, 개발사명 으로 검색 ">
     <button class="search_button" type="button" id="btn_search">search</button>
   </div>
-  <div class="mainbanner">
-    <div class="banner-box">
-      <a href="">
-        <video src="https://cdn.akamai.steamstatic.com/steam/apps/256674854/movie480.webm?t=1496409949" autoplay muted loop></video>
-      </a>
-    </div>
-  </div>
   <div class="icon">
+    <div class="gameListTitle-box">
+    <span class="gameListTitle">
+      Theme
+    </span>
+    </div>
     <div class="icon-box">
       <a th:href="@{/product/list/RPG}">
         <div class="img-box">
@@ -32,7 +38,7 @@
       <a th:href="@{/product/list/Sports}">
         <div class="img-box">
           <img src="https://i.postimg.cc/8kq7YZWW/image.png"/>
-          <p class="iconName">스포츠</p>
+          <p class="iconName">Sports</p>
         </div>
       </a>
       <a th:href="@{/product/list/FPS}">
@@ -43,19 +49,19 @@
       </a>
       <a th:href="@{/product/list/Arcade}">
         <div class="img-box">
-          <img src="https://i.postimg.cc/85RYVKc5/image.png"/><p class="iconName">아케이드</p>
+          <img src="https://i.postimg.cc/85RYVKc5/image.png"/><p class="iconName">Arcade</p>
         </div>
       </a>
       <a th:href="@{/product/list/Thriller}">
         <div class="img-box">
           <img src="https://i.postimg.cc/xjPZx4Bp/image.png" style="width:100px height:100px"/>
-          <p class="iconName">스릴러</p>
+          <p class="iconName">Thriller</p>
         </div>
       </a>
       <a th:href="@{/product/list/Simulation}">
         <div class="img-box">
           <img src="https://i.postimg.cc/Dy8crphX/image.png">
-          <p class="iconName">시뮬레이션</p>
+          <p class="iconName">Simulation</p>
         </div>
       </a>
 
