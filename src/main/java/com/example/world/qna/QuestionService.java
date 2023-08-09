@@ -33,6 +33,17 @@ public class QuestionService {
         return this.questionRepository.findByProduct_Id(productId, pageable);
     }
 
+    public Page<Question> getList(int page, int size) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
+        return this.questionRepository.findAll(pageable);
+    }
+
+    public List<Question> getQuestionList() {
+        return this.questionRepository.findAll();
+    }
+
     public Question getQuestion(Long id) {
         Optional<Question> question = this.questionRepository.findById(id);
         if (question.isPresent()) {

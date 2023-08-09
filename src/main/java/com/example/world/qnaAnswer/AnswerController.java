@@ -1,5 +1,7 @@
 package com.example.world.qnaAnswer;
 
+import com.example.world.order.OrderForm;
+import com.example.world.product.Product;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.user.SiteUser;
@@ -29,17 +31,26 @@ public class AnswerController {
     private final UserService userService;
 
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create/{id}")
+    public String creatAnswer(AnswerForm answerForm, @PathVariable("id") Long id, Model model, Principal principal) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser user = this.userService.getUser(principal.getName());
+        answerForm.setContent(answerForm.getContent());
+        model.addAttribute("question", question);
+        model.addAttribute("user", user);
+        return "answer_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")
     public String createAnswer(Model model, @PathVariable("id") Long id,
                                @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "question_list";
+        }
         Question question = this.questionService.getQuestion(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("question", question);
-            return "question_detail";
-        }
-        Answer answer = this.answerService.create(question,
-                answerForm.getContent(), siteUser);
+        Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
         return String.format("redirect:/question/detail/%s#answer_%s",
                 answer.getQuestion().getId(), answer.getId());
     }
