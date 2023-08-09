@@ -87,4 +87,7 @@ public class OrderService {
     }
 
 
+    public List<ProductOrder> getAuthor(SiteUser siteUser) {
+        return this.orderRepository.findByUser(siteUser);
+    }
 }

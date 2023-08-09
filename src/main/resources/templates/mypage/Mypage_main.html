@@ -11,6 +11,7 @@
 <div class="profilecont">
 
   <div class="banner">
+    <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
@@ -34,7 +35,7 @@
 
                 <span>
                   <i class="fas fa-money-check-alt"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${orderCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 
@@ -76,7 +77,7 @@
 
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${reviewCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 
@@ -97,7 +98,7 @@
                 <span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${questionCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
 

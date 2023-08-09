@@ -75,6 +75,9 @@ public class ReviewService {
         this.reviewRepository.delete(review);
     }
 
+    public List<Review> getAuthor(SiteUser siteUser) {
+        return this.reviewRepository.findByAuthor(siteUser);
+    }
 }
 
 
