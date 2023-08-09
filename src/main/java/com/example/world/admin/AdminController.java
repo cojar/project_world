@@ -46,6 +46,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminController {
 
     private final NoticeService noticeService;
@@ -57,7 +58,7 @@ public class AdminController {
     private final UserService userService;
     private final AnswerService answerService;
 
-    @GetMapping("/admin/")
+    @GetMapping("/")
     public String adminMain(Model model,AdminSearchForm adminSearchForm) {
         int num=0;
         int priceM1 = this.adminService.requestMonthPrice(YearMonth.now());
@@ -87,7 +88,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/admin/")
+    @PostMapping("/")
     public String adminMainSearsh(Model model, @Valid AdminSearchForm adminSearchForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/ad/order";
@@ -136,7 +137,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/order")
+    @GetMapping("/order")
     public String adminOrder(Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<ProductOrder> paging = this.adminService.getList(page, size);
         List<ProductOrder> orderProductList = this.orderService.getOrderList();
@@ -146,13 +147,13 @@ public class AdminController {
         return "admin/admin_order";
     }
 
-    @PostMapping("/admin/confirm/{id}")
+    @PostMapping("/confirm/{id}")
     public ResponseEntity<String> adminConfirmOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "결제완료");
         return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
     }
 
-    @GetMapping("/admin/code/{id}")
+    @GetMapping("/code/{id}")
     public String adminSendCode(@PathVariable("id") Long id, @RequestParam(value = "sendCode", defaultValue = "") String sendCode) {
         ProductOrder productOrder = orderService.getOrder(id);
         if (productOrder != null) {
@@ -165,13 +166,13 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/admin/completeCancel/{id}")
+    @PostMapping("/completeCancel/{id}")
     public ResponseEntity<String> adminCompleteCancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "취소완료");
         return ResponseEntity.ok("주문 상태가 성공적으로 변경되었습니다.");
     }
 
-    @GetMapping("/admin/product")
+    @GetMapping("/product")
     public String adminProduct(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Page<Product> paging = this.productService.getList(page, size);
@@ -194,7 +195,7 @@ public class AdminController {
 //        return "redirect:/ad/product";
 //    }
 
-    @GetMapping("/admin/product/modify/{id}")
+    @GetMapping("/product/modify/{id}")
     public String adminProductModify(ProductForm productForm, @PathVariable("id") Long id, Model model) {
         Product product = productService.getProduct(id);
         if (product == null) {
@@ -272,14 +273,14 @@ public class AdminController {
         return "product_form";
     }
 
-    @GetMapping("/admin/user")
+    @GetMapping("/user")
     public String adminUser(Model model , @RequestParam(value = "page",defaultValue = "0")int page) {
         Page<SiteUser> userList = this.adminService.getUserList(page);
         model.addAttribute("paging", userList);
         return "admin/admin_user";
     }
 
-    @PostMapping("/admin/product/modify/{id}")
+    @PostMapping("/product/modify/{id}")
     public String adminProductModify(@ModelAttribute("productForm") @Valid ProductForm productForm,
                                      BindingResult bindingResult,
                                      @PathVariable("id") Long id,
@@ -308,24 +309,24 @@ public class AdminController {
         return String.format("redirect:/product/%s", product.getId());
     }
 
-    @PostMapping("/admin/user/adminPlus/{id}")
+    @PostMapping("/user/adminPlus/{id}")
     public ResponseEntity<String> adminPlus(@PathVariable("id") Long id) throws Exception {
         userService.adminPlus(id);
         return ResponseEntity.ok("관리자가 성공적으로 추가되었습니다.");
     }
-    @PostMapping("/admin/user/adminMinus/{id}")
+    @PostMapping("/user/adminMinus/{id}")
     public ResponseEntity<String> adminMinus(@PathVariable("id") Long id) throws Exception {
         userService.adminMinus(id);
         return ResponseEntity.ok("관리자 권한이 성공적으로 회수 되었습니다.");
     }
 
-    @GetMapping("/admin/review")
+    @GetMapping("/review")
     public String adminReview() {
         return "admin/admin_review";
     }
 
 
-    @GetMapping("/admin/qna")
+    @GetMapping("/qna")
     public String adminQna(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Page<Question> paging = this.questionService.getList(page, size);
@@ -335,16 +336,16 @@ public class AdminController {
         return "admin/admin_qna";
     }
 
-    @GetMapping("/admin/qna/answer/{id}")
-    public String adminAnswer(@PathVariable Long id, Model model, AnswerForm answerForm) {
+    @GetMapping("/qna/answer/{id}")
+    public String adminAnswer(@PathVariable("id") Long id, Model model, AnswerForm answerForm) {
         Question question = this.questionService.getQuestion(id);
         answerForm.setContent(answerForm.getContent());
         model.addAttribute("question", question);
         return "admin/answer_form";
     }
 
-    @PostMapping("/admin/qna/answer/{id}")
-    public String adminAnswer(@PathVariable Long id, @RequestParam String content, Principal principal) {
+    @PostMapping("/qna/answer/{id}")
+    public String adminAnswer(@PathVariable("id") Long id, @RequestParam String content, Principal principal) {
         Question question = this.questionService.getQuestion(id);
         SiteUser adminUser = this.userService.getUser(principal.getName());
         this.answerService.create(question, content, adminUser);
@@ -352,7 +353,15 @@ public class AdminController {
         return "redirect:/admin/qna";
     }
 
-    @GetMapping("admin/notice")
+    @PostMapping("/qna/delete")
+    public ResponseEntity<String> deleteQuestions(@RequestParam(value="ids[]") List<Long> ids) {
+        for (Long id : ids) {
+            questionService.deleteQuestionWithAnswers(id);
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/notice")
     public String adminNotice(Model model, @RequestParam(value = "page", defaultValue = "0") int page){
         Page<Notice> paging = this.noticeService.allNotice(page);
         model.addAttribute("paging",paging);

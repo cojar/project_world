@@ -4,8 +4,11 @@ import com.example.world.DataNotFoundException;
 import com.example.world.product.Product;
 import com.example.world.product.ProductService;
 import com.example.world.qnaAnswer.Answer;
+import com.example.world.qnaAnswer.AnswerRepository;
 import com.example.world.user.SiteUser;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +28,7 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final ProductService productService;
+    private final AnswerRepository answerRepository;
 
     public Page<Question> getListByProductId(Long productId, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -72,6 +76,18 @@ public class QuestionService {
 
     public void delete(Question question) {
         this.questionRepository.delete(question);
+    }
+
+    @Transactional
+    public void deleteQuestionWithAnswers(Long questionId) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + questionId));
+
+        List<Answer> answerList = question.getAnswerList();
+        if (answerList != null && !answerList.isEmpty()) {
+            this.answerRepository.deleteAll(answerList);
+        }
+        questionRepository.delete(question);
     }
 
 }

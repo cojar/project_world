@@ -40,6 +40,5 @@ public class Question {
 
     private LocalDateTime modifyDate;
 
-
     private boolean answered;
 }
