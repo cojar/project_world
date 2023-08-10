@@ -9,13 +9,12 @@
 <body>
 <nav th:replace="layout/navbar.html"></nav>
 <div class="profilecont">
-
   <div class="banner">
+    <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
     <h4><span th:text='${user.nickname}'></span><span th:text='${"#"+user.id}'>#회원번호(타임리프)</span></h4>
-
   </div>
   <div class="content">
     <div class="main">
@@ -31,14 +30,11 @@
               <div class="sub">
                 <strong>주문내역</strong>
                 <span>&nbsp;-&nbsp;</span>
-
                 <span>
                   <i class="fas fa-money-check-alt"></i>
                   &nbsp;3(타임리프)
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -46,19 +42,17 @@
         <li class="crypto">
           <a href="#">
             <div class="icon">
-              <i class="	fas fa-shopping-cart"></i>
+              <i class="fas fa-shopping-cart"></i>
             </div>
             <div class="txt">
               <h5>Wish List</h5>
               <div class="sub">
-                <strong>찜목록</strong>               <span>&nbsp;-&nbsp;</span>
+                <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-shopping-cart"></i>
                   &nbsp;3(타임리프)
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -66,21 +60,18 @@
         <li class="coding">
           <a href="#">
             <div class="icon">
-              <i class="	fas fa-sticky-note"></i>
+              <i class="fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Review</h5>
               <div class="sub">
                 <strong>내가 쓴 리뷰</strong>
                 <span>&nbsp;-&nbsp;</span>
-
                 <span>
                   <i class="fas fa-sticky-note"></i>
                   &nbsp;3(타임리프)
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -88,7 +79,7 @@
         <li class="design">
           <a href="#">
             <div class="icon">
-              <i class="	fas fa-sticky-note"></i>
+              <i class="fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Question</h5>
@@ -97,11 +88,9 @@
                 <span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text="${#lists.size(questionList)}"></span>
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -115,7 +104,6 @@
               <h5>User Edit</h5>
               <div class="sub">
                 <strong>회원정보수정</strong>
-
               </div>
             </div>
           </a>
@@ -124,33 +112,53 @@
     </div>
     <div class="side">
       <h5>내 상품문의</h5>
-
       <table class="list_table">
         <thead>
         <tr>
-          <th class="number">상품번호</th>
-          <th class="title">상품명</th>
-          <th class="date">문의 제목</th>
-          <th class="inquiry">답변 수</th>
-          <th class="button_menu">상품페이지</th>
-
+          <th class="number" style="text-align: center;">상품명</th>
+          <th class="title" style="text-align: center;">상품개발사</th>
+          <th class="date" style="text-align: center;">문의 내용</th>
+          <th style="text-align: center;">상품보기</th>
+          <th class="inquiry" style="text-align: center;">답변 여부</th>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="order : ${orderList}">
-          <td class="number" th:text="${order.id}">1</td>
+        <tr th:each="question : ${questionList}">
+          <td class="number" th:text="${question.product?.productName}">상품명</td>
           <td class="title">
-            <a
-                    th:href=""                       th:text="${product.name}"
-            > 상품명</a>
+            <span th:text="${question.product?.developer}">상품개발사</span>
           </td>
-          <td class="date" th:text=“${order.email}”>test@test.test</td>
-          <td class="inquiry" >1</td>
-          <td class="button_menu">
-            <button type="button">상세보기</button>
+          <td class="date" th:text="${question.content}">문의 내용</td>
+          <td><a th:href="@{|/product/${question.product?.id}|}"><button type="button">상품상세보기</button></a></td>
+          <td class="inquiry">
+            <span th:if="${question.answered}">답변 완료</span>
+            <span th:unless="${question.answered}">답변 대기중</span>
           </td>
         </tr>
         </tbody>
       </table>
+      <!-- 페이징처리 시작 -->
+      <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+        <ul class="pagination1 justify-content-center">
+          <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+            <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+              <span><</span>
+            </a>
+          </li>
+          <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+              th:if="${page >= paging.number-5 and page <= paging.number+5}"
+              th:classappend="${page == paging.number} ? 'active'"
+              class="page-item">
+            <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
+          </li>
+          <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+            <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+              <span>></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- 페이징처리 끝 -->
     </div>
   </div>
 </div>
