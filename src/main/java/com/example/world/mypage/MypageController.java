@@ -1,11 +1,8 @@
 package com.example.world.mypage;
 
 
-import com.example.world.DataNotFoundException;
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
-import com.example.world.product.Product;
-import com.example.world.product.ProductService;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.review.Review;
@@ -13,18 +10,13 @@ import com.example.world.review.ReviewService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/mypage")
@@ -35,7 +27,6 @@ public class MypageController {
     private final OrderService orderService;
     private final ReviewService reviewService;
     private final QuestionService questionService;
-    private final ProductService productService;
 
     @GetMapping("")
     public String mypageMain(Model model , Principal principal){
@@ -83,7 +74,8 @@ public class MypageController {
         return "/mypage/Mypage_review";
     }
     @GetMapping("/user")
-    public String myStatus(Model model , Principal principal){
+    @PreAuthorize("isAuthenticated()")
+    public String myStatus(UserForm userForm, Model model , Principal principal){
         SiteUser siteUser = this.userService.getUser(principal.getName());
         List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
         List<Review> reviews = this.reviewService.getAuthor(siteUser);
@@ -99,4 +91,27 @@ public class MypageController {
         model.addAttribute("user",siteUser);
         return "/mypage/Mypage_usr";
     }
+
+
+    @PostMapping("/user/modify")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    public String userEdit(UserForm userForm, Principal principal, BindingResult bindingResult) {
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        if (bindingResult.hasErrors()) {
+            return "다시 시도해 주세요. ";
+        }else if (userForm.getPassword1().equals("")) {
+            return "변경할 비밀번호를 입력해주세요";
+        }else if (userForm.getNickname().equals("")) {
+            return "변경할 닉네임을 입력해주세요";
+        }else if (!userForm.getPassword1().equals(userForm.getPassword2())) {
+            return "비밀번호 2개가 일치하지 않습니다.";
+        }else if (userForm.getNickname().equals(siteUser.getNickname())) {
+            return "같은 닉네임으로는 변경이 불가능합니다.";
+        }else {
+            this.userService.modifyUser(siteUser,userForm.getNickname(),userForm.getPassword1());
+            return "성공적으로 수정되었습니다.";
+        }
+    }
+
 }

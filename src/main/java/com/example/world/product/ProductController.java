@@ -38,19 +38,13 @@ public class ProductController {
     private final UserService userService;
     private final ProductImageService productImageService;
 
-//    @GetMapping("/list")
-//    public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-//        String themeName = "All";
-//        Page<Product> paging = this.productService.allTheme(page);
-//        model.addAttribute("paging", paging);
-//        model.addAttribute("themeKey",themeName);
-//        return "product_list";
-//
-//    }
-
     @GetMapping("/list")
-    public String root(){
-        return "redirect:/product/list/all";
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Product> paging = this.productService.getSearch(page, kw);
+        model.addAttribute("paging", paging);
+        model.addAttribute("themeKey", "검색어: "+kw);
+        return "product_list";
     }
 
 
@@ -98,7 +92,7 @@ public class ProductController {
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("all")){
-            String themeName = "all";
+            String themeName = "All";
             Page<Product> paging = this.productService.allTheme(page);
             model.addAttribute("paging",paging);
             model.addAttribute("themeKey",themeName);

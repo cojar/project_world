@@ -42,8 +42,8 @@
                 <button type="button" id="send-verification" class="btnPrimary2" onclick="sendEmailConfirmation()">인증번호 전송</button>
               </div>
             </div>
-            <div id="email-format-error" style="display: none; color: red;">이메일 형식으로 작성해주세요.</div>
           </div>
+          <div id="email-format-error" style="display: none; color: red;">이메일 형식으로 작성해주세요.</div>
 
           <div class="email-check-box">
             <div class="email-check">
@@ -52,8 +52,8 @@
               <div class="email-checkmark">✓</div>
               <div id="timer">03:00</div>
               <div id="timer-expired" style="display: none; color: red;">인증시간이 만료되었습니다.</div>
-              <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>
             </div>
+            <div id="mail-key-errorMessage" style="display: none; color: red;">메일 키가 일치하지 않아요</div>
           </div>
 
           <div class="birthday-box">
@@ -66,10 +66,9 @@
               <input id="password-input" th:field="*{password1}" type="password" class="form-control"
                      placeholder="비밀번호를 입력해주세요. (영문,숫자 8글자 이상)" required="" value="">
               <div class="password-checkmark">✓</div>
-              <i id="show-password" class="fa-solid fa-eye fa-lg" alt="Show Password"></i>
             </div>
-            <div id="password-error" style="display: none; color: red;">비밀번호는 영문, 숫자 8글자 이상을 입력하세요.</div>
           </div>
+          <div id="password-error" style="display: none; color: red;">비밀번호는 영문, 숫자 8글자 이상을 입력하세요.</div>
 
           <div class="password-check-box">
             <div class="password-check">
@@ -77,8 +76,8 @@
                      placeholder="비밀번호를 다시 입력해주세요." required="" value="">
               <div class="password-check-checkmark">✓</div>
             </div>
-            <div id="password-match-error" style="display: none; color: red;">비밀번호와 일치하지 않습니다.</div>
           </div>
+          <div id="password-match-error" style="display: none; color: red;">비밀번호와 일치하지 않습니다.</div>
 
           <div class="nickname-box">
             <div class="nickname2">
@@ -96,7 +95,7 @@
         <div class="signupSummitBtn2">
           <div class="signInBtn">
             <button type="submit" class="btnPrimary" name="signupBtn">회원가입</button>
-            <button type="button" class="btnPrimary"><a th:href="@{|/main|}">취소하기</a></button>
+            <a th:href="@{|/|}"><button type="button" class="btnPrimary">취소하기</button></a>
           </div>
         </div>
 
@@ -271,7 +270,7 @@ $(document).ready(function() {
           $('#nicknameCheckResult')
             .text('사용 가능한 닉네임입니다.')
             .css('margin-left', '70px')
-            .css('color', 'black');
+            .css('color', 'white');
         }
       },
       error: function(xhr, status, error) {
@@ -340,6 +339,7 @@ function validatePassword() {
         },
         error: function(xhr, status, error) {
             alert("이메일 인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+            location.reload();
         }
     });
 }

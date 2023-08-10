@@ -181,6 +181,11 @@ public class UserService {
 
     }
 
+    public void modifyUser(SiteUser siteUser,String nickname, String password) {
+        siteUser.setNickname(nickname);
+        siteUser.setPassword(passwordEncoder.encode(password));
+        this.userRepository.save(siteUser);
+    }
 
 
     //    public CurrentUser updateUser(String newUsername, String newPassword) {
