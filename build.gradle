@@ -39,7 +39,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 	implementation 'org.commonmark:commonmark:0.21.0'
-
+	testImplementation 'org.assertj:assertj-core:3.11.1'
 
 }
 

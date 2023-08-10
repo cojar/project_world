@@ -13,10 +13,13 @@ import com.example.world.review.ReviewService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,7 +34,7 @@ public class MypageController {
     private final ReviewService reviewService;
     private final QuestionService questionService;
 
-    private
+
 
     @GetMapping("")
     public String mypageMain(Model model , Principal principal){
@@ -59,15 +62,19 @@ public class MypageController {
     public String myqna(){
         return "/mypage/Mypage_qna";
     }
+
     @GetMapping("/review")
-    public String myReview(Model model, Principal principal){
+    public String myReview(Model model, Principal principal,@RequestParam Long productOrderId,@RequestParam(value = "page", defaultValue = "0")int page){
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        List<Review> reviewList = this.reviewService.getReviewsByAuthor(siteUser);
+        Page<Review> reviewPage = this.reviewService.myReview(page);
+        ProductOrder productOrder = this.orderService.getOrder(productOrderId);
         model.addAttribute("user",siteUser);
-        model.addAttribute("review",reviewList);
+        model.addAttribute("review",reviewPage);
+        model.addAttribute("productOrder",productOrderId);
 
         return "/mypage/Mypage_review";
     }
+
     @GetMapping("/user")
     public String myStatus(Model model , Principal principal){
         SiteUser siteUser = this.userService.getUser(principal.getName());

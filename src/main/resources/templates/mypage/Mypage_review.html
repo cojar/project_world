@@ -11,6 +11,7 @@
 <div class="profilecont">
 
   <div class="banner">
+    <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
@@ -136,15 +137,13 @@
 
         </thead>
         <tbody>
-        <tr th:each="order : ${orderList}">
-          <td class="number" th:text="${order.id}">1</td>
+        <tr th:each="review : ${reviewList}">
+          <td class="number" th:text="${product.id}"></td>
           <td class="title">
-            <a
-                    th:href="@{|/product/${product.id}|}" th:text="${product.name}"
-            > 상품명</a>
+            <a th:href="@{|/product/${product.id}|}" th:text="${product.name}"> 상품명</a>
           </td>
-          <td class="date" th:text=“${order.email}”>test@test.test</td>
-          <td class="inquiry" >평점(타임리프)</td>
+          <td class="date" th:text=“${review.content}”></td>
+          <td class="inquiry" th:text="${review.score}">평점(타임리프)</td>
           <td class="button_menu">
             <button type="button">상세보기</button>
           </td>
