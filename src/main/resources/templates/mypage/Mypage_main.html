@@ -9,14 +9,12 @@
 <body>
 <nav th:replace="layout/navbar.html"></nav>
 <div class="profilecont">
-
   <div class="banner">
     <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
     <h4><span th:text='${user.nickname}'></span><span th:text='${"#"+user.id}'>#회원번호(타임리프)</span></h4>
-
   </div>
   <div class="content">
     <div class="main">
@@ -32,14 +30,11 @@
               <div class="sub">
                 <strong>주문내역</strong>
                 <span>&nbsp;-&nbsp;</span>
-
                 <span>
                   <i class="fas fa-money-check-alt"></i>
                   &nbsp;<span th:text='${orderCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -47,19 +42,17 @@
         <li class="crypto">
           <a href="#">
             <div class="icon">
-              <i class="	fas fa-shopping-cart"></i>
+              <i class="fas fa-shopping-cart"></i>
             </div>
             <div class="txt">
               <h5>Wish List</h5>
               <div class="sub">
-                <strong>찜목록</strong>               <span>&nbsp;-&nbsp;</span>
+                <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-shopping-cart"></i>
                   &nbsp;3(타임리프)
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -67,21 +60,18 @@
         <li class="coding">
           <a th:href="@{/mypage/review}">
             <div class="icon">
-              <i class="	fas fa-sticky-note"></i>
+              <i class="fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Review</h5>
               <div class="sub">
                 <strong>내가 쓴 리뷰</strong>
                 <span>&nbsp;-&nbsp;</span>
-
                 <span>
                   <i class="fas fa-sticky-note"></i>
                   &nbsp;<span th:text='${reviewCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -89,7 +79,7 @@
         <li class="design">
           <a th:href="@{/mypage/qna}">
             <div class="icon">
-              <i class="	fas fa-sticky-note"></i>
+              <i class="fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Question</h5>
@@ -101,8 +91,6 @@
                   &nbsp;<span th:text='${questionCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
-
-
               </div>
             </div>
           </a>
@@ -116,7 +104,6 @@
               <h5>User Edit</h5>
               <div class="sub">
                 <strong>회원정보수정</strong>
-
               </div>
             </div>
           </a>
