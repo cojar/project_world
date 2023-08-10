@@ -49,7 +49,7 @@ public class NoticeController {
             return "notice_form";
         }
         this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent());
-        return String.format("redirect:/ad/notice");
+        return String.format("redirect:/admin/notice");
     }
 
 
