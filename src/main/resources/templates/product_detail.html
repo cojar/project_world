@@ -22,6 +22,25 @@
         </div>
         <button class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">BuyNow</button>
     </div>
+
+    <div class="inner-container trainer-certificate">
+        <h3>보유 자격증
+            <span th:if="${#lists.size(product.productImageList) > 0}" th:text="|[${#lists.size(product.productImageList)}]|"></span></h3>
+        <div class="certificate-list-box">
+            <div class="certificate-list" th:each="productImage, loop : ${product.productImageList}">
+                <div class="certificate-name" >
+                    <i class="fa-solid fa-medal"></i>
+                    <span th:text="${productImage.name}"></span>
+                </div>
+                <div class="certificate-img">
+                    <img th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="product-detail-width">
         <div class="product-detail-width">
         <div class="product-detail-classification">
@@ -261,6 +280,5 @@ $(document).ready(function() {
 
 
 });
-
 </script>
 </html>

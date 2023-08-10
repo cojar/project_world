@@ -121,12 +121,28 @@
             </label>
         </div>
 
-<!--        <div class="main-imgUrl" style="color:white;">-->
-<!--            <div class="uploaded-file-name">배너 사진을 업로드해주세요</div>-->
-<!--            <input type="file" th:value="${profileImage}" th:field="*{profileImage}"-->
-<!--                   placeholder="배너 사진을 업로드 해주세요" th:onchange="_getFileName(this)">-->
-<!--            <label th:for="profileImage"><i class="fa-solid fa-cloud-arrow-up"></i></label>-->
-<!--        </div>-->
+        <div class="form-container">
+            <div class="productImage" th:each="productImage, loop : ${productImageList}">
+                    <input class="productImage-name" type="hidden" th:value="${productImage.name}" th:field="*{productImageList[__${loop.index}__].name}">
+                <div class="main-imgUrl" style="color:white;">
+                    <input class="upload-image" type="file" th:value="${productImage.image}" th:field="*{productImageList[__${loop.index}__].image}"
+                           placeholder="배너 사진을 업로드 해주세요" th:onchange="_getFileName(this)" >
+                </div>
+            </div>
+        </div>
+
+<!--        <li class="type">프로필 사진</li>-->
+<!--        <li class="content">-->
+<!--            <div class="profile-imgUrl">-->
+<!--                <div class="uploaded-file-name">프로필 사진을 업로드 해주세요.</div>-->
+<!--                <input type="file" th:value="${panelImage}" th:field="*{panelImage}"-->
+<!--                       placeholder="프로필 사진을 업로드 해주세요." th:onchange="_getFileName(this)">-->
+<!--                <label th:for="panelImage"><i class="fa-solid fa-cloud-arrow-up"></i></label>-->
+<!--            </div>-->
+<!--        </li>-->
+
+
+
 
 
         <div class="product-form-btn">
@@ -157,12 +173,10 @@ $(document).ready(function() {
         }
     });
 
-    function _getFileName(_this) {
-        var fileValue = $(_this).val().split("\\");
-        var fileName = fileValue[fileValue.length - 1];
-
-        $(_this).siblings(".uploaded-file-name").html(fileName).addClass("active");
-    }
+   $('.upload-image').on('change', function() {
+        var fileName = $(this).val().split('\\').pop();
+        $('.productImage-name').val(fileName);
+    });
 
 
 
@@ -171,5 +185,12 @@ $(document).ready(function() {
     });
 
 });
+    function _getFileName(_this) {
+        var fileValue = $(_this).val().split("\\");
+        var fileName = fileValue[fileValue.length-1];
+
+        $(_this).siblings("div.uploaded-file-name").html(fileName);
+        $(_this).siblings("div.uploaded-file-name").addClass("active");
+    }
 </script>
 </html>

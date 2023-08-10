@@ -21,7 +21,7 @@ public class UploadedFile {
 
     private String primaryPath;
 
-//    private String secondaryPath;
+    private String secondaryPath;
 
     private String uploader;
 

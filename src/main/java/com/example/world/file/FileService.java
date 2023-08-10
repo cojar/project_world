@@ -2,6 +2,7 @@ package com.example.world.file;
 
 import com.example.world.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class FileService {
@@ -24,8 +26,8 @@ public class FileService {
 
     private final FileRepository fileRepository;
 
-    //    public UploadedFile upload(MultipartFile file, String primaryPath, String secondaryPath, String uploader) throws IOException {
-    public UploadedFile upload(MultipartFile file, String primaryPath, String uploader) throws IOException {
+
+    public UploadedFile upload(MultipartFile file, String primaryPath, String secondaryPath, String uploader) throws IOException {
 
         String[] fileBits = file.getContentType().split("/");
         String type = fileBits[0];
@@ -49,24 +51,31 @@ public class FileService {
 
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_n"));
 
-//        String saveDirPath = fileRootPath
-//                + File.separator + primaryPath
-//                + File.separator + secondaryPath;
-
         String saveDirPath = fileRootPath
-                + File.separator + primaryPath;
+                + File.separator + primaryPath
+                + File.separator + secondaryPath;
 
         String saveFilePath = saveDirPath
                 + File.separator + uploader
                 + "_" + date
                 + "." + ext;
 
+        File target = new File(saveDirPath);
+        if (!target.exists()) {
+            log.info(saveDirPath + " 경로가 존재하지 않습니다.");
+            target.mkdirs();
+            log.info(saveDirPath + " 경로를 생성했습니다.");
+        } else {
+            log.info(saveDirPath + " 경로가 존재합니다.");
+        }
+
         file.transferTo(new File(saveFilePath));
+        log.info(saveFilePath + " 파일 저장을 완료했습니다.");
 
         UploadedFile uploadedFile = new UploadedFile();
 
         uploadedFile.setPrimaryPath(primaryPath);
-//        uploadedFile.setSecondaryPath(secondaryPath);
+        uploadedFile.setSecondaryPath(secondaryPath);
         uploadedFile.setUploader(uploader);
         uploadedFile.setDate(date);
         uploadedFile.setExt(ext);
@@ -88,7 +97,7 @@ public class FileService {
 
     public String getFilePath(UploadedFile uploadedFile) {
         return fileOriginPath + uploadedFile.getPrimaryPath()
-//                + File.separator + uploadedFile.getSecondaryPath()
+                + File.separator + uploadedFile.getSecondaryPath()
                 + File.separator + uploadedFile.getUploader()
                 + "_" + uploadedFile.getDate()
                 + "." + uploadedFile.getExt();

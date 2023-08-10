@@ -1,5 +1,7 @@
 package com.example.world.product;
 
+import com.example.world.product.productImage.ProductImageForm;
+import com.example.world.product.productImage.ProductImageService;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
@@ -34,7 +36,7 @@ public class ProductController {
     private final WindowMinService windowMinService;
     private final WindowRecommendedService windowRecommendedService;
     private final UserService userService;
-//    private final ProductImageService productImageService;
+    private final ProductImageService productImageService;
 
 //    @GetMapping("/list")
 //    public String allList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -107,8 +109,8 @@ public class ProductController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String create(Model model, ProductForm productForm, Principal principal) {
-
+    public String create(Model model, ProductForm productForm) {
+//    public String create(Model model, ProductForm productForm, Principal principal) {
 //        SiteUser username = this.userService.getUserByUsername(principal.getName());
 //        productForm.setUsername(username.getUsername());
 
@@ -116,20 +118,20 @@ public class ProductController {
         List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
         List<MacMinForm> macMinList = new ArrayList<>();
         List<MacRecommendedForm> macRecommendedList = new ArrayList<>();
-//        List<ProductImageForm> productImageList = new ArrayList<>();
+        List<ProductImageForm> productImageList = new ArrayList<>();
 
         windowMinList.add(new WindowMinForm());
         windowRecommendedList.add(new WindowRecommendedForm());
         macMinList.add(new MacMinForm());
         macRecommendedList.add(new MacRecommendedForm());
-//        productImageList.add(new ProductImageForm());
+        productImageList.add(new ProductImageForm());
 
 
         model.addAttribute("windowMinList", windowMinList);
         model.addAttribute("windowRecommendedList", windowRecommendedList);
         model.addAttribute("macMinList", macMinList);
         model.addAttribute("macRecommendedList", macRecommendedList);
-//        model.addAttribute("productImageList", productImageList);
+        model.addAttribute("productImageList", productImageList);
 
         return "product_form";
     }
@@ -144,6 +146,9 @@ public class ProductController {
 
         Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
                 productForm.getTheme(), productForm.getPrice(), productForm.getContent());
+
+//        Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
+//                productForm.getTheme(), productForm.getPanelImage(), productForm.getPrice(), productForm.getContent());
 
         // windowMin 저장
         for (WindowMinForm windowMinForm : productForm.getWindowMinList()) {
@@ -193,11 +198,11 @@ public class ProductController {
             }
         }
 
-//        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
-//            if (!productImageForm.getName().equals("") && productImageForm.getImage() != null) {
-//                this.productImageService.create(productImageForm.getName(), productImageForm.getImage(), product);
-//            }
-//        }
+        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
+            if (!productImageForm.getName().equals("") && productImageForm.getImage() != null) {
+                this.productImageService.create(productImageForm.getName(), productImageForm.getImage(), product);
+            }
+        }
 
 
 

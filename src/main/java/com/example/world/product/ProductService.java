@@ -2,10 +2,14 @@ package com.example.world.product;
 
 
 import com.example.world.DataNotFoundException;
+import com.example.world.file.FileService;
+import com.example.world.file.UploadedFile;
 import com.example.world.order.OrderRepository;
 import com.example.world.order.ProductOrder;
 //import com.example.world.product.productImage.ProductImage;
 //import com.example.world.product.productImage.ProductImageForm;
+import com.example.world.product.productImage.ProductImage;
+import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommended;
@@ -31,6 +35,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import jakarta.persistence.criteria.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,13 +48,20 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    public Product create(String productName, String developer, String theme, int price, String content) {
+
+    private final FileService fileService;
+
+    //    public Product create(String productName, String developer, String theme, MultipartFile file, int price, String content) throws IOException {
+    public Product create(String productName, String developer, String theme, int price, String content) throws IOException {
         Product product = new Product();
+
+//        UploadedFile panelImage = this.fileService.upload(file, "product", "productImage", "productNumber");
 
 //        product.setUsername(username);
         product.setProductName(productName);
         product.setDeveloper(developer);
         product.setTheme(theme);
+//        product.setPanelImage(panelImage);
         product.setPrice(price);
         product.setContent(content);
         product.setCreateDate(LocalDate.now());
@@ -64,34 +77,33 @@ public class ProductService {
         return this.productRepository.findAll(spec, pageable);
     }
 
-    public Page<Product>sortHigh(int page, String key){
+    public Page<Product> sortHigh(int page, String key) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
         return this.productRepository.findAll(spec, pageable);
     }
 
-    public Page<Product> sortHighAll(int page){
+    public Page<Product> sortHighAll(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 
-    public Page<Product> sortLowAll(int page){
+    public Page<Product> sortLowAll(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 
 
-
-    public Page<Product>sortLow(int page, String key){
+    public Page<Product> sortLow(int page, String key) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.asc("price"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
         return this.productRepository.findAll(spec, pageable);
     }
@@ -114,12 +126,13 @@ public class ProductService {
         };
     }
 
-    public Page<Product> allTheme(int page){
+    public Page<Product> allTheme(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 16);
         return this.productRepository.findAll(pageable);
     }
+
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
         if (product.isPresent()) {
@@ -241,6 +254,7 @@ public class ProductService {
     private Specification<Product> search(String kw) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Predicate toPredicate(Root<Product> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true);  // 중복을 제거
