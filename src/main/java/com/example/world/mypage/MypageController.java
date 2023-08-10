@@ -3,17 +3,22 @@ package com.example.world.mypage;
 
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
+import com.example.world.product.Product;
+import com.example.world.product.ProductService;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.review.Review;
 import com.example.world.review.ReviewService;
 import com.example.world.user.SiteUser;
+import com.example.world.user.UserForm;
 import com.example.world.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,6 +32,7 @@ public class MypageController {
     private final OrderService orderService;
     private final ReviewService reviewService;
     private final QuestionService questionService;
+    private final ProductService productService;
 
     @GetMapping("")
     public String mypageMain(Model model , Principal principal){
