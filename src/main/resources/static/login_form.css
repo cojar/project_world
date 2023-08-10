@@ -47,8 +47,6 @@ form>div{
 .btnPrimary{
   background: #000;
   color:white;
-
-  border:none;
   font-size:20px;
 }
 
@@ -93,12 +91,11 @@ form>div{
 }
 
 .signupSummitBtn .btnPrimary{
-  background: #000;
   width : 100%;
   padding:15px;
-  border: 2px solid white;
   margin-top:20px;
-  color:#fff;
+    background: #373838;
+    color:white;
   font-size:20px;
   font-family: 'NeoDunggeunmoPro-Regular';
 }
