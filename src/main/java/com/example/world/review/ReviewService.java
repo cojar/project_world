@@ -7,12 +7,15 @@ import com.example.world.product.Product;
 import com.example.world.product.ProductService;
 import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -83,11 +86,28 @@ public class ReviewService {
         return this.reviewRepository.findByAuthor(siteUser);
     }
 
-    public Page<Review> myReview(int page){
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.reviewRepository.findAll(pageable);
+    public List<Review> getReviewsByAuthor(SiteUser author, int page) {
+        Page<Review> reviewPage = this.reviewRepository.findByAuthor(author, PageRequest.of(page, 10, Sort.by(Sort.Order.desc("id"))));
+        return reviewPage.getContent();
+    }
+
+
+    public Specification<SiteUser> searchUser(SiteUser sortkey){
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            // Season 컬럼을 기준으로 검색 조건 생성
+            if (sortkey != null) {
+                Path<String> seasonPath = root.get("author");
+                Predicate seasonPredicate = criteriaBuilder.equal(seasonPath, sortkey);
+                predicates.add(seasonPredicate);
+            }
+
+            // 다른 조건들을 추가하고 싶다면 여기에 추가
+
+            // 검색 조건들을 조합하여 최종 검색 조건 생성
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
     }
 }
 

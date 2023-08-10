@@ -1,6 +1,7 @@
 package com.example.world.mypage;
 
 
+import com.example.world.DataNotFoundException;
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
 import com.example.world.qna.Question;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/mypage")
@@ -64,16 +66,15 @@ public class MypageController {
     }
 
     @GetMapping("/review")
-    public String myReview(Model model, Principal principal,@RequestParam Long productOrderId,@RequestParam(value = "page", defaultValue = "0")int page){
+    public String myReview(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        Page<Review> reviewPage = this.reviewService.myReview(page);
-        ProductOrder productOrder = this.orderService.getOrder(productOrderId);
-        model.addAttribute("user",siteUser);
-        model.addAttribute("review",reviewPage);
-        model.addAttribute("productOrder",productOrderId);
+        List<Review> reviews = this.reviewService.getReviewsByAuthor(siteUser, page); // 수정된 부분
+
+        model.addAttribute("reviews", reviews); // 리뷰 목록을 모델에 추가
 
         return "/mypage/Mypage_review";
     }
+
 
     @GetMapping("/user")
     public String myStatus(Model model , Principal principal){
