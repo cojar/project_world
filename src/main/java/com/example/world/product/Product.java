@@ -58,8 +58,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductImage> productImageList;
-    @OneToOne
-    private UploadedFile panelImage;
+//    @OneToOne
+//    private UploadedFile panelImage;
 
     @Column(columnDefinition = "text")
     private String content;

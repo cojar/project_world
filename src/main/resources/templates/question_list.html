@@ -25,7 +25,10 @@
                         삭제
                     </button>
                     <div th:if="${question.answerList}">
-                        <p><hr><span th:text="${question.answerList[0].content}"></span></p>
+                        <hr>
+                        <div th:each="answer : ${question.answerList}">
+                            <p><span th:text="${answer.content}"></span></p>
+                        </div>
                     </div>
                 </div>
             </div>

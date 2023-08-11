@@ -122,11 +122,11 @@
         </div>
 
         <div class="form-container">
+            <div class="menu">배너 이미지</div>
             <div class="productImage" th:each="productImage, loop : ${productImageList}">
                     <input class="productImage-name" type="hidden" th:value="${productImage.name}" th:field="*{productImageList[__${loop.index}__].name}">
                 <div class="main-imgUrl" style="color:white;">
-                    <input class="upload-image" type="file" th:value="${productImage.image}" th:field="*{productImageList[__${loop.index}__].image}"
-                           placeholder="배너 사진을 업로드 해주세요" th:onchange="_getFileName(this)" >
+                    <input class="upload-image" type="file" th:value="${productImage.image}" th:field="*{productImageList[__${loop.index}__].image}" th:onchange="_getFileName(this)" >
                 </div>
             </div>
         </div>
