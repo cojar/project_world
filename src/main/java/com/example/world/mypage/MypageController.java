@@ -73,12 +73,15 @@ public class MypageController {
     @GetMapping("/review")
     public String myReview(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        List<Review> reviews = this.reviewService.getReviewsByAuthor(siteUser, page); // 수정된 부분
-
-        model.addAttribute("reviews", reviews); // 리뷰 목록을 모델에 추가
+        int pageSize = 10; // 페이지 크기 설정
+        Page<Review> reviewPage = this.reviewService.getReviewsByAuthor(siteUser, page, pageSize);
+        model.addAttribute("user",siteUser);
+        model.addAttribute("reviewPage", reviewPage); // 전체 페이지 정보를 모델에 추가
 
         return "/mypage/Mypage_review";
     }
+
+
     @GetMapping("/user")
     @PreAuthorize("isAuthenticated()")
     public String myStatus(UserForm userForm, Model model , Principal principal){
