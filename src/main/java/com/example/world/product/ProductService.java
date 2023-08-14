@@ -86,8 +86,6 @@ public class ProductService {
         return this.productRepository.findAll(pageable);
     }
 
-
-
     public Page<Product>sortLow(int page, String key){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.asc("price"));
@@ -223,6 +221,19 @@ public class ProductService {
 
         //product = productRepository.save(product);
         this.productRepository.save(product);
+    }
+
+    public void wish(Product product, SiteUser siteUser) {
+        product.getWish().add(siteUser);
+        this.productRepository.save(product);
+    }
+    public void cancelWish(Product product, SiteUser siteUser) {
+        product.getWish().remove(siteUser);
+        this.productRepository.save(product);
+    }
+
+    public List<Product> getProductsByWish(SiteUser wish) {
+        return productRepository.findByWish(wish);
     }
 
     public void delete(Product product) {

@@ -31,26 +31,28 @@
             </div>
         </div>
     </div>
-    <div class="question-list-foot" th:if="${!paging.isEmpty()}">
-        <ul class="question-pagination">
-            <li class="question-page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a class="question-page-link" th:href="@{|?page=${1}|}">
-                    <span>처음</span>
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+        <ul class="pagination1 justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                    <span><</span>
                 </a>
             </li>
-            <li th:each="page: ${#numbers.sequence(1, paging.totalPages)}"
-                th:if="${page >= paging.number - 4 and page <= paging.number + 5}"
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
                 th:classappend="${page == paging.number} ? 'active'"
-                class="question-page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                class="page-item">
+                <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
             </li>
-            <li class="question-page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="question-page-link" th:href="@{|?page=${paging.totalPages}|}">
-                    <span>끝</span>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+                    <span>></span>
                 </a>
             </li>
         </ul>
     </div>
+    <!-- 페이징처리 끝 -->
 </section>
 <script>
 $(document).ready(function () {

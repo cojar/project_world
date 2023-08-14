@@ -26,7 +26,6 @@
             <div class="menu">장르</div>
             <label for="theme">
             <select type="text" id="theme" th:field="*{theme}">
-
                 <option value="">선택</option>
                 <option value="RPG">RPG</option>
                 <option value="FPS">FPS</option>
@@ -44,7 +43,6 @@
             <input type="number" id="price" value="" th:field="*{price}" placeholder="금액을 입력해주세요">
             </label>
         </div>
-
         <div class="form-container">
             <div class="menu">시스템 요구 사항</div>
             <div class="checkbox-container" id="specification">
@@ -58,7 +56,6 @@
                 </div>
             </div>
         </div>
-
         <div class="form-container" id="window-Min">
             <div class="menu">Window 최소</div>
             <div class="windowMin" th:each="windowMin, loop : ${windowMinList}">
@@ -69,10 +66,8 @@
                     <input type="text" th:value="${windowMin.storage}" th:field="*{windowMinList[__${loop.index}__].storage}" placeholder="저장공간*">
                     <input type="text" th:value="${windowMin.directAccess}" th:field="*{windowMinList[__${loop.index}__].directAccess}" placeholder="DirectX">
                     <input type="text" th:value="${windowMin.network}" th:field="*{windowMinList[__${loop.index}__].network}" placeholder="네트워크">
-
             </div>
         </div>
-
         <div class="form-container" id="window-Recommended">
             <div class="menu">Window 권장</div>
             <div class="windowRecommended" th:each="windowRecommended, loop : ${windowRecommendedList}">
@@ -85,8 +80,6 @@
                 <input type="text" th:value="${windowRecommended.network}" th:field="*{windowRecommendedList[__${loop.index}__].network}" placeholder="네트워크">
             </div>
         </div>
-
-
         <div class="form-container" id="Mac-Min">
             <div class="menu">Mac 최소</div>
             <div class="macMin" th:each="macMin, loop : ${macMinList}">
@@ -97,10 +90,8 @@
                 <input type="text" th:value="${macMin.storage}" th:field="*{macMinList[__${loop.index}__].storage}" placeholder="저장공간*">
                 <input type="text" th:value="${macMin.directAccess}" th:field="*{macMinList[__${loop.index}__].directAccess}" placeholder="DirectX">
                 <input type="text" th:value="${macMin.network}" th:field="*{macMinList[__${loop.index}__].network}" placeholder="네트워크">
-
             </div>
         </div>
-
         <div class="form-container" id="Mac-Recommended">
             <div class="menu">Mac 권장</div>
             <div class="macRecommended" th:each="macRecommended, loop : ${macRecommendedList}">
@@ -113,22 +104,18 @@
                 <input type="text" th:value="${macRecommended.network}" th:field="*{macRecommendedList[__${loop.index}__].network}" placeholder="네트워크">
             </div>
         </div>
-
         <div class="form-container">
             <div class="menu">게임 설명</div>
             <label for="content">
             <textarea id="content" rows="5" th:field="*{content}" placeholder="게임설명을 입력해주세요"></textarea>
             </label>
         </div>
-
 <!--        <div class="main-imgUrl" style="color:white;">-->
 <!--            <div class="uploaded-file-name">배너 사진을 업로드해주세요</div>-->
 <!--            <input type="file" th:value="${profileImage}" th:field="*{profileImage}"-->
 <!--                   placeholder="배너 사진을 업로드 해주세요" th:onchange="_getFileName(this)">-->
 <!--            <label th:for="profileImage"><i class="fa-solid fa-cloud-arrow-up"></i></label>-->
 <!--        </div>-->
-
-
         <div class="product-form-btn">
             <button class="cancel_button" type="button" id="btn_cancel">취소</button>
             <button class="submit_button" type="submit" id="btn_submit">등록</button>
@@ -164,12 +151,9 @@ $(document).ready(function() {
         $(_this).siblings(".uploaded-file-name").html(fileName).addClass("active");
     }
 
-
-
     $("#btn_cancel").click(function() {
         window.location.href = "/product/list";
     });
-
 });
 </script>
 </html>

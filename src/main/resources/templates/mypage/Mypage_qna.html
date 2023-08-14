@@ -50,7 +50,7 @@
                 <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-shopping-cart"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text="${#lists.size(wishList)}"></span>
                 </span>
                 <span>&nbsp;건</span>
               </div>
@@ -126,7 +126,7 @@
         <tr th:each="question : ${questionList}">
           <td class="number" th:text="${question.product?.productName}">상품명</td>
           <td class="title">
-            <span th:text="${question.product?.developer}">상품개발사</span>
+            <span th:text="${question.product?.developer}">개발사</span>
           </td>
           <td class="date" th:text="${question.content}">문의 내용</td>
           <td><a th:href="@{|/product/${question.product?.id}|}"><button type="button">상품상세보기</button></a></td>
@@ -162,5 +162,6 @@
     </div>
   </div>
 </div>
+<footer th:replace="layout/footer.html"></footer>
 </body>
 </html>
