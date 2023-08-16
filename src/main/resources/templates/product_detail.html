@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/layout/Product_detail.css" />
@@ -23,7 +23,6 @@
         <button type="button" class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">Buy Now</button>
     </div>
 
-        <div class="product-detail-width">
         <div class="product-detail-width">
         <div class="product-detail-classification">
             <div class="classify-btn-box" style="font-family: NeoDunggeunmoPro-Regular;">
@@ -179,13 +178,17 @@
             </tbody>
         </table>
     </div>
-
     <div id="review"></div>
-
     <div id="question"></div>
+        <div class="wish">
+        <span class="zzim" href="javascript:void(0);"
+           th:data-uri="@{|/product/wish/${product.id}|}">
+            <i class="fa-regular fa-heart fa-2xl"></i>
+            <span th:text="${#lists.size(product.wish)}"></span>
+        </span>
     </div>
     </div>
-
+    </div>
 </section>
 <footer th:replace="layout/footer.html"></footer>
 <script>
@@ -259,8 +262,16 @@ $(document).ready(function() {
     $.get(questionUrl, function(data) {
         $("#question").html(data);
     });
+});
 
-
+const zzim_elements = document.getElementsByClassName("zzim");
+Array.from(zzim_elements).forEach(function(element) {
+$(".wish").click(function() {
+    $(this).find("i").toggleClass("fa-regular fa-solid");
+  });
+    element.addEventListener('click', function() {
+            location.href = this.dataset.uri;
+    });
 });
 </script>
 </html>

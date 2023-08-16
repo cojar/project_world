@@ -47,7 +47,6 @@ public class ProductController {
         return "product_list";
     }
 
-
     @GetMapping(value = "/list/{theme}")
     public String productList(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
         String themeKey;
@@ -198,8 +197,6 @@ public class ProductController {
             }
         }
 
-
-
         return String.format("redirect:/product/%s", product.getId());
     }
 
@@ -212,8 +209,6 @@ public class ProductController {
 
         return "product_detail";
     }
-
-
 
     @GetMapping(value = "/list/{theme}/sort/high")
     public String sortHigh(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -235,14 +230,27 @@ public class ProductController {
         Page<Product> paging;
         if(key.equals("all")){
             paging = this.productService.sortLowAll(page);
-        }else{
-
+        } else{
             paging = this.productService.sortLow(page, key);
         }
         model.addAttribute("paging",paging);
         model.addAttribute("themeKey",key);
 
         return "product_list";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/wish/{id}")
+    public String productWish(Principal principal, @PathVariable("id") Long id) {
+        Product product = this.productService.getProduct(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        boolean hasWished = product.getWish().contains(siteUser);
+        if (hasWished) {
+            this.productService.cancelWish(product, siteUser);
+        } else {
+            this.productService.wish(product, siteUser);
+        }
+        return String.format("redirect:/product/%s", id);
     }
 
 

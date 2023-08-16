@@ -77,25 +77,25 @@ public class ProductService {
         return this.productRepository.findAll(spec, pageable);
     }
 
-    public Page<Product> sortHigh(int page, String key) {
+    public Page<Product>sortHigh(int page, String key){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
         return this.productRepository.findAll(spec, pageable);
     }
 
-    public Page<Product> sortHighAll(int page) {
+    public Page<Product> sortHighAll(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 
-    public Page<Product> sortLowAll(int page) {
+    public Page<Product> sortLowAll(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 
@@ -103,7 +103,7 @@ public class ProductService {
     public Page<Product> sortLow(int page, String key) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.asc("price"));
-        Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
         return this.productRepository.findAll(spec, pageable);
     }
@@ -126,13 +126,12 @@ public class ProductService {
         };
     }
 
-    public Page<Product> allTheme(int page) {
+    public Page<Product> allTheme(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 16);
         return this.productRepository.findAll(pageable);
     }
-
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
         if (product.isPresent()) {
@@ -238,6 +237,19 @@ public class ProductService {
         this.productRepository.save(product);
     }
 
+    public void wish(Product product, SiteUser siteUser) {
+        product.getWish().add(siteUser);
+        this.productRepository.save(product);
+    }
+    public void cancelWish(Product product, SiteUser siteUser) {
+        product.getWish().remove(siteUser);
+        this.productRepository.save(product);
+    }
+
+    public List<Product> getProductsByWish(SiteUser wish) {
+        return productRepository.findByWish(wish);
+    }
+
     public void delete(Product product) {
         this.productRepository.delete(product);
     }
@@ -254,7 +266,6 @@ public class ProductService {
     private Specification<Product> search(String kw) {
         return new Specification<>() {
             private static final long serialVersionUID = 1L;
-
             @Override
             public Predicate toPredicate(Root<Product> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 query.distinct(true);  // 중복을 제거

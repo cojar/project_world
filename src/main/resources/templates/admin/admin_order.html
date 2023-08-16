@@ -166,31 +166,46 @@
     }
 
     function sendShipmentCode() {
-        const selectedOrderId = getSelectedOrderId();
-        const shipmentCode = document.getElementById("shipmentCode").value;
+    const selectedOrderId = getSelectedOrderId();
+    const shipmentCode = document.getElementById("shipmentCode").value;
 
-        console.log("Selected Order ID:", selectedOrderId);
-        console.log("Shipment Code:", shipmentCode);
+    console.log("Selected Order ID:", selectedOrderId);
+    console.log("Shipment Code:", shipmentCode);
 
-        if (selectedOrderId !== null && shipmentCode !== "") {
-            $.ajax({
-                type: "GET",
-                url: `/admin/code/${selectedOrderId}`,
-                data: {
-                    sendCode: shipmentCode
-                },
-                success: function (response) {
-                    alert("발송 코드가 저장되었습니다.");
-                    window.location.reload();
-                },
-                error: function () {
-                    alert("발송 코드 저장에 실패하였습니다.");
-                }
-            });
-        } else {
-            alert("주문을 선택하고 발송 코드를 입력해주세요.");
-        }
+    if (selectedOrderId !== null && shipmentCode !== "") {
+        $.ajax({
+            type: "GET",
+            url: `/admin/code/${selectedOrderId}`,
+            data: {
+                sendCode: shipmentCode
+            },
+            success: function (response) {
+                alert("발송 코드가 저장되었습니다.");
+
+                // 이메일 보내기 로직 시작
+                $.ajax({
+                    type: "GET",
+                    url: `/admin/sendEmail/${selectedOrderId}`,
+                    success: function (response) {
+                        alert("주문자에게 이메일이 성공적으로 전송되었습니다.");
+                    },
+                    error: function () {
+                        alert("주문자에게 이메일 전송에 실패하였습니다.");
+                    }
+                });
+                // 이메일 보내기 로직 끝
+
+                window.location.reload();
+            },
+            error: function () {
+                alert("발송 코드 저장에 실패하였습니다.");
+            }
+        });
+    } else {
+        alert("주문을 선택하고 발송 코드를 입력해주세요.");
     }
+}
+
 
     function adminCompleteCancelOrder() {
         const selectedOrderId = getSelectedOrderId();

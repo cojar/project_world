@@ -20,6 +20,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,7 +30,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //상품번호
+
 //    @ManyToOne
 //    private SiteUser username;
 
@@ -72,6 +73,8 @@ public class Product {
     private Integer viewCount;
     //조회수
 
+    @ManyToMany
+    Set<SiteUser> wish;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Question> questionList;
