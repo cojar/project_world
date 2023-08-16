@@ -100,3 +100,9 @@ section {
     height: 16px;
     margin:0 5px;
 }
+
+.image-container{
+display:flex;
+justify-content: flex-end;
+margin-bottom: 20px;
+}

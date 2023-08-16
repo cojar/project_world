@@ -40,7 +40,7 @@
           </a>
         </li>
         <li class="crypto">
-          <a href="#">
+          <a th:href="@{mypage/wish}">
             <div class="icon">
               <i class="fas fa-shopping-cart"></i>
             </div>
@@ -48,10 +48,9 @@
               <h5>Wish List</h5>
               <div class="sub">
                 <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
-                <span>
                   <i class="fas fa-shopping-cart"></i>
-                  &nbsp;3(타임리프)
-                </span>
+                  &nbsp;<span th:text="${#lists.size(wishList)}"></span>
+                  </span>
                 <span>&nbsp;건</span>
               </div>
             </div>

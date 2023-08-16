@@ -165,41 +165,32 @@ public class AdminController {
             productOrder.setCode(sendCode);
             productOrder.setOrderStatus("발송완료");
             orderRepository.save(productOrder);
-            return "redirect:/admin/order";
+
+            String userEmail = productOrder.getEmail();
+
+            String emailSubject = "발송 코드 정보";
+            String emailContent = "반갑습니다 ! WORLD 에서 주문하신 상품의 코드입니다 : " + sendCode;
+
+            try {
+                MimeMessage mail = mailSender.createMimeMessage();
+                MimeMessageHelper mailHelper = new MimeMessageHelper(mail, true, "UTF-8");
+
+                mailHelper.setTo(userEmail);
+                mailHelper.setSubject(emailSubject);
+                mailHelper.setText(emailContent, true);
+
+                mailSender.send(mail);
+
+                return "redirect:/admin/order";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/admin/order";
+            }
         } else {
             return "redirect:/admin/order";
         }
     }
 
-    @GetMapping("/sendEmail/{id}")
-    public ResponseEntity<String> sendEmailToUser(@PathVariable Long id) {
-        try {
-            // 사용자의 주문 정보 가져오기
-            ProductOrder order = orderService.getOrder(id);
-            String userEmail = order.getEmail(); // 사용자 이메일 주소
-
-            // 관리자가 입력한 코드 가져오기
-            String adminCode = "123456"; // 관리자가 입력한 코드
-
-            // 이메일 보내는 로직 처리
-            String to = userEmail; // 수신자 이메일 주소
-            String subject = "게임 코드입니다."; // 이메일 제목
-            String content = "주문이 성공적으로 결제되었습니다. 코드: " + adminCode; // 이메일 내용
-
-            MimeMessage mail = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mail, true, "UTF-8");
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);
-
-            mailSender.send(mail);
-
-            return ResponseEntity.ok("이메일 전송에 성공하였습니다.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 전송에 실패하였습니다.");
-        }
-    }
     @PostMapping("/completeCancel/{id}")
     public ResponseEntity<String> adminCompleteCancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "취소완료");

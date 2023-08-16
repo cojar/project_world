@@ -46,5 +46,5 @@ public class ProductForm {
     private String content;
     // 상품 설명
 
-    private MultipartFile panelImage;
+//    private MultipartFile panelImage;
 }
