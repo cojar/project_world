@@ -122,16 +122,7 @@
     $("#addCalendar").on("click", function() {
     var content = $("#calendar_content").val();
     var start_date = $("#calendar_start_date").val();
-var end_date = $("#calendar_end_date").val();
-
-var formattedStartDate = new Date(start_date).toISOString();
-var formattedEndDate = new Date(end_date).toISOString();
-
-var eventData = {
-    "title": content,
-    "start": formattedStartDate,
-    "end": formattedEndDate
-};
+    var end_date = $("#calendar_end_date").val();
 
     if (content == null || content == "") {
         alert("내용을 입력하세요.");
@@ -142,11 +133,13 @@ var eventData = {
     } else {
         var eventData = {
             "title": content,
-            "start": start_date,
-            "end": end_date
+            "start_date": start_date, // YYYY-MM-DD 형식으로 이미 정확하게 되어 있음
+            "start_time": "00:00",
+            "end_date": end_date, // YYYY-MM-DD 형식으로 이미 정확하게 되어 있음
+            "end_time": "23:59"
         };
 
-         $.ajax({
+        $.ajax({
             type: "POST",
             url: "/calendar/add",
             data: JSON.stringify(eventData),
@@ -162,6 +155,7 @@ var eventData = {
         });
     }
 });
+
 
 </script>
 </body>

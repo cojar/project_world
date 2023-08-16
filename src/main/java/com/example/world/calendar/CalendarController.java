@@ -29,28 +29,26 @@ public class CalendarController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addCalendar(@RequestBody Calendar calendar) {
+
         if (calendar.getTitle() == null || calendar.getStart_date() == null || calendar.getEnd_date() == null) {
             return ResponseEntity.badRequest().body("Invalid calendar data");
         }
 
-        LocalDate startDate = LocalDate.parse(calendar.getStart_date(), DateTimeFormatter.ISO_DATE);
-        LocalTime startTime = LocalTime.of(0, 0); // 시간을 00:00으로 설정
-        LocalDateTime start = LocalDateTime.of(startDate, startTime);
-
-        LocalDate endDate = LocalDate.parse(calendar.getEnd_date(), DateTimeFormatter.ISO_DATE);
-        LocalTime endTime = LocalTime.of(23, 59, 59); // 시간을 23:59:59으로 설정
-        LocalDateTime end = LocalDateTime.of(endDate, endTime);
-
-        calendar.setStart(start);
-        calendar.setEnd(end);
+        LocalDateTime startDateTime = LocalDateTime.parse(calendar.getStart_date() + "T00:00:00");
+        LocalDateTime endDateTime = LocalDateTime.parse(calendar.getEnd_date() + "T00:00:00");
+        calendar.setStart(startDateTime);
+        calendar.setEnd(endDateTime);
 
         Calendar savedCalendar = calendarService.saveCalendar(calendar);
         if (savedCalendar != null) {
             return ResponseEntity.ok("Calendar data saved successfully");
         } else {
+            System.out.println("gd");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving calendar data");
         }
+
     }
+
 
 
 
