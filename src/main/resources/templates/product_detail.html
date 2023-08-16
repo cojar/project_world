@@ -11,9 +11,9 @@
 <section>
     <div class="inner-container">
         <div class="panel-Inner"></div>
-        <div class="image-panel">
-            <img src="https://cdn.gametoc.co.kr/news/photo/202303/71814_222692_543.jpg" alt="" style="width: 100%; height: 700px;">
-        </div>
+            <div class="image-panel" th:each="productImage, loop : ${product.productImageList}">
+                    <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
+            </div>
         <div class="panel-productName" th:text="${product.productName}">
         </div>
         <div class="panel-developer" th:text="${product.developer}">
@@ -23,25 +23,6 @@
         <button type="button" class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">Buy Now</button>
     </div>
 
-    <div class="inner-container trainer-certificate">
-        <h3>보유 자격증
-            <span th:if="${#lists.size(product.productImageList) > 0}" th:text="|[${#lists.size(product.productImageList)}]|"></span></h3>
-        <div class="certificate-list-box">
-            <div class="certificate-list" th:each="productImage, loop : ${product.productImageList}">
-                <div class="certificate-name" >
-                    <i class="fa-solid fa-medal"></i>
-                    <span th:text="${productImage.name}"></span>
-                </div>
-                <div class="certificate-img">
-                    <img th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="product-detail-width">
         <div class="product-detail-width">
         <div class="product-detail-classification">
             <div class="classify-btn-box" style="font-family: NeoDunggeunmoPro-Regular;">
