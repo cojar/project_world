@@ -37,9 +37,11 @@ public class MypageController {
     @GetMapping("")
     public String mypageMain(Model model , Principal principal){
         SiteUser siteUser = this.userService.getUser(principal.getName());
+        SiteUser user = this.userService.getUser(principal.getName());
         List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
         List<Review> reviews = this.reviewService.getAuthor(siteUser);
         List<Question> questions = this.questionService.getAuthor(siteUser);
+        List<Product> wishList = this.productService.getProductsByWish(user);
 
         int orderCount = articles.size();
         int reviewCount = reviews.size();
@@ -48,7 +50,10 @@ public class MypageController {
         model.addAttribute("questionCount",questionCount);
         model.addAttribute("reviewCount",reviewCount);
         model.addAttribute("orderCount",orderCount);
+        model.addAttribute("wishList", wishList);
         model.addAttribute("user",siteUser);
+        model.addAttribute("user", user);
+
         return "/mypage/Mypage_main";
     }
 
