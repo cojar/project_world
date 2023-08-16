@@ -9,6 +9,7 @@ import com.example.world.qnaAnswer.AnswerForm;
 import com.example.world.qnaAnswer.AnswerService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import com.example.world.order.OrderRepository;
 import com.example.world.product.ProductForm;
@@ -25,7 +26,10 @@ import org.springframework.data.domain.Page;
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
 import com.example.world.product.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,6 +61,7 @@ public class AdminController {
     private final QuestionService questionService;
     private final UserService userService;
     private final AnswerService answerService;
+    private final JavaMailSender mailSender;
 
     @GetMapping("/")
     public String adminMain(Model model,AdminSearchForm adminSearchForm) {
@@ -166,6 +171,35 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/sendEmail/{id}")
+    public ResponseEntity<String> sendEmailToUser(@PathVariable Long id) {
+        try {
+            // 사용자의 주문 정보 가져오기
+            ProductOrder order = orderService.getOrder(id);
+            String userEmail = order.getEmail(); // 사용자 이메일 주소
+
+            // 관리자가 입력한 코드 가져오기
+            String adminCode = "123456"; // 관리자가 입력한 코드
+
+            // 이메일 보내는 로직 처리
+            String to = userEmail; // 수신자 이메일 주소
+            String subject = "게임 코드입니다."; // 이메일 제목
+            String content = "주문이 성공적으로 결제되었습니다. 코드: " + adminCode; // 이메일 내용
+
+            MimeMessage mail = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mail, true, "UTF-8");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+
+            mailSender.send(mail);
+
+            return ResponseEntity.ok("이메일 전송에 성공하였습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일 전송에 실패하였습니다.");
+        }
+    }
     @PostMapping("/completeCancel/{id}")
     public ResponseEntity<String> adminCompleteCancelOrder(@PathVariable Long id) {
         orderService.updateOrderStatus(id, "취소완료");

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/layout/mypage_list.css"/>
+    <title>My Page</title>
+</head>
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<div class="profilecont">
+    <div class="banner">
+        <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
+        <div class="ava">
+            <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
+        </div>
+        <h4><span th:text='${user.nickname}'></span><span th:text='${"#"+user.id}'>#회원번호(타임리프)</span></h4>
+    </div>
+    <div class="content">
+        <div class="main">
+            <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
+            <ul class="posts">
+                <li class="coding">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <div class="txt">
+                            <h5>My Order</h5>
+                            <div class="sub">
+                                <strong>주문내역</strong>
+                                <span>&nbsp;-&nbsp;</span>
+                                <span>
+                                  <i class="fas fa-money-check-alt"></i>
+                                  &nbsp;3(타임리프)
+                                </span>
+                                <span>&nbsp;건</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="crypto">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="txt">
+                            <h5>Wish List</h5>
+                            <div class="sub">
+                                <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
+                                <span>
+                                  <i class="fas fa-shopping-cart"></i>
+                                  &nbsp;<span th:text="${#lists.size(wishList)}"></span>
+                                </span>
+                                <span>&nbsp;건</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="coding">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="txt">
+                            <h5>My Review</h5>
+                            <div class="sub">
+                                <strong>내가 쓴 리뷰</strong>
+                                <span>&nbsp;-&nbsp;</span>
+                                <span>
+                                  <i class="fas fa-sticky-note"></i>
+                                  &nbsp;3(타임리프)
+                                </span>
+                                <span>&nbsp;건</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="design">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="txt">
+                            <h5>My Question</h5>
+                            <div class="sub">
+                                <strong>내 문의</strong>
+                                <span>&nbsp;-&nbsp;</span>
+                                <span>
+                                  <i class="fas fa-sticky-note"></i>
+                                  &nbsp;<span th:text="${#lists.size(questionList)}"></span>
+                                </span>
+                                <span>&nbsp;건</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="general">
+                    <a href="#">
+                        <div class="icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <div class="txt">
+                            <h5>User Edit</h5>
+                            <div class="sub">
+                                <strong>회원정보수정</strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="side">
+            <h5>찜목록</h5>
+            <tbody>
+            <tr th:each="product : ${wishList}">
+                <td >
+                    <li class="tal2"> <div class="tal">
+                        <div class="product">
+                            <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                            <div>
+                                <p style="color:white;">상품명 :</p>
+                                <p style="color:white;" th:text="${product?.productName}">디아블로</p>
+                            </div>
+                            <div>
+                                <p style="color:white;">개발사 :</p>
+                                <p style="color:white;" th:text="${product?.developer}">개발사</p>
+                            </div>
+                            <div>
+                                <p style="color:white;">상품가격 :</p>
+                                <p style="color:white;" th:text="${product?.price}">45,000</p>
+                            </div>
+                            <div>
+                                <p style="color:white;">게임테마 :</p>
+                                <p style="color:white;" th:text="${product?.theme}">RPG</p>
+                            </div>
+                            <td class="button_menu">
+                                <div>
+                                    <a th:href="@{|/order/create/${product.id}|}"><button type="button">구매하기</button></a>
+                                    <a th:href="@{|/product/${product.id}|}"><button type="button">상품보기</button></a>
+                                </div>
+                            </td>
+                        </div>
+                    </div>
+                    </li>
+                </td>
+            </tr>
+            </tbody>
+            <!-- 페이징처리 시작 -->
+            <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+                <ul class="pagination1 justify-content-center">
+                    <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                        <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+                            <span><</span>
+                        </a>
+                    </li>
+                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                        th:classappend="${page == paging.number} ? 'active'"
+                        class="page-item">
+                        <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                        <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+                            <span>></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 페이징처리 끝 -->
+        </div>
+    </div>
+</div>
+<footer th:replace="layout/footer.html"></footer>
+</body>
+</html>

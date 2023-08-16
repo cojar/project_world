@@ -60,16 +60,36 @@ public class MypageController {
     @GetMapping("/qna")
     public String myqna(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<Question> paging = this.questionService.getList(page, size);
+        SiteUser user = this.userService.getUser(principal.getName());
         List<Question> questionList = this.questionService.getQuestionList();
         List<Product> productList = this.productService.getProductList();
-        SiteUser user = this.userService.getUser(principal.getName());
+        List<Product> wishList = this.productService.getProductsByWish(user);
         model.addAttribute("paging", paging);
         model.addAttribute("questionList", questionList);
         model.addAttribute("productList", productList);
+        model.addAttribute("wishList", wishList);
         model.addAttribute("user", user);
 
         return "mypage/Mypage_qna";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/wish")
+    public String myWish(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<Product> paging = this.productService.getList(page, size);
+        SiteUser user = this.userService.getUser(principal.getName());
+        List<Product> wishList = this.productService.getProductsByWish(user);
+        List<Product> productList = this.productService.getProductList();
+        List<Question> questionList = this.questionService.getQuestionList();
+        model.addAttribute("paging", paging);
+        model.addAttribute("user", user);
+        model.addAttribute("wishList", wishList);
+        model.addAttribute("productList", productList);
+        model.addAttribute("questionList", questionList);
+
+        return "mypage/Mypage_wish";
+    }
+
     @GetMapping("/review")
     public String myReview(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page) {
         SiteUser siteUser = this.userService.getUser(principal.getName());

@@ -187,10 +187,11 @@ $(document).ready(function() {
 });
     function _getFileName(_this) {
         var fileValue = $(_this).val().split("\\");
-        var fileName = fileValue[fileValue.length-1];
+        var fileName = fileValue[fileValue.length - 1];
 
         $(_this).siblings("div.uploaded-file-name").html(fileName);
         $(_this).siblings("div.uploaded-file-name").addClass("active");
     }
+});
 </script>
 </html>
