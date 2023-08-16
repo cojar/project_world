@@ -86,10 +86,10 @@ public class ReviewService {
         return this.reviewRepository.findByAuthor(siteUser);
     }
 
-    public List<Review> getReviewsByAuthor(SiteUser author, int page) {
-        Page<Review> reviewPage = this.reviewRepository.findByAuthor(author, PageRequest.of(page, 10, Sort.by(Sort.Order.desc("id"))));
-        return reviewPage.getContent();
+    public Page<Review> getReviewsByAuthor(SiteUser author, int page, int pageSize) {
+        return this.reviewRepository.findByAuthor(author, PageRequest.of(page, pageSize, Sort.by(Sort.Order.desc("id"))));
     }
+
 
 
     public Specification<SiteUser> searchUser(SiteUser sortkey){
