@@ -40,14 +40,20 @@ public class ReviewService {
     }
 
 
-    public Review create(String content, SiteUser user, ProductOrder productOrder) {
+    public Review create(String content, SiteUser author, ProductOrder productOrder) {
+
         Review review = new Review();
+
         review.setContent(content);
-        review.setCreateDate(LocalDateTime.now());
+        review.setAuthor(author);
         review.setProductOrder(productOrder);
-        review.setAuthor(user);
+        review.setCreateDate(LocalDateTime.now());
+
+
         this.reviewRepository.save(review);
+
         return review;
+
     }
 
     public Review getReview(Long id) {

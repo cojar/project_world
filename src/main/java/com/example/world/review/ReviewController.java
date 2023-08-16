@@ -62,20 +62,18 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String reviewCreate(@RequestParam Long productOrderId, Model model) {
-        try {
-            ProductOrder productOrder = orderService.getOrder(productOrderId);
+    public String reviewCreate(@RequestParam("productOrderId") Long productOrderId,
+                               @RequestParam("userId") Long userId,
+                               @RequestParam("productId") Long productId,
+            Model model) {
 
-            ReviewForm reviewForm = new ReviewForm();
-            reviewForm.setProductOrderId(productOrder.getId());
+        ProductOrder productOrder = orderService.getOrder(productOrderId);
+        SiteUser author = userService.getUser(userId);
 
-            model.addAttribute("reviewForm", reviewForm);
-            model.addAttribute("productOrder", productOrder);
+        model.addAttribute("productOrderId", productOrderId);
+        model.addAttribute("productId", productId);
 
-            return "review_form";
-        } catch (IllegalArgumentException e) {
-            return "redirect:/product/list/all"; // 주문이 유효하지 않은 경우 처리
-        }
+        return "review_form";
     }
 
     @PreAuthorize("isAuthenticated()")

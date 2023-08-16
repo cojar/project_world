@@ -2,6 +2,7 @@ package com.example.world.order;
 
 import com.example.world.product.Product;
 import com.example.world.product.ProductService;
+import com.example.world.review.ReviewForm;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import jakarta.persistence.Lob;
@@ -61,6 +62,11 @@ public class OrderController {
     public String orderDetail(@PathVariable Long id, Principal principal, Model model) {
         SiteUser user = userService.getUser(principal.getName());
         ProductOrder productOrder = orderService.getOrder(id);
+
+        ReviewForm reviewForm = new ReviewForm();
+        reviewForm.setProductOrderId(id);
+        model.addAttribute("reviewForm", reviewForm);
+
         model.addAttribute("orderProduct", productOrder);
         model.addAttribute("username", user);
         model.addAttribute("product", productOrder.getProduct());

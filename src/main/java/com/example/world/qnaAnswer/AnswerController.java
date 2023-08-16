@@ -32,7 +32,7 @@ public class AnswerController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create/{id}")
-    public String creatAnswer(AnswerForm answerForm, @PathVariable("id") Long id, Model model, Principal principal) {
+    public String createAnswer(AnswerForm answerForm, @PathVariable("id") Long id, Model model, Principal principal) {
         Question question = this.questionService.getQuestion(id);
         SiteUser user = this.userService.getUser(principal.getName());
         answerForm.setContent(answerForm.getContent());
