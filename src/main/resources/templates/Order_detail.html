@@ -84,7 +84,7 @@
         </div>
         <!-- 주문상태 끝 -->
         <div class="bt_box">
-            <a class="review_button" type="submit" id="btn_search" th:href="@{/review/create(productOrderId=${orderProduct.id}, userId=${username.id}, productId=${product.id})}">리뷰작성</a>
+            <a class="review_button" type="submit" id="btn_search" th:href="@{/review/create(productOrderId=${orderProduct.id})}">리뷰작성</a>
             <a class="order_button" type="submit" id="btn_search" th:href="@{/}">쇼핑계속하기</a>
             <a class="exit_button" type="submit" id="btn_search" th:href="@{/order/cancel/{id}(id=${orderProduct.id})}" onclick="handleCancelClick(event)">주문취소</a>
         </div>

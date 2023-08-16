@@ -63,9 +63,9 @@ public class OrderController {
         SiteUser user = userService.getUser(principal.getName());
         ProductOrder productOrder = orderService.getOrder(id);
 
-        ReviewForm reviewForm = new ReviewForm();
-        reviewForm.setProductOrderId(id);
-        model.addAttribute("reviewForm", reviewForm);
+//        ReviewForm reviewForm = new ReviewForm();
+//        reviewForm.setProductOrderId(id);
+//        model.addAttribute("reviewForm", reviewForm);
 
         model.addAttribute("orderProduct", productOrder);
         model.addAttribute("username", user);

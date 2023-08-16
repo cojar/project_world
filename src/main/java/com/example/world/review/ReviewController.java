@@ -62,19 +62,37 @@ public class ReviewController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String reviewCreate(@RequestParam("productOrderId") Long productOrderId,
-                               @RequestParam("userId") Long userId,
-                               @RequestParam("productId") Long productId,
-            Model model) {
+    public String reviewCreate(@RequestParam Long productOrderId,
+                               Model model) {
 
         ProductOrder productOrder = orderService.getOrder(productOrderId);
-        SiteUser author = userService.getUser(userId);
 
+        ReviewForm reviewForm = new ReviewForm();
+        reviewForm.setProductOrderId(productOrderId);
+
+        model.addAttribute("reviewForm", reviewForm);
         model.addAttribute("productOrderId", productOrderId);
-        model.addAttribute("productId", productId);
 
         return "review_form";
     }
+
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/create")
+//    public String questionCreate(@RequestParam Long productId, Model model) {
+//        // productId를 사용하여 ProductService에서 Product 정보를 가져옴
+//        Product product = productService.getProduct(productId);
+//
+//        // QuestionForm 생성 후 product.id 값 추가
+//        QuestionForm questionForm = new QuestionForm();
+//        questionForm.setProductId(productId);
+//
+//        // Thymeleaf 템플릿으로 QuestionForm과 Product를 함께 전달
+//        model.addAttribute("questionForm", questionForm);
+//        model.addAttribute("product", product);
+//
+//        return "question_form";
+//    }
+
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
@@ -85,16 +103,13 @@ public class ReviewController {
         }
 
         Long productOrderId = reviewForm.getProductOrderId();
-        try {
-            ProductOrder productOrder = orderService.getOrder(productOrderId);
+        ProductOrder productOrder = orderService.getOrder(productOrderId);
 
-            SiteUser siteUser = userService.getUser(principal.getName());
-            reviewService.create(reviewForm.getContent(), siteUser, productOrder);
-            return "redirect:/review/list";
-        } catch (IllegalArgumentException e) {
-            return "redirect:/product/list/all"; // 주문이 유효하지 않은 경우 처리
-        }
+        SiteUser siteUser = userService.getUser(principal.getName());
+        reviewService.create(reviewForm.getContent(), siteUser, productOrder);
+        return "redirect:/product/list/all";
     }
+
 
 
 //    @PreAuthorize("isAuthenticated()")
@@ -112,12 +127,11 @@ public class ReviewController {
 //    }
 
 
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String reviewModify(ReviewForm reviewForm, @PathVariable("id") Long id, Principal principal) {
         Review review = this.reviewService.getReview(id);
-        if(!review.getAuthor().getUsername().equals(principal.getName())) {
+        if (!review.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 
@@ -128,7 +142,7 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String reviewModify(@Valid ReviewForm reviewForm, BindingResult bindingResult,
-                                 Principal principal, @PathVariable("id") Long id) {
+                               Principal principal, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "review_form";
         }
