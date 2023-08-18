@@ -2,17 +2,12 @@ package com.example.world.admin;
 
 import com.example.world.notice.Notice;
 import com.example.world.notice.NoticeService;
-import com.example.world.product.Product;
-import com.example.world.qna.Question;
-import com.example.world.qna.QuestionService;
-import com.example.world.qnaAnswer.AnswerForm;
-import com.example.world.qnaAnswer.AnswerService;
-import com.example.world.user.SiteUser;
-import com.example.world.user.UserService;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.validation.Valid;
 import com.example.world.order.OrderRepository;
+import com.example.world.order.OrderService;
+import com.example.world.order.ProductOrder;
+import com.example.world.product.Product;
 import com.example.world.product.ProductForm;
+import com.example.world.product.ProductService;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommended;
@@ -21,22 +16,22 @@ import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
+import com.example.world.qna.Question;
+import com.example.world.qna.QuestionService;
+import com.example.world.qnaAnswer.AnswerForm;
+import com.example.world.qnaAnswer.AnswerService;
+import com.example.world.user.SiteUser;
+import com.example.world.user.UserService;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import com.example.world.order.OrderService;
-import com.example.world.order.ProductOrder;
-import com.example.world.product.ProductService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -169,7 +164,7 @@ public class AdminController {
             String userEmail = productOrder.getEmail();
 
             String emailSubject = "발송 코드 정보";
-            String emailContent = "반갑습니다 ! WORLD 에서 주문하신 상품의 코드입니다 : " + sendCode;
+            String emailContent = "반갑습니다 ! <WORLD> 에서 주문하신 상품의 코드입니다 : " + sendCode;
 
             try {
                 MimeMessage mail = mailSender.createMimeMessage();
@@ -187,7 +182,7 @@ public class AdminController {
                 return "redirect:/admin/order";
             }
         } else {
-            return "redirect:/admin/order";
+            return "redirect:/admin";
         }
     }
 
