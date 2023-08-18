@@ -4,15 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,37 +24,32 @@ public class CalendarController {
 
 
     @GetMapping("/")
-    public String calendar(){
+    public String calendarPage(Model model) {
+        List<Calendar> eventList = calendarService.getAllEvents();
+        model.addAttribute("eventList", eventList);
         return "calendar_view";
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCalendar(@RequestBody Calendar calendar) {
-
-        if (calendar.getTitle() == null || calendar.getStart_date() == null || calendar.getEnd_date() == null) {
-            return ResponseEntity.badRequest().body("Invalid calendar data");
-        }
-
-        LocalDateTime startDateTime = LocalDateTime.parse(calendar.getStart_date() + "T00:00:00");
-        LocalDateTime endDateTime = LocalDateTime.parse(calendar.getEnd_date() + "T00:00:00");
-        calendar.setStart(startDateTime);
-        calendar.setEnd(endDateTime);
-
+    @ResponseBody
+    public Map<String, Object> addCalendarEvent(@RequestBody Calendar calendar) {
         Calendar savedCalendar = calendarService.saveCalendar(calendar);
-        if (savedCalendar != null) {
-            return ResponseEntity.ok("Calendar data saved successfully");
-        } else {
-            System.out.println("gd");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving calendar data");
-        }
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("calendar", savedCalendar);
+        return response;
     }
 
 
 
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+

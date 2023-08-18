@@ -10,9 +10,12 @@ import java.util.List;
 public class CalendarService {
     private final CalendarRepository calendarRepository;
 
+    public List<Calendar> getAllEvents() {
+        return calendarRepository.findAll();
+    }
+
     public Calendar saveCalendar(Calendar calendar) {
         return calendarRepository.save(calendar);
     }
-
 }
 
