@@ -40,7 +40,7 @@ dependencies {
 	implementation 'com.sun.mail:jakarta.mail:2.0.1'
 	implementation 'org.commonmark:commonmark:0.21.0'
 	testImplementation 'org.assertj:assertj-core:3.11.1'
-
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 tasks.named('test') {
