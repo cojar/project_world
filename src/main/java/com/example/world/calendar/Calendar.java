@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,13 +15,9 @@ import java.time.LocalDateTime;
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private int id;
     private String title;
-    private String start_date;
-    private String end_date;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private LocalDate start;
+    private LocalDate end;
 }
-
 

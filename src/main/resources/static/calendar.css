@@ -1,0 +1,25 @@
+/* 노멀라이징 */
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+ul,li{
+  text-decoration:none;
+  list-style:none;
+}
+
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#calendarBox>.title{
+    color:white;
+    font-size:40px;
+    font-family: 'NeoDunggeunmoPro-Regular';
+    margin-bottom:20px;
+}
