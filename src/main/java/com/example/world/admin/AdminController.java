@@ -96,7 +96,7 @@ public class AdminController {
     @PostMapping("/")
     public String adminMainSearsh(Model model, @Valid AdminSearchForm adminSearchForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/ad/order";
+            return "redirect:/admin/";
         }
         LocalDateTime start = adminSearchForm.getStart();
         LocalDateTime end = adminSearchForm.getEnd();
