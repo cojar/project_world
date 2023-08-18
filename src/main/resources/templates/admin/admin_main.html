@@ -62,7 +62,7 @@
 
           <div class="date_content">
             <div class="date_title"><p>기간별 조회. </p></div>
-            <form th:action="@{/ad}" th:object="${adminSearchForm}" method="POST" class="date_form">
+            <form th:action="@{/admin/}" th:object="${adminSearchForm}" method="POST" class="date_form">
               <div class="birthday">
                 <p>조회기간 :</p>
                 <input type="datetime-local" th:field="*{start}">
