@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+  <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="/layout/mypage_list.css"/>
   <title>My Page</title>
@@ -11,6 +12,7 @@
 <div class="profilecont">
 
   <div class="banner">
+    <img src="https://i.postimg.cc/GhgS0D1X/1123.jpg" alt="ava" class="bannerimg"/>
     <div class="ava">
       <img src="https://i.postimg.cc/1tWhz9Q0/image.jpg" alt="ava" />
     </div>
@@ -124,30 +126,38 @@
     </div>
     <div class="side">
       <h5>주문내역</h5>
-
+      <table class="list_table">
+        <thead>
+        <tr>
+          <th class="productName" style="text-align: center;">상품명</th>
+          <th class="orderDate" style="text-align: center;">주문일</th>
+          <th class="code" style="text-align: center;">코드</th>
+          <th class="price" style="text-align: center;">주문금액</th>
+          <th class="orderView" style="text-align: center;">주문상세</th>
+          <th class="reviewCreate" style="text-align: center;">리뷰작성</th>
+          <th class="orderStatus" style="text-align: center;">주문상태</th>
+        </tr>
+        </thead>
+        <tbody>
       <tbody>
-      <tr th:each="notice, stat : ${paging}" th:if="${stat.index < 5}">
+      <tr th:each="productOrder : ${productOrderList}">
+        <td class="productName">
+          <a th:href="@{|/product/${productOrder.product.id}|}" th:text="${productOrder.product.productName}">상품명</a>
+        </td>
+        <td class="orderDate" th:text="${#temporals.format(productOrder.orderDate, 'yyyy-MM-dd')}">주문일</td>
+        <td class="code" th:text="${productOrder.code}">코드</td>
+        <td class="price" th:text="${productOrder.product.price}">주문금액</td>
+        <td><a th:href="@{|/product/${productOrder.product?.id}|}"><button type="button">주문상세보기</button></a></td>
+        <td>
+          <a th:href="@{|/review/create?productOrderId=${productOrder.id}|}">
+            <button class="review-btn" type="button">리뷰등록</button>
+          </a>
+        </td>
+        <td class="orderStatus" th:text="${productOrder.orderStatus}">주문상태</td>
+      </tr>
+      </tbody>
+      </table>
 
-        <td >
-          <li class="tal2"> <div class="tal" >
-            <div class="product" >
-              <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
-
-              <div>                     <p style="color:white;">상품명 :</p>
-                <p style="color:white;" th:text="${productOrder.product.productName}">디아블로</p>
-              </div>
-
-              <div>                              <p style="color:white;">주문일 :</p>
-                <p style="color:white;" th:text="${productOrder.orderDate}">2023-07-30</p>
-              </div>
-              <div>
-                <p style="color:white;">주문금액 :</p>
-
-                <p style="color:white;" th:text="${productOrder.product.price}">45,000</p>
-              </div>
-              <div>
-                <p style="color:white;">주문상태 :</p><p style="color:white;" th:text="${productOrder.status}">주문완료</p>
-              </div>
         <td class="button_menu">
           <div>
             <a href="#"><button type="button">주문상세</button></a>
@@ -166,3 +176,11 @@
 </div>
 </body>
 </html>
+
+<script th:inline="javascript">
+    const orderStatus = /*[[${orderProduct.orderStatus}]]*/; // 주문 상태 값 가져오기
+
+
+
+
+</script>
