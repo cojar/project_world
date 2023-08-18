@@ -44,15 +44,6 @@ public class ReviewController {
         return "review_list";
     }
 
-//    @GetMapping("/orderCheck")
-//    public ResponseEntity<Map<String, Boolean>> checkOrderValidity(@RequestParam Long orderId) {
-//        boolean isValid = orderService.isOrderValid(orderId);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("valid", isValid);
-//        return ResponseEntity.ok(response);
-//    }
-
-
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         Review review = this.reviewService.getReview(id);
@@ -109,22 +100,6 @@ public class ReviewController {
         reviewService.create(reviewForm.getContent(), siteUser, productOrder);
         return "redirect:/product/list/all";
     }
-
-
-
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping("/create/{id}")
-//    public String createReview(@PathVariable("id") Long id, @Valid ReviewForm reviewForm,
-//                               BindingResult bindingResult, Principal principal,
-//                               Model model) {
-//        ProductOrder productOrder = this.orderService.getOrder(id);
-//        if (bindingResult.hasErrors()) {
-//            return "review_form";
-//        }
-//        SiteUser siteUser = this.userService.getUser(principal.getName());
-//        this.reviewService.create(productOrder, reviewForm.getContent(), siteUser);
-//        return "redirect:/review/list";
-//    }
 
 
     @PreAuthorize("isAuthenticated()")

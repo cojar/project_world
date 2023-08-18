@@ -28,8 +28,8 @@ section {
 }
 
 .image-panel-img {
-  max-width:100%;
-  height: auto;
+  width:100%;
+  height: 600px;
 }
 
 .panel-Inner {

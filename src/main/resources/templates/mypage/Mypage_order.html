@@ -134,19 +134,19 @@
               <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
 
               <div>                     <p style="color:white;">상품명 :</p>
-                <p style="color:white;" th:text="${order.product.subject}">디아블로</p>
+                <p style="color:white;" th:text="${productOrder.product.productName}">디아블로</p>
               </div>
 
               <div>                              <p style="color:white;">주문일 :</p>
-                <p style="color:white;" th:text="${order.createDate}">2023-07-30</p>
+                <p style="color:white;" th:text="${productOrder.orderDate}">2023-07-30</p>
               </div>
               <div>
                 <p style="color:white;">주문금액 :</p>
 
-                <p style="color:white;" th:text="${order.product.price}">45,000</p>
+                <p style="color:white;" th:text="${productOrder.product.price}">45,000</p>
               </div>
               <div>
-                <p style="color:white;">주문상태 :</p><p style="color:white;" th:text="${order.status}">주문완료</p>
+                <p style="color:white;">주문상태 :</p><p style="color:white;" th:text="${productOrder.status}">주문완료</p>
               </div>
         <td class="button_menu">
           <div>

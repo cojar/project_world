@@ -2,12 +2,18 @@ package com.example.world.order;
 
 import com.example.world.DataNotFoundException;
 import com.example.world.product.Product;
+import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,4 +96,12 @@ public class OrderService {
     public List<ProductOrder> getAuthor(SiteUser siteUser) {
         return this.orderRepository.findByUser(siteUser);
     }
+
+    public Page<ProductOrder> getList(int page, int size) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("orderDate"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
+        return this.orderRepository.findAll(pageable);
+    }
+
 }

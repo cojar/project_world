@@ -58,9 +58,23 @@ public class MypageController {
     }
 
     @GetMapping("/order")
-    public String myOrder(){
+    public String myOrder(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        Page<ProductOrder> paging = this.orderService.getList(page, size);
+        SiteUser user = this.userService.getUser(principal.getName());
+
+        List<ProductOrder> productOrderList = this.orderService.getOrderList();
+        List<Product> productList = this.productService.getProductList();
+        model.addAttribute("paging", paging);
+        model.addAttribute("productOrderList", productOrderList);
+        model.addAttribute("productList", productList);
+        model.addAttribute("user", user);
+
         return "/mypage/Mypage_order";
     }
+
+
+
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/qna")
     public String myqna(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
