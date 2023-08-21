@@ -26,7 +26,7 @@
             <td >
                 <li class="tal2"> <a th:href="@{|/notice/detail/${notice.id}|}" class="tal" >
                     <div class="notice" >
-                        <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                        <img th:src="@{|/gen/${notice.thumbnailImg}|}"/>
                         <div class="notice_detail">
                             <div>
                                 <p>제목 :</p>

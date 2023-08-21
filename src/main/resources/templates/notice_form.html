@@ -18,7 +18,7 @@
 
         <div class="product" >
         </div>
-        <form th:object="${noticeForm}"  method="post">
+        <form th:object="${noticeForm}"  method="post" enctype="multipart/form-data">
             <div class="createform">
                 <div class="create-box">
                     <span> 제목 : </span>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="create-box">
                     <span>사진 :</span>
-                    <input type="file">
+                    <input type="file" name="thumbnail" accept="img/png, image/gif, image/jpeg">
 
                 </div>
                 <div class="create-box">

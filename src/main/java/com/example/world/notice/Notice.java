@@ -9,9 +9,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +28,8 @@ public class Notice {
     private LocalDate createDate;
 
     private LocalDate modifyDate;
+
+    private String thumbnailImg;
 
     @Column(columnDefinition = "text")
     private String content;

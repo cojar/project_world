@@ -1,5 +1,6 @@
 package com.example.world.notice;
 
+import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.user.SiteUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
@@ -22,6 +24,8 @@ import java.util.List;
 public class NoticeController {
 
     private final NoticeService noticeService;
+
+
     @GetMapping("/list")
     public String noticeList(Model model, @RequestParam(value = "page", defaultValue = "0")int page){
         //
@@ -44,11 +48,11 @@ public class NoticeController {
 
 
     @PostMapping("/create")
-    public String articleCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult) {
+    public String articleCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult, MultipartFile thumbnail) {
         if (bindingResult.hasErrors()) {
             return "notice_form";
         }
-        this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent());
+        this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent(),thumbnail);
         return String.format("redirect:/admin/notice");
     }
 

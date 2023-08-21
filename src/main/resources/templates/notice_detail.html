@@ -20,7 +20,7 @@
             <p>작성일 :</p>
             <p th:text="${notice.createDate}">2022-07-24(타임리프)</p>
             <div class="product" >
-                <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                <img th:src="@{|/gen/${notice.thumbnailImg}|}"/>
                 <p class="notice-content" th:text="${notice.content}"> 공지사항 내용(타임리프) </p>
             </div>
         </div>
