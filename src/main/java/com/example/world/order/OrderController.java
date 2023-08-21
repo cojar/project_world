@@ -7,19 +7,20 @@ import com.example.world.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.json.simple.parser.JSONParser;
-import java.net.URL;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.Base64;
@@ -84,6 +85,7 @@ public class OrderController {
 
     @Value("${custom.paymentSecretKey}")
     private String paymentSecretKey;
+    String secretKey = "test_sk_ZORzdMaqN3wBKjyXWOB85AkYXQGw";
 
     @GetMapping("/success")
     public String paymentResult(
@@ -93,7 +95,7 @@ public class OrderController {
             @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
 
         Base64.Encoder encoder = Base64.getEncoder();
-        byte[] encodedBytes = encoder.encode(paymentSecretKey.getBytes("UTF-8"));
+        byte[] encodedBytes = encoder.encode(secretKey.getBytes("UTF-8"));
         String authorizations = "Basic " + new String(encodedBytes, 0, encodedBytes.length);
 
         URL url = new URL("https://api.tosspayments.com/v1/payments/" + paymentKey);
