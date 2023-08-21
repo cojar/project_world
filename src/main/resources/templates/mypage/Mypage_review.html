@@ -137,10 +137,10 @@
 
         </thead>
         <tbody>
-        <tr th:each="review : ${reviewPage.content}">
+        <tr th:each="review : ${userReviews}">
           <td class="number" th:text="${review.productOrder.id}"></td>
           <td class="title">
-            <a th:href="@{|/product/${review.productOrder.product.id}|}" th:text="${review.productOrder.productName}">상품명</a>
+            <a th:href="@{|/product/${review.productOrder.id}|}" th:text="${review.productOrder.product.productName}">상품명</a>
           </td>
           <td class="date" th:text="${review.content}"></td>
           <td class="inquiry" th:text="${review.score}">평점(타임리프)</td>
@@ -149,6 +149,7 @@
           </td>
         </tr>
         </tbody>
+
       </table>
     </div>
   </div>

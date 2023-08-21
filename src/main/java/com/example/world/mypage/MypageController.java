@@ -8,17 +8,20 @@ import com.example.world.product.ProductService;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.review.Review;
+import com.example.world.review.ReviewForm;
 import com.example.world.review.ReviewService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserForm;
 import com.example.world.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -110,15 +113,18 @@ public class MypageController {
     }
 
     @GetMapping("/review")
-    public String myReview(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page) {
+    public String myReview(Model model, Principal principal, ReviewForm reviewForm, @RequestParam(value = "page", defaultValue = "0") int page) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        int pageSize = 10; // 페이지 크기 설정
-        Page<Review> reviewPage = this.reviewService.getReviewsByAuthor(siteUser, page, pageSize);
-        model.addAttribute("user",siteUser);
-        model.addAttribute("reviewPage", reviewPage); // 전체 페이지 정보를 모델에 추가
+
+        List<Review> userReviews = this.reviewService.getReviewsByAuthor(siteUser);
+
+        model.addAttribute("userReviews", userReviews);
+        model.addAttribute("user", siteUser);
 
         return "/mypage/Mypage_review";
     }
+
+
 
 
     @GetMapping("/user")
