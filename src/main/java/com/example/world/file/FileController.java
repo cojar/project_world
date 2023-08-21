@@ -34,7 +34,7 @@ public class FileController {
     @ResponseBody
     public String upload(@Valid FileForm fileForm, BindingResult bindingResult) throws IOException {
         MultipartFile file = fileForm.getFile();
-        UploadedFile uploadedFile = this.fileService.upload(file, "product", "productImage", "songchaeyeong");
+        UploadedFile uploadedFile = this.fileService.upload(file, "product", "productImage", "OGH");
         return this.fileService.getFilePath(uploadedFile);
     }
 }

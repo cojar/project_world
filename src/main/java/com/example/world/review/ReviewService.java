@@ -6,9 +6,12 @@ import com.example.world.order.ProductOrder;
 import com.example.world.product.Product;
 import com.example.world.product.ProductService;
 import com.example.world.qna.Question;
+import com.example.world.qnaAnswer.Answer;
 import com.example.world.user.SiteUser;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,10 +43,11 @@ public class ReviewService {
     }
 
 
-    public Review create(String content, SiteUser author, ProductOrder productOrder) {
+    public Review create(int score, String content, SiteUser author, ProductOrder productOrder) {
 
         Review review = new Review();
 
+        review.setScore(score);
         review.setContent(content);
         review.setAuthor(author);
         review.setProductOrder(productOrder);
@@ -65,7 +69,14 @@ public class ReviewService {
         }
     }
 
-    public List<Review> findAll() {
+    public Page<Review> getList(int page, int size) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
+        return this.reviewRepository.findAll(pageable);
+    }
+
+    public List<Review> getReviewList() {
         return this.reviewRepository.findAll();
     }
 
@@ -77,6 +88,11 @@ public class ReviewService {
 
     public void vote(Review review, SiteUser siteUser) {
         review.getVoter().add(siteUser);
+        this.reviewRepository.save(review);
+    }
+
+    public void cancelVote(Review review, SiteUser siteUser) {
+        review.getVoter().remove(siteUser);
         this.reviewRepository.save(review);
     }
 
@@ -94,6 +110,14 @@ public class ReviewService {
 
     public Page<Review> getReviewsByAuthor(SiteUser author, int page, int pageSize) {
         return this.reviewRepository.findByAuthor(author, PageRequest.of(page, pageSize, Sort.by(Sort.Order.desc("id"))));
+    }
+
+    @Transactional
+    public void deleteReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + reviewId));
+
+        reviewRepository.delete(review);
     }
 
 

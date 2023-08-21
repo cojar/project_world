@@ -30,8 +30,8 @@ public class QuestionController {
     @GetMapping("/list/{productId}")
     public String list(Model model,
                        @PathVariable("productId") Long productId,
-                       @RequestParam(value = "page", defaultValue = "1") int page) {
-        Page<Question> paging = this.questionService.getListByProductId(productId, page - 1);
+                       @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Question> paging = this.questionService.getListByProductId(productId, page);
         model.addAttribute("paging", paging);
         return "question_list";
     }

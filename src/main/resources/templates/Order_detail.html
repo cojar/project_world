@@ -84,7 +84,9 @@
         </div>
         <!-- 주문상태 끝 -->
         <div class="bt_box">
-            <a class="review_button" type="submit" id="btn_search" th:href="@{/review/create(productOrderId=${orderProduct.id})}">리뷰작성</a>
+            <button class="review-create-btn" th:attr="data-product-order-id=${orderProduct.id}">
+                리뷰등록
+            </button>
             <a class="order_button" type="submit" id="btn_search" th:href="@{/}">쇼핑계속하기</a>
             <a class="exit_button" type="submit" id="btn_search" th:href="@{/order/cancel/{id}(id=${orderProduct.id})}" onclick="handleCancelClick(event)">주문취소</a>
         </div>
@@ -97,7 +99,8 @@
 </script>
 
 <script>
-    function handleCancelClick(event) {
+$(document).ready(function () {
+  function handleCancelClick(event) {
         if (orderStatus === "주문완료") {
             if (!confirm("주문을 취소하시겠습니까?")) {
                 event.preventDefault();
@@ -112,6 +115,46 @@
             event.preventDefault();
         }
     }
+
+
+
+  $(".review-create-btn").click(function () {
+    var productOrderId = $(this).data("product-order-id"); // 주문 ID를 가져옴
+    console.log(productOrderId);
+
+    $.ajax({
+      url: "/review/create", // 리뷰 생성 엔드포인트
+      type: "POST",
+      data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄
+      success: function (data) {
+        // 리뷰 작성 성공 처리
+        console.log("리뷰 작성 성공");
+        var width = 700; // 새 창의 너비
+        var height = 500; // 새 창의 높이
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var options =
+          "width=" +
+          width +
+          ",height=" +
+          height +
+          ",left=" +
+          left +
+          ",top=" +
+          top;
+
+        var url = "/review/create?productOrderId=" + productOrderId;
+        window.open(url, "_blank", options);
+      },
+      error: function () {
+        console.error("리뷰 작성 실패");
+      }
+    });
+  });
+});
+
+
+
 </script>
 </body>
 </html>

@@ -20,6 +20,8 @@ import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.qnaAnswer.AnswerForm;
 import com.example.world.qnaAnswer.AnswerService;
+import com.example.world.review.Review;
+import com.example.world.review.ReviewService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import jakarta.mail.internet.MimeMessage;
@@ -53,6 +55,7 @@ public class AdminController {
     private final OrderService orderService;
     private final OrderRepository orderRepository;
     private final ProductService productService;
+    private final ReviewService reviewService;
     private final QuestionService questionService;
     private final UserService userService;
     private final AnswerService answerService;
@@ -341,8 +344,22 @@ public class AdminController {
     }
 
     @GetMapping("/review")
-    public String adminReview() {
+    public String adminReview(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<Review> paging = this.reviewService.getList(page, size);
+        List<Review> reviewList = this.reviewService.getReviewList();
+        model.addAttribute("paging", paging);
+        model.addAttribute("reviewList", reviewList);
+
+
         return "admin/admin_review";
+    }
+
+    @PostMapping("/review/delete")
+    public ResponseEntity<String> deleteReview(@RequestParam(value="ids[]") List<Long> ids) {
+        for (Long id : ids) {
+            reviewService.deleteReview(id);
+        }
+        return ResponseEntity.ok().build();
     }
 
 

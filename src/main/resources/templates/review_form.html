@@ -1,9 +1,22 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
-<link rel="stylesheet" href="/question_form.css"/>
+<link rel="stylesheet" href="/review_form.css"/>
 <section class="review-write-section">
     <div class="title">리뷰 남기기</div>
     <form th:object="${reviewForm}" method="post" class="review-write-form">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <fieldset>
+<!--            <span class="text-bold">별점을 선택해주세요</span>-->
+            <input type="radio" name="score" value="5" id="rate1"><label
+                for="rate1">★</label>
+            <input type="radio" name="score" value="4" id="rate2"><label
+                for="rate2">★</label>
+            <input type="radio" name="score" value="3" id="rate3"><label
+                for="rate3">★</label>
+            <input type="radio" name="score" value="2" id="rate4"><label
+                for="rate4">★</label>
+            <input type="radio" name="score" value="1" id="rate5"><label
+                for="rate5">★</label>
+        </fieldset>
         <div class="write-body">
             <textarea class="content" th:field="*{content}" placeholder="리뷰 내용을 입력하세요"></textarea>
         </div>

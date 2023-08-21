@@ -90,6 +90,22 @@ section {
 }
 
 
+.classify-btn-box > a {
+    display: inline-block;
+    border-right: 3px solid white
+}
+
+.classify-btn-box a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.classify-btn-box > a.inquiry {
+    border-right: none;
+}
+
+
+
 
 .detail, .specification, .review, .inquiry{
   font-size: 3rem;
@@ -100,10 +116,8 @@ section {
   border-width: 0;
 }
 
-.detail, .specification, .review{
-  border-right-width: 3px;
-  border-color: white;
-}
+
+
 
 .detail-box, .form-container{
   color:white;

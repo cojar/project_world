@@ -2,16 +2,24 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="review_listFragment" class="review-list-section">
   <div class="review-create-box">
-    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
+    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm" id="Review" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
     <button sec:authorize="isAnonymous()" class="review-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
   </div>
+
 
   <div class="review-list-content">
     <div class="review-container" th:each="review, loop : ${paging}">
       <div class="review-header">
         <span class="review-author" th:text="${review.author.nickname}"></span>
         <span class="review-score" th:text="${review.score}"></span>
-        <span class="review-voter" th:text="${review.voter}"></span>
+
+        <div class="like">
+          <a class="like-action" href="javascript:void(0);"
+             th:data-uri="@{|/review/vote/${review.id}|}">
+            <i class="fa-thumbs-up fa-2xl fa-regular"></i>
+            <span th:text="${#lists.size(review.voter)}"></span>
+          </a>
+        </div>
         <span class="review-subject" th:text="${#strings.length(review.content) > 30 ? #strings.substring(review.content, 0, 30) + '' : review.content.replaceAll('\n', ' ')}"> </span>
         <span class="review-create-date" th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd')}"></span>
       </div>
@@ -57,36 +65,51 @@
 <script>
 $(document).ready(function () {
 var productId = localStorage.getItem("productId");
-console.log(productId);
 
-  $(".review-create-btn").click(function() {
-        var productOrderId = $("#productOrderId").val(); // 주문 ID를 가져옴
-        console.log(productOrderId);
-        $.ajax({
-            url: "/review/create", // 리뷰 생성 엔드포인트
-            type: "POST",
-            data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄
-        success: function(data) {
-            // 리뷰 작성 성공 처리
-            console.log("리뷰 작성 성공");
-            if (productId !== null) {
-    var width = 700; // 새 창의 너비
-    var height = 500; // 새 창의 높이
-    var left = (window.screen.width - width) / 2;
-    var top = (window.screen.height - height) / 2;
-    var options =
-      "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;
+<!--  $(".review-create-btn").click(function() {-->
+<!--        var productOrderId = $("#productOrderId").val(); // 주문 ID를 가져옴-->
+<!--        console.log(productOrderId);-->
+<!--        $.ajax({-->
+<!--            url: "/review/create", // 리뷰 생성 엔드포인트-->
+<!--            type: "POST",-->
+<!--            data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄-->
+<!--        success: function(data) {-->
+<!--            // 리뷰 작성 성공 처리-->
+<!--            console.log("리뷰 작성 성공");-->
+<!--            if (productId !== null) {-->
+<!--    var width = 700; // 새 창의 너비-->
+<!--    var height = 500; // 새 창의 높이-->
+<!--    var left = (window.screen.width - width) / 2;-->
+<!--    var top = (window.screen.height - height) / 2;-->
+<!--    var options =-->
+<!--      "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;-->
 
-    var url = "/review/create?productOrderId=" + productOrderId + "&productId=" + productId;
-  window.open(url, "_blank");
-    } else {
-      console.error("상품 ID를 찾지 못했습니다.");
-    }
-        },
-        error: function() {
-            console.error("리뷰 작성 실패");
-        }
-    });
+<!--    var url = "/review/create?productOrderId=" + productOrderId + "&productId=" + productId;-->
+<!--  window.open(url, "_blank", options);-->
+<!--    } else {-->
+<!--      console.error("상품 ID를 찾지 못했습니다.");-->
+<!--    }-->
+<!--        },-->
+<!--        error: function() {-->
+<!--            console.error("리뷰 작성 실패");-->
+<!--        }-->
+<!--    });-->
+<!--  });-->
+
+  $(".like-action").click(function () {
+      // Toggle heart icon classes
+      $(this).find("i").toggleClass("fa-regular fa-solid");
+
+      // Redirect to the specified URI
+      var uri = $(this).data("uri");
+      if (uri) {
+          window.location.href = uri;
+      }
+  });
+
+  $(".like").click(function () {
+        // Toggle heart icon classes
+        $(this).find("i").toggleClass("fa-regular fa-solid");
   });
 
   $(".review-container").click(function () {

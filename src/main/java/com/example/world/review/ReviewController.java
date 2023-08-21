@@ -38,8 +38,8 @@ public class ReviewController {
     @GetMapping("/list/{productId}")
     public String list(Model model,
                        @PathVariable("productId") Long productId,
-                       @RequestParam(value = "page", defaultValue = "1") int page) {
-        Page<Review> paging = this.reviewService.getListByProductId(productId, page - 1);
+                       @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Review> paging = this.reviewService.getListByProductId(productId, page );
         model.addAttribute("paging", paging);
         return "review_list";
     }
@@ -51,39 +51,22 @@ public class ReviewController {
         return "review_detail";
     }
 
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String reviewCreate(@RequestParam Long productOrderId,
                                Model model) {
 
-        ProductOrder productOrder = orderService.getOrder(productOrderId);
+//        ProductOrder productOrder = orderService.getOrder(productOrderId);
 
         ReviewForm reviewForm = new ReviewForm();
-        reviewForm.setProductOrderId(productOrderId);
+//        reviewForm.setProductOrderId(productOrderId);
 
         model.addAttribute("reviewForm", reviewForm);
-        model.addAttribute("productOrderId", productOrderId);
+//        model.addAttribute("productOrderId", productOrderId);
 
         return "review_form";
     }
-
-//    @PreAuthorize("isAuthenticated()")
-//    @GetMapping("/create")
-//    public String questionCreate(@RequestParam Long productId, Model model) {
-//        // productId를 사용하여 ProductService에서 Product 정보를 가져옴
-//        Product product = productService.getProduct(productId);
-//
-//        // QuestionForm 생성 후 product.id 값 추가
-//        QuestionForm questionForm = new QuestionForm();
-//        questionForm.setProductId(productId);
-//
-//        // Thymeleaf 템플릿으로 QuestionForm과 Product를 함께 전달
-//        model.addAttribute("questionForm", questionForm);
-//        model.addAttribute("product", product);
-//
-//        return "question_form";
-//    }
-
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
@@ -96,8 +79,12 @@ public class ReviewController {
         Long productOrderId = reviewForm.getProductOrderId();
         ProductOrder productOrder = orderService.getOrder(productOrderId);
 
+        System.out.println("score =" + reviewForm.getScore());
+        System.out.println("score =" + reviewForm.getContent());
+        System.out.println("score =" + reviewForm.getProductOrderId());
+
         SiteUser siteUser = userService.getUser(principal.getName());
-        reviewService.create(reviewForm.getContent(), siteUser, productOrder);
+        reviewService.create(reviewForm.getScore(), reviewForm.getContent(), siteUser, productOrder);
         return "redirect:/product/list/all";
     }
 
@@ -147,7 +134,15 @@ public class ReviewController {
                              Principal principal) {
         Review review = this.reviewService.getReview(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
-        this.reviewService.vote(review, siteUser);
-        return String.format("redirect:/review/detail/%s#answer_%s", review.getProductOrder().getId(), review.getId());
+        boolean hasVoter = review.getVoter().contains(siteUser);
+        if (hasVoter) {
+            this.reviewService.cancelVote(review, siteUser);
+        } else {
+            this.reviewService.vote(review, siteUser);
+        }
+
+        Long productId = review.getProductOrder().getProduct().getId();
+        return "redirect:/product/" + productId;
     }
+
 }

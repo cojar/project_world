@@ -147,11 +147,11 @@
         <td class="orderDate" th:text="${#temporals.format(productOrder.orderDate, 'yyyy-MM-dd')}">주문일</td>
         <td class="code" th:text="${productOrder.code}">코드</td>
         <td class="price" th:text="${productOrder.product.price}">주문금액</td>
-        <td><a th:href="@{|/product/${productOrder.product?.id}|}"><button type="button">주문상세보기</button></a></td>
+        <td><a th:href="@{|/order/detail/${productOrder.id}|}"><button type="button">주문상세보기</button></a></td>
         <td>
-          <a th:href="@{|/review/create?productOrderId=${productOrder.id}|}">
-            <button class="review-btn" type="button">리뷰등록</button>
-          </a>
+          <button class="review-create-btn" th:attr="data-product-order-id=${productOrder.id}">
+            리뷰등록
+          </button>
         </td>
         <td class="orderStatus" th:text="${productOrder.orderStatus}">주문상태</td>
       </tr>
@@ -177,9 +177,42 @@
 </body>
 </html>
 
-<script th:inline="javascript">
-    const orderStatus = /*[[${orderProduct.orderStatus}]]*/; // 주문 상태 값 가져오기
+<script>
+$(document).ready(function () {
+  $(".review-create-btn").click(function () {
+    var productOrderId = $(this).data("product-order-id"); // 주문 ID를 가져옴
+    console.log(productOrderId);
 
+    $.ajax({
+      url: "/review/create", // 리뷰 생성 엔드포인트
+      type: "POST",
+      data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄
+      success: function (data) {
+        // 리뷰 작성 성공 처리
+        console.log("리뷰 작성 성공");
+        var width = 700; // 새 창의 너비
+        var height = 500; // 새 창의 높이
+        var left = (window.screen.width - width) / 2;
+        var top = (window.screen.height - height) / 2;
+        var options =
+          "width=" +
+          width +
+          ",height=" +
+          height +
+          ",left=" +
+          left +
+          ",top=" +
+          top;
+
+        var url = "/review/create?productOrderId=" + productOrderId;
+        window.open(url, "_blank", options);
+      },
+      error: function () {
+        console.error("리뷰 작성 실패");
+      }
+    });
+  });
+});
 
 
 

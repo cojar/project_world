@@ -37,5 +37,4 @@ public class Review {
     Set<SiteUser> voter;
 
     private int score;
-    // 해당 게임 평점
 }

@@ -23,17 +23,18 @@
         <button type="button" class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">Buy Now</button>
     </div>
 
-        <div class="product-detail-width">
+    <div class="product-detail-width">
         <div class="product-detail-classification">
             <div class="classify-btn-box" style="font-family: NeoDunggeunmoPro-Regular;">
-                <button class="detail">DETAIL</button>
-                <button class="specification">시스템 요구 사항</button>
-                <button class="review">REVIEW </button>
-                <button class="inquiry">상품문의</button>
+                <a href="#product_detail" class="detail">DETAIL</a>
+                <a href="#system-specification" class="specification">시스템 요구 사항</a>
+                <a href="#Review" class="review">REVIEW</a>
+                <a href="#question" class="inquiry">상품문의</a>
             </div>
         </div>
+    </div>
 
-        <div class="product-detail">
+        <div class="product-detail" id="product_detail">
             <div class="detail-box">
                 <div>게임명:
                     <br>
@@ -55,7 +56,7 @@
         </div>
 
         <div class="form-container">
-            <div class="menu">시스템 요구 사항</div>
+            <div class="menu" id="system-specification">시스템 요구 사항</div>
             <div class="radio-container" style="font-family: NeoDunggeunmoPro-Regular;">
                 <div class="radio-window">
                     <input type="radio" id="window" name="specification" checked>
@@ -262,15 +263,21 @@ $(document).ready(function() {
     $.get(questionUrl, function(data) {
         $("#question").html(data);
     });
-});
 
-const zzim_elements = document.getElementsByClassName("zzim");
-Array.from(zzim_elements).forEach(function(element) {
-$(".wish").click(function() {
-    $(this).find("i").toggleClass("fa-regular fa-solid");
-  });
-    element.addEventListener('click', function() {
-            location.href = this.dataset.uri;
+    $(".zzim").click(function () {
+        // Toggle heart icon classes
+        $(this).find("i").toggleClass("fa-regular fa-solid");
+
+        // Redirect to the specified URI
+        var uri = $(this).data("uri");
+        if (uri) {
+            window.location.href = uri;
+        }
+    });
+
+    $(".wish").click(function () {
+        // Toggle heart icon classes
+        $(this).find("i").toggleClass("fa-regular fa-solid");
     });
 });
 </script>
