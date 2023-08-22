@@ -2,7 +2,6 @@ package com.example.world.order;
 
 import com.example.world.DataNotFoundException;
 import com.example.world.product.Product;
-import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +30,18 @@ public class OrderService {
         order.setPayment(orderForm.getPayment());
         order.setOrderDate(LocalDateTime.now());
         this.orderRepository.save(order);
+    }
+
+    public Long tossCreate(Product product, SiteUser user, OrderForm orderForm) {
+        ProductOrder order = new ProductOrder();
+        order.setProduct(product);
+        order.setUser(user);
+        order.setCustomerName(orderForm.getCustomerName());
+        order.setEmail(orderForm.getEmail());
+        order.setPayment("토스 간편결제");
+        order.setOrderDate(LocalDateTime.now());
+        this.orderRepository.save(order);
+        return order.getId();
     }
 
     public ProductOrder getOrder(Long id) {

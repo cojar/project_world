@@ -3,13 +3,7 @@ package com.example.world.product;
 
 import com.example.world.DataNotFoundException;
 import com.example.world.file.FileService;
-import com.example.world.file.UploadedFile;
 import com.example.world.order.OrderRepository;
-import com.example.world.order.ProductOrder;
-//import com.example.world.product.productImage.ProductImage;
-//import com.example.world.product.productImage.ProductImageForm;
-import com.example.world.product.productImage.ProductImage;
-import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommended;
@@ -19,28 +13,20 @@ import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
 import com.example.world.user.SiteUser;
-import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Min;
-import org.springframework.data.jpa.domain.Specification;
-
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-
-import jakarta.persistence.criteria.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -134,6 +120,15 @@ public class ProductService {
     }
     public Product getProduct(Long id) {
         Optional<Product> product = this.productRepository.findById(id);
+        if (product.isPresent()) {
+            return product.get();
+        } else {
+            throw new DataNotFoundException("product not found");
+        }
+    }
+
+    public Product getProduct(String orderId) {
+        Optional<Product> product = this.productRepository.findById(Long.valueOf(orderId));
         if (product.isPresent()) {
             return product.get();
         } else {

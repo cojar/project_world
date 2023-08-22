@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/toss.css" />
+    <title>주문 결제성공</title>
+</head>
+
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<section class="section section-payment-fail container mx-auto">
+    <div class="success-icon">✔</div>
+    <h2>주문 결제 성공</h2>
+    <p>주문번호 : [[${orderId}]]</p>
+    <p>
+<!--        <a th:href="@{|/order/detail/${productOrder.id}|}">-->
+<!--        <button type="button">주문상세보기</button>-->
+<!--        </a>-->
+    </p>
+</section>
+<footer th:replace="layout/footer.html"></footer>
+</body>
+
+</html>

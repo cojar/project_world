@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/toss.css" />
+    <title>주문 결제실패</title>
+</head>
+
+<body>
+<nav th:replace="layout/navbar.html"></nav>
+<section class="section section-payment-fail container mx-auto">
+    <div class="success-icon">✔</div>
+    <h2>주문 결제 실패</h2>
+
+    <p>주문번호 : [[${orderId}]]</p>
+    <p>[[${message}]]</p>
+    <p>[[${code}]]</p>
+</section>
+<footer th:replace="layout/footer.html"></footer>
+</body>
+
+</html>

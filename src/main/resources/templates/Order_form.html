@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/layout/Order.css"/>
   <title>Hello World!</title>
-  <script src="https://js.tosspayments.com/v1/payment-widget"></script>
 </head>
 <body>
 <nav th:replace="layout/navbar.html"></nav>
@@ -19,8 +18,8 @@
       <!--  상품정보    -->
       <div class="product_title_box">
         <span class="product_title">product</span>
-        <div class="product">
-          <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+        <div class="product" th:each="productImage, loop : ${product.productImageList}">
+          <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
           <div class="product_detail">
             <div>
               <p>상품명 :</p>
@@ -44,11 +43,11 @@
           </div>
           <div class="customer">
             <p>구매자명 :</p>
-            <input type="text" name="customerName" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
+            <input class="styled-input" type="text" name="customerName" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
           </div>
           <div class="customer">
             <p>e-mail :</p>
-            <input type="text" name="email" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
+            <input class="styled-input" type="text" name="email" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
           </div>
         </div>
       </div>
@@ -68,7 +67,7 @@
                 카카오뱅크 3333-03-1659896 오택주</p>
             </div>
             <div class="toss_pay" style="display: none;">
-              <button onclick="pay();" class="btn btn-outline-primary" id="payment-button">토스 카드결제</button>
+              <button onclick="pay();" type="button" class="btn btn-outline-primary" id="payment-button">토스 카드결제</button>
             </div>
           </div>
         </div>
@@ -82,6 +81,45 @@
   </form>
 </div>
 <footer th:replace="layout/footer.html"></footer>
+<script src="https://js.tosspayments.com/v1"></script>
+<script th:inline="javascript">
+  let amount = /*[[ ${product.price}]]*/;
+  let orderName = /*[[ ${product.productName}]]*/;
+
+  let tossPayments = TossPayments("test_ck_dP9BRQmyarYvxo5lPeL8J07KzLNk"); //테스트 클라이언트 키
+
+  let path = "/order/";
+  let successUrl = window.location.origin + path + "success";
+  let failUrl = window.location.origin + path + "fail";
+  let callbackUrl = window.location.origin + path + "va_callback";
+  let orderId = new Date().getTime();
+
+  function pay() {
+        const method = "카드";
+        const requestJson = {
+            "amount": amount,
+            "orderId": "sample-" + orderId,
+            "orderName": orderName,
+            "successUrl": successUrl,
+            "failUrl": failUrl,
+            "cardCompany": null,
+            "cardInstallmentPlan": null,
+            "maxCardInstallmentPlan": null,
+            "useCardPoint": false,
+            "customerName": "박토스",
+            "customerEmail": null,
+            "customerMobilePhone": null,
+            "taxFreeAmount": null,
+            "useInternationalCardOnly": false,
+            "flowMode": "DEFAULT",
+            "discountCode": null,
+            "appScheme": null
+        }
+        tossPayments.requestPayment(method, requestJson)
+
+  }
+
+</script>
 <script>
   // 체크박스 선택에 따라 계좌번호를 보이거나 숨기는 함수입니다.
   function toggleAccountNumberVisibility() {
@@ -170,44 +208,6 @@
       toggleTossPayVisibility();
     });
   });
-</script>
-<script th:inline="javascript">
-  let amount = /*[[ ${product.price}]]*/;
-  let orderName = /*[[ ${product.productName}]]*/;
-
-  let tossPayments = TossPayments("test_ck_dP9BRQmyarYvxo5lPeL8J07KzLNk"); //테스트 클라이언트 키
-
-  let path = "/order/";
-  let successUrl = window.location.origin + path + "success";
-  let failUrl = window.location.origin + path + "fail";
-  let callbackUrl = window.location.origin + path + "va_callback";
-  let orderId = new Date().getTime();
-
-  function pay() {
-        const method = "카드";
-        const requestJson = {
-            "amount": amount,
-            "orderId": "sample-" + orderId,
-            "orderName": orderName,
-            "successUrl": successUrl,
-            "failUrl": failUrl,
-            "cardCompany": null,
-            "cardInstallmentPlan": null,
-            "maxCardInstallmentPlan": null,
-            "useCardPoint": false,
-            "customerName": "박토스",
-            "customerEmail": null,
-            "customerMobilePhone": null,
-            "taxFreeAmount": null,
-            "useInternationalCardOnly": false,
-            "flowMode": "DEFAULT",
-            "discountCode": null,
-            "appScheme": null
-        }
-        tossPayments.requestPayment(method, requestJson)
-
-  }
-
 </script>
 </body>
 </html>
