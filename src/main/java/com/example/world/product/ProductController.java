@@ -61,33 +61,32 @@ public class ProductController {
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeKey);
         } else if (key.equals("Thriller")) {
-            themeKey = "스릴러";
+
             String themeName = "Thriller";
-            Page<Product> paging = this.productService.getTheme(page, themeKey);
+            Page<Product> paging = this.productService.getTheme(page,key);
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("Arcade")) {
-            themeKey = "아케이드";
             String themeName="Arcade";
-            Page<Product> paging = this.productService.getTheme(page, themeKey);
+            Page<Product> paging = this.productService.getTheme(page, key);
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("Sports")) {
-            themeKey = "스포츠";
+
             String themeName= "Sports";
-            Page<Product> paging = this.productService.getTheme(page, themeKey);
+            Page<Product> paging = this.productService.getTheme(page, key);
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("Simulation")) {
-            themeKey = "시뮬레이션";
+
             String themeName = "Simulation";
-            Page<Product> paging = this.productService.getTheme(page, themeKey);
+            Page<Product> paging = this.productService.getTheme(page, key);
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("ETC")) {
-            themeKey = "기타";
+
             String themeName = "ETC";
-            Page<Product> paging = this.productService.getTheme(page, themeKey);
+            Page<Product> paging = this.productService.getTheme(page, key);
             model.addAttribute("paging", paging);
             model.addAttribute("themeKey",themeName);
         } else if (key.equals("all")){
@@ -232,6 +231,20 @@ public class ProductController {
             paging = this.productService.sortLowAll(page);
         } else{
             paging = this.productService.sortLow(page, key);
+        }
+        model.addAttribute("paging",paging);
+        model.addAttribute("themeKey",key);
+        System.out.println(model);
+        return "product_list";
+    }
+
+    @GetMapping(value = "/list/{theme}/sort/vote")
+    public String sortVote(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Product> paging;
+        if(key.equals("All")){
+            paging = this.productService.sortVoteAll(page);
+        } else{
+            paging = this.productService.sortVote(page, key);
         }
         model.addAttribute("paging",paging);
         model.addAttribute("themeKey",key);
