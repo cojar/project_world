@@ -1,6 +1,7 @@
 package com.example.world.review;
 
 import com.example.world.order.ProductOrder;
+import com.example.world.product.Product;
 import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import org.springframework.data.domain.Page;

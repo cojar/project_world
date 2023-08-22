@@ -104,8 +104,12 @@ public class ReviewService {
         return this.reviewRepository.findByAuthor(siteUser);
     }
 
-    public List<Review> getReviewsByAuthor(SiteUser siteUser) {
-        return this.reviewRepository.findByAuthor(siteUser);
+    public Page<Review> getReviewsByAuthor(SiteUser siteUser, int page) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.asc("id"));
+        Pageable pageable = PageRequest.of(page,10,Sort.by(sorts));
+        return this.reviewRepository.findByAuthor(siteUser,pageable);
+
     }
 
     public Page<Review> getReviewsByAuthor(SiteUser author, int page, int pageSize) {
