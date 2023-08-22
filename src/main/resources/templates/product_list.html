@@ -40,6 +40,14 @@
                 <ul id="holy">
                     <li th:each="product : ${paging}">
                         <a th:href="@{|/product/${product.id}|}">
+
+                            <div class="img-box" th:each="productImage, loop : ${product.productImageList}">
+                                <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
+                            </div>
+
+                            <div class="image-panel" th:each="productImage, loop : ${product.productImageList}">
+                                <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
+                            </div>
                             <div class=img-box>
                                 <img src="https://cdn.akamai.steamstatic.com/steam/apps/751630/header_292x136.jpg?t=1685527850" alt="">
                             </div>

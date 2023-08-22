@@ -158,18 +158,28 @@
       </tbody>
       </table>
 
-        <td class="button_menu">
-          <div>
-            <a href="#"><button type="button">주문상세</button></a>
-            <a href="#"><button type="button">리뷰작성</button></a>
-          </div>
-        </td>
-    </div>
-  </div>
-  </li>
-  </td>
-  </tr>
-  </tbody>
+      <!-- 페이징처리 시작 -->
+      <div th:if="${!paging.isEmpty()}" style="text-align: center;">
+        <ul class="pagination1 justify-content-center">
+          <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+            <a class="page-link1" th:href="${paging.hasPrevious} ? @{|?page=${paging.number-1}|} : @{|?page=0|}">
+              <span><</span>
+            </a>
+          </li>
+          <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+              th:if="${page >= paging.number-5 and page <= paging.number+5}"
+              th:classappend="${page == paging.number} ? 'active'"
+              class="page-item">
+            <a th:text="${page+1}" class="page-link1" th:href="@{|?page=${page}|}"></a>
+          </li>
+          <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+            <a class="page-link1" th:href="@{|?page=${paging.number+1}|}">
+              <span>></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- 페이징처리 끝 -->
 
 </div>
 </div>
