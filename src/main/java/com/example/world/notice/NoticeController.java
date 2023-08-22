@@ -41,20 +41,20 @@ public class NoticeController {
         return "notice_detail";
     }
 
-    @GetMapping("/create")
-    public String noticeCreate(){
-        return "notice_form";
-    }
-
-
-    @PostMapping("/create")
-    public String articleCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult, MultipartFile thumbnail) {
-        if (bindingResult.hasErrors()) {
-            return "notice_form";
-        }
-        this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent(),thumbnail);
-        return String.format("redirect:/admin/notice");
-    }
+//    @GetMapping("/create")
+//    public String noticeCreate(){
+//        return "notice_form";
+//    }
+//
+//
+//    @PostMapping("/create")
+//    public String articleCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult, MultipartFile thumbnail) {
+//        if (bindingResult.hasErrors()) {
+//            return "notice_form";
+//        }
+//        this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent(),thumbnail);
+//        return String.format("redirect:/admin/notice");
+//    }
 
 
     @GetMapping("/modify/{id}")

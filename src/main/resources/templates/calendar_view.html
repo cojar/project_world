@@ -94,7 +94,16 @@
             addEventButton: {
               text: "일정 추가",
               click: function() {
-                $("#calendarModal").modal("show");
+                    var isAdminOrSuperAdmin = /*[[${#authorization.expression('hasRole(''ADMIN'') or hasRole(''SUPER_ADMIN'')')}]]*/ false;
+                    var isAuthenticated = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false;
+
+                    if (isAdminOrSuperAdmin && isAuthenticated) {
+                        // 권한이 있는 경우 모달 열기 등의 동작 수행
+                        $("#calendarModal").modal("show");
+                    } else {
+                        // 권한이 없는 경우 알림 창 띄우기
+                        alert("권한이 없습니다.");
+            }
               }
             }
           },
