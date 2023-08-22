@@ -51,6 +51,11 @@ a{
   gap: 50px; /* 간격 설정 */
 }
 
+.list-wrap>.list>#holy>.a>.img-box>img{
+    width:300px;
+    height:150px;
+}
+
 .list-wrap>.list>#holy>li>a>.product-price{
     color:white;
     background-image: linear-gradient(to right, rgb(64,64,64), rgb(192,192,192));
@@ -119,6 +124,8 @@ display:inline-block;
 .img-box > img {
   position: relative;
   transition: transform 0.3s;
+  width:300px;
+  height:150px;
 }
 
 .img-box:hover > img {

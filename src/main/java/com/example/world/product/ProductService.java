@@ -71,10 +71,25 @@ public class ProductService {
 
     public Page<Product> getTheme(int page, String key) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
+        sorts.add(Sort.Order.asc("id"));
         Pageable pageable = PageRequest.of(page, 16, Sort.by(sorts));
         Specification<Product> spec = searchTheme(key);
         return this.productRepository.findAll(spec, pageable);
+    }
+
+    public Page<Product>sortVote(int page, String key){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("wish"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        Specification<Product> spec = searchTheme(key);
+        return this.productRepository.findAll(spec, pageable);
+    }
+
+    public Page<Product> sortVoteAll(int page){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("wish"));
+        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+        return this.productRepository.findAll(pageable);
     }
 
     public Page<Product>sortHigh(int page, String key){
@@ -94,7 +109,7 @@ public class ProductService {
 
     public Page<Product> sortLowAll(int page){
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("price"));
+        sorts.add(Sort.Order.asc("price"));
         Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
