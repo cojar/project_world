@@ -1,0 +1,30 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    }
+
+.section-payment-fail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    }
+
+.success-icon {
+    font-size: 64px;
+    color: #27ae60;
+    margin-bottom: 20px;
+    }
+
+h2 {
+    color: #3498db;
+    margin-bottom: 10px;
+    }
+
+p {
+    color: #555;
+    margin-bottom: 5px;
+    }

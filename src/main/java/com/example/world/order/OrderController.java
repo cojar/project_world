@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/create/{id}") // order/create/product.id
+    @PostMapping("/create/{id}")
     public String submitOrder(@Valid OrderForm orderForm, @PathVariable("id") Long id, Model model, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "Order_form";
@@ -143,7 +143,7 @@ public class OrderController {
             model.addAttribute("message", (String) jsonObject.get("message"));
         }
 
-        return "success";
+        return "order/success";
     }
 
     @GetMapping("/fail")
@@ -156,7 +156,7 @@ public class OrderController {
         model.addAttribute("code", code);
         model.addAttribute("message", message);
 
-        return "fail";
+        return "order/fail";
     }
 
     @GetMapping("/delete/{id}")
