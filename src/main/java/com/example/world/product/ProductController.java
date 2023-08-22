@@ -213,7 +213,7 @@ public class ProductController {
     @GetMapping(value = "/list/{theme}/sort/high")
     public String sortHigh(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<Product> paging;
-        if(key.equals("all")){
+        if(key.equals("All")){
             paging = this.productService.sortHighAll(page);
         }else{
 
@@ -228,14 +228,14 @@ public class ProductController {
     @GetMapping(value = "/list/{theme}/sort/low")
     public String sortLow(Model model, @PathVariable("theme") String key, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<Product> paging;
-        if(key.equals("all")){
+        if(key.equals("All")){
             paging = this.productService.sortLowAll(page);
         } else{
             paging = this.productService.sortLow(page, key);
         }
         model.addAttribute("paging",paging);
         model.addAttribute("themeKey",key);
-
+        System.out.println(model);
         return "product_list";
     }
 
