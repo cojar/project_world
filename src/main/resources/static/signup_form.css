@@ -191,6 +191,7 @@ background: #373838;
 #password-match-error {
   display: none;
   color: red;
+  margin-top:15px;
 }
 
 #show-password {

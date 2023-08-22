@@ -29,15 +29,14 @@
                         <img th:src="@{|/gen/${notice.thumbnailImg}|}"/>
                         <div class="notice_detail">
                             <div>
-                                <p>제목 :</p>
                                 <p th:text="${notice.subject}"></p>
                             </div>
                             <div>
-                                <p>작성일 :</p>
-                                <p th:text="${notice.createDate}"></p>
+                                <p style="font-size:13px;">Create :</p>
+                                <p style="font-size:13px;" th:text="${notice.createDate}"></p>
                             </div>
                             <div>
-                                <p th:text="${notice.content}"></p>
+                                <p style="font-size:13px;" th:text="${notice.content}"></p>
                             </div>
                         </div>
                     </div>

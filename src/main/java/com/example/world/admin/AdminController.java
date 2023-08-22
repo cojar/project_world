@@ -1,6 +1,7 @@
 package com.example.world.admin;
 
 import com.example.world.notice.Notice;
+import com.example.world.notice.NoticeForm;
 import com.example.world.notice.NoticeService;
 import com.example.world.order.OrderRepository;
 import com.example.world.order.OrderService;
@@ -8,14 +9,20 @@ import com.example.world.order.ProductOrder;
 import com.example.world.product.Product;
 import com.example.world.product.ProductForm;
 import com.example.world.product.ProductService;
+import com.example.world.product.productImage.ProductImageForm;
+import com.example.world.product.productImage.ProductImageService;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macMin.MacMinForm;
+import com.example.world.product.specification.macMin.MacMinService;
 import com.example.world.product.specification.macRecommended.MacRecommended;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
+import com.example.world.product.specification.macRecommended.MacRecommendedService;
 import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowMin.WindowMinForm;
+import com.example.world.product.specification.windowMin.WindowMinService;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
+import com.example.world.product.specification.windowRecommended.WindowRecommendedService;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.qnaAnswer.AnswerForm;
@@ -31,12 +38,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -60,6 +70,12 @@ public class AdminController {
     private final UserService userService;
     private final AnswerService answerService;
     private final JavaMailSender mailSender;
+
+    private final MacMinService macMinService;
+    private final MacRecommendedService macRecommendedService;
+    private final WindowMinService windowMinService;
+    private final WindowRecommendedService windowRecommendedService;
+    private final ProductImageService productImageService;
 
     @GetMapping("/")
     public String adminMain(Model model,AdminSearchForm adminSearchForm) {
@@ -403,5 +419,122 @@ public class AdminController {
         Page<Notice> paging = this.noticeService.allNotice(page);
         model.addAttribute("paging",paging);
         return "admin/admin_notice";
+    }
+
+    //////공지사항작성///////
+    @GetMapping("/notice/create")
+    public String noticeCreate(){
+        return "notice_form";
+    }
+
+
+    @PostMapping("/notice/create")
+    public String articleCreate(@Valid NoticeForm noticeForm, BindingResult bindingResult, MultipartFile thumbnail) {
+        if (bindingResult.hasErrors()) {
+            return "notice_form";
+        }
+        this.noticeService.create(noticeForm.getSubject(),noticeForm.getContent(),thumbnail);
+        return String.format("redirect:/admin/notice");
+    }
+
+    ////////상품작성////////
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/product/create")
+    public String create(Model model, ProductForm productForm) {
+//    public String create(Model model, ProductForm productForm, Principal principal) {
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
+//        productForm.setUsername(username.getUsername());
+
+        List<WindowMinForm> windowMinList = new ArrayList<>();
+        List<WindowRecommendedForm> windowRecommendedList = new ArrayList<>();
+        List<MacMinForm> macMinList = new ArrayList<>();
+        List<MacRecommendedForm> macRecommendedList = new ArrayList<>();
+        List<ProductImageForm> productImageList = new ArrayList<>();
+
+        windowMinList.add(new WindowMinForm());
+        windowRecommendedList.add(new WindowRecommendedForm());
+        macMinList.add(new MacMinForm());
+        macRecommendedList.add(new MacRecommendedForm());
+        productImageList.add(new ProductImageForm());
+
+
+        model.addAttribute("windowMinList", windowMinList);
+        model.addAttribute("windowRecommendedList", windowRecommendedList);
+        model.addAttribute("macMinList", macMinList);
+        model.addAttribute("macRecommendedList", macRecommendedList);
+        model.addAttribute("productImageList", productImageList);
+
+        return "product_form";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/product/create")
+    public String create(Model model,
+                         @Valid ProductForm productForm,
+                         BindingResult bindingResult, Principal principal) throws IOException {
+
+//        SiteUser username = this.userService.getUserByUsername(principal.getName());
+
+        Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
+                productForm.getTheme(), productForm.getPrice(), productForm.getContent());
+
+//        Product product = this.productService.create(productForm.getProductName(), productForm.getDeveloper(),
+//                productForm.getTheme(), productForm.getPanelImage(), productForm.getPrice(), productForm.getContent());
+
+        // windowMin 저장
+        for (WindowMinForm windowMinForm : productForm.getWindowMinList()) {
+            if (!windowMinForm.getOperatingSystem().isEmpty()
+                    || !windowMinForm.getProcessor().isEmpty()
+                    || !windowMinForm.getMemory().isEmpty()
+                    || !windowMinForm.getGraphics().isEmpty()
+                    || !windowMinForm.getStorage().isEmpty()) {
+                this.windowMinService.create(windowMinForm.getOperatingSystem(), windowMinForm.getProcessor(), windowMinForm.getMemory(),
+                        windowMinForm.getGraphics(), windowMinForm.getStorage(), windowMinForm.getDirectAccess(), windowMinForm.getNetwork(), product);
+            }
+        }
+
+        // windowRecommended 저장
+        for (WindowRecommendedForm windowRecommendedForm : productForm.getWindowRecommendedList()) {
+            if (!windowRecommendedForm.getOperatingSystem().isEmpty()
+                    || !windowRecommendedForm.getProcessor().isEmpty()
+                    || !windowRecommendedForm.getMemory().isEmpty()
+                    || !windowRecommendedForm.getGraphics().isEmpty()
+                    || !windowRecommendedForm.getStorage().isEmpty()) {
+                this.windowRecommendedService.create(windowRecommendedForm.getOperatingSystem(), windowRecommendedForm.getProcessor(), windowRecommendedForm.getMemory(),
+                        windowRecommendedForm.getGraphics(), windowRecommendedForm.getStorage(), windowRecommendedForm.getDirectAccess(), windowRecommendedForm.getNetwork(), product);
+            }
+        }
+
+        // MacMin 저장
+        for (MacMinForm macMinForm : productForm.getMacMinList()) {
+            if (!macMinForm.getOperatingSystem().isEmpty()
+                    || !macMinForm.getProcessor().isEmpty()
+                    || !macMinForm.getMemory().isEmpty()
+                    || !macMinForm.getGraphics().isEmpty()
+                    || !macMinForm.getStorage().isEmpty()) {
+                this.macMinService.create(macMinForm.getOperatingSystem(), macMinForm.getProcessor(), macMinForm.getMemory(),
+                        macMinForm.getGraphics(), macMinForm.getStorage(), macMinForm.getDirectAccess(), macMinForm.getNetwork(), product);
+            }
+        }
+
+        // MacRecommended 저장
+        for (MacRecommendedForm macRecommendedForm : productForm.getMacRecommendedList()) {
+            if (!macRecommendedForm.getOperatingSystem().isEmpty()
+                    || !macRecommendedForm.getProcessor().isEmpty()
+                    || !macRecommendedForm.getMemory().isEmpty()
+                    || !macRecommendedForm.getGraphics().isEmpty()
+                    || !macRecommendedForm.getStorage().isEmpty()) {
+                this.macRecommendedService.create(macRecommendedForm.getOperatingSystem(), macRecommendedForm.getProcessor(), macRecommendedForm.getMemory(),
+                        macRecommendedForm.getGraphics(), macRecommendedForm.getStorage(), macRecommendedForm.getDirectAccess(), macRecommendedForm.getNetwork(), product);
+            }
+        }
+
+        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
+            if (!productImageForm.getName().equals("") && productImageForm.getImage() != null) {
+                this.productImageService.create(productImageForm.getName(), productImageForm.getImage(), product);
+            }
+        }
+
+        return String.format("redirect:/product/%s", product.getId());
     }
 }

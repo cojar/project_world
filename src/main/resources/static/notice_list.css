@@ -50,7 +50,8 @@ ul,li{
 }
 
 .notice>img{
-  width:30%;
+  width:250px;
+  height:125px;
   margin:0;
   padding:0;
   position:absolute;

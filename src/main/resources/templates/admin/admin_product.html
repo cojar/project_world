@@ -15,7 +15,7 @@
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
       <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
     </button>
-    <a class="navbar-brand" href="#"><img class="rogoimg" src="https://i.postimg.cc/qRMyWWkr/image.png"/></a>
+    <a class="navbar-brand" th:href="@{/}"><img class="rogoimg" src="https://i.postimg.cc/qRMyWWkr/image.png"/></a>
   </div>
   <!-- navbar-header-->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -62,7 +62,7 @@
           <div class="date_content">
             <div class="date_title"><p>상품 관리 </p></div>
             <div class="btn_line">
-              <a th:href="@{/product/create}"><button type="button" class="date_btn" style="color: black;">상품등록</button></a>
+              <a th:href="@{/admin/product/create}"><button type="button" class="date_btn" style="color: black;">상품등록</button></a>
 <!--              <a href="javascript:void(0);" th:href="@{/ad/product/delete/{id}(id=${product?.id})}"-->
 <!--                 class="delete-btn" onclick="confirmDelete(event)">-->
 <!--                <button type="button" class="date_btn" style="color: black;">삭제</button>-->
