@@ -59,7 +59,6 @@ public class MypageController {
 
         return "/mypage/Mypage_main";
     }
-
     @GetMapping("/order")
     public String myOrder(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
         Page<ProductOrder> paging = this.orderService.getList(page, size);
@@ -134,7 +133,8 @@ public class MypageController {
         List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
         List<Review> reviews = this.reviewService.getAuthor(siteUser);
         List<Question> questions = this.questionService.getAuthor(siteUser);
-
+        List<Product> wishList = this.productService.getProductsByWish(siteUser);
+        model.addAttribute("wishList", wishList);
         int orderCount = articles.size();
         int reviewCount = reviews.size();
         int questionCount=questions.size();

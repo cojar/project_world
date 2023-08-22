@@ -2,8 +2,8 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="review_listFragment" class="review-list-section">
   <div class="review-create-box">
-    <button sec:authorize="isAuthenticated()" class="review-create-btn btn-sm" id="Review" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
-    <button sec:authorize="isAnonymous()" class="review-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/review/create|" style="font-family: NeoDunggeunmoPro-Regular;">Review</button>
+    <span>Review</span>
+
   </div>
 
 
