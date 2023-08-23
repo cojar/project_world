@@ -32,7 +32,7 @@
             <div class="list">
                 <div class="sort-section">
                     <ul class="flex justify-end text-white mb-5">
-                        <li class="mr-3"><button>인기순</button></li>
+                        <li class="mr-3"><a th:href="@{|/product/list/${themeKey}/sort/vote?page=${paging.number}|}">인기순</a></li>
                         <li class="mr-3"><a th:href="@{|/product/list/${themeKey}/sort/high?page=${paging.number}|}">높은 가격순</a></li>
                         <li class="mr-3"><a th:href="@{|/product/list/${themeKey}/sort/low?page=${paging.number}|}">낮은 가격순</a></li>
                     </ul>
