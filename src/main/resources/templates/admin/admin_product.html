@@ -85,7 +85,7 @@
                 <tr th:each="product, loop : ${paging}">
                   <td class="number" id="selectedProductId" th:text="${product.id}"></td>
                   <td class="title">
-                    <a th:href="@{|/product/detail/${product.id}|}" th:text="${product.productName}">상품명</a>
+                    <a th:href="@{|/product/${product.id}|}" th:text="${product.productName}">상품명</a>
                   </td>
                   <td class="nickname" th:text="${product.theme}">테마</td>
                   <td class="nickname" th:text="${product.price}">가격</td>

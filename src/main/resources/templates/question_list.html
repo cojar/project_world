@@ -2,8 +2,9 @@
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
 <section th:fragment="question_listFragment" class="question-list-section">
     <div class="question-create-box">
-        <button sec:authorize="isAuthenticated()" class="question-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
-        <button sec:authorize="isAnonymous()" class="question-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/question/create|" style="font-family: NeoDunggeunmoPro-Regular;">Q & A</button>
+        <span>Q & A</span>
+        <button sec:authorize="isAuthenticated()" class="question-create-btn btn-sm" style="font-family: NeoDunggeunmoPro-Regular;">문의하기</button>
+        <button sec:authorize="isAnonymous()" class="question-create-btn btn-sm a-hover" th:onclick="_anonymous(this)" th:data-uri="|/question/create|" style="font-family: NeoDunggeunmoPro-Regular;">문의하기</button>
     </div>
     <div class="question-list-content">
         <div class="question-container" th:each="question, loop : ${paging}">

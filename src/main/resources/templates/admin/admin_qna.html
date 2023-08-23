@@ -83,7 +83,7 @@
                     <span th:text="${question.author.username}">작성자 e-mail</span>
                   </td>
                   <td class="nickname" th:text="${question.content}">문의 내용</td>
-                  <td class="nickname" th:text="${question.product?.productName}">상품명</td>
+                  <td class="nickname" ><a th:href="@{|/product/${question.product?.id}|}" th:text="${question.product?.productName}">상품명</a></td>
                   <td class="date" th:text="${#lists.size(question.answerList)}">답변 수</td>
                   <td class="inquiry">
                     <a th:href="@{/admin/qna/answer/{id}(id=${question.id})}">

@@ -130,7 +130,7 @@ public class ProductService {
     public Page<Product> allTheme(int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
     public Product getProduct(Long id) {
@@ -269,7 +269,7 @@ public class ProductService {
     public Page<Product> allThemeMain(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 8);
+        Pageable pageable = PageRequest.of(page, 8,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 

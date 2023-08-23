@@ -85,7 +85,7 @@
                 <tr th:each="orderProduct, loop : ${paging}">
                   <td class="number" id="selectedOrderId" th:text="${orderProduct.id}"></td>
                   <td class="title">
-                    <a th:href="@{|/orderProduct/detail/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
+                    <a th:href="@{|/product/${orderProduct.id}|}" th:text="${orderProduct.product.productName}">상품명</a>
                   </td>
                   <td class="nickname" th:text="${orderProduct.customerName}">주문자명</td>
                   <td class="date" th:text="${orderProduct.email}">test@test.test</td>

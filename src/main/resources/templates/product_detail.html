@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
-<script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/layout/Product_detail.css" />
     <title>world</title>
 </head>
+<body>
 <nav th:replace="layout/navbar.html"></nav>
 <section>
     <div class="inner-container">
@@ -14,22 +15,31 @@
             <div class="image-panel" th:each="productImage, loop : ${product.productImageList}">
                     <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
             </div>
-        <div class="panel-productName" th:text="${product.productName}">
+        <div class="productTitle">
+        <div class="panel-productName" th:text="${product.productName}" style="text-shadow: 2px 2px 4px black;">
         </div>
-        <div class="panel-developer" th:text="${product.developer}">
+        <div class="panel-developer" th:text="${product.developer}" style="text-shadow: 2px 2px 4px black;">
         </div>
-        <div class="panel-price" th:text="|${#numbers.formatInteger(product.price, 0, 'COMMA')} won|">
+        <div class="panel-price" th:text="|${#numbers.formatInteger(product.price, 0, 'COMMA')} won|" style="text-shadow: 2px 2px 4px black;">
         </div>
         <button type="button" class="panel-btn" id="order-btn" style="font-family: NeoDunggeunmoPro-Regular;">Buy Now</button>
+        <div class="wish">
+            <span class="zzim" th:data-uri="@{|/product/wish/${product.id}|}">
+    <i th:if="${hasWished == true}" class="fa fa-heart" aria-hidden="true" style="cursor:pointer; text-shadow: 2px 2px 4px black;"></i>
+    <i th:unless="${hasWished == true}" class="fa fa-heart-o" aria-hidden="true" style="cursor:pointer; text-shadow: 2px 2px 4px black;"></i>
+    <span th:text="${#lists.size(product.wish)}" style="text-shadow: 2px 2px 4px black;"></span>
+</span>
+        </div>
+        </div>
     </div>
 
     <div class="product-detail-width">
         <div class="product-detail-classification">
             <div class="classify-btn-box" style="font-family: NeoDunggeunmoPro-Regular;">
                 <a href="#product_detail" class="detail">DETAIL</a>
-                <a href="#system-specification" class="specification">시스템 요구 사항</a>
-                <a href="#Review" class="review">REVIEW</a>
-                <a href="#question" class="inquiry">상품문의</a>
+                <a href="#system-specification" class="specification">System Spec</a>
+                <a href="#review" class="review">REVIEW</a>
+                <a href="#question" class="inquiry">Q & A</a>
             </div>
         </div>
     </div>
@@ -56,7 +66,7 @@
         </div>
 
         <div class="form-container">
-            <div class="menu" id="system-specification">시스템 요구 사항</div>
+            <div class="menu" id="system-specification">System Spec</div>
             <div class="radio-container" style="font-family: NeoDunggeunmoPro-Regular;">
                 <div class="radio-window">
                     <input type="radio" id="window" name="specification" checked>
@@ -181,13 +191,6 @@
     </div>
     <div id="review"></div>
     <div id="question"></div>
-        <div class="wish">
-        <span class="zzim" href="javascript:void(0);"
-           th:data-uri="@{|/product/wish/${product.id}|}">
-            <i class="fa-regular fa-heart fa-2xl"></i>
-            <span th:text="${#lists.size(product.wish)}"></span>
-        </span>
-    </div>
     </div>
     </div>
 </section>
@@ -266,7 +269,12 @@ $(document).ready(function() {
 
     $(".zzim").click(function () {
         // Toggle heart icon classes
-        $(this).find("i").toggleClass("fa-regular fa-solid");
+        var heartIcon = $(this).find("i");
+        if (heartIcon.hasClass(".fa-heart-o")) {
+            heartIcon.removeClass(".fa-heart-o").addClass(".fa-heart");
+        } else if (heartIcon.hasClass(".fa-heart")) {
+            heartIcon.removeClass(".fa-heart").addClass(".fa-heart-o");
+        }
 
         // Redirect to the specified URI
         var uri = $(this).data("uri");
@@ -277,8 +285,30 @@ $(document).ready(function() {
 
     $(".wish").click(function () {
         // Toggle heart icon classes
-        $(this).find("i").toggleClass("fa-regular fa-solid");
+        var heartIcon = $(this).find("i");
+        if (heartIcon.hasClass(".fa-heart-o")) {
+            heartIcon.removeClass(".fa-heart-o").addClass(".fa-heart");
+        } else if (heartIcon.hasClass(".fa-heart")) {
+            heartIcon.removeClass(".fa-heart").addClass(".fa-heart-o");
+        }
     });
 });
 </script>
+<script>
+$(document).ready(function() {
+    // 이벤트 핸들러 등록
+    $(".detail, .specification, .review, .inquiry").click(function(event) {
+        event.preventDefault(); // 기본 링크 동작 방지
+
+        var target = $(this).attr("href"); // 타겟 섹션 선택
+        var offset = $(target).offset().top - 120; // 타겟 섹션의 위치에서 150px 위로 이동
+
+        // 스크롤 애니메이션
+        $("html, body").animate({
+            scrollTop: offset
+        }, 500); // 500ms 동안 스크롤 애니메이션 진행
+    });
+});
+</script>
+</body>
 </html>

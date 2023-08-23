@@ -93,7 +93,7 @@
                     <span th:text="${review.author.username}">작성자 e-mail</span>
                   </td>
                   <td class="subject" th:text="${review.content}">리뷰 내용</td>
-                  <td class="product-name" th:text="${review.productOrder.product.productName}">상품명</td>
+                  <td class="product-name" ><a th:href="@{|/product/${review.productOrder.product.id}|}" th:text="${review.productOrder.product.productName}">상품명</a></td>
                   <td class="score" th:text="${review.score}">평점</td>
                   <td class="button_menu">
                     <label class="order_check">

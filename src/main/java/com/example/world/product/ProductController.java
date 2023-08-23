@@ -200,11 +200,15 @@ public class ProductController {
 //    }
 
     @GetMapping("/{id}")
-    public String detail(Model model,
-                         @PathVariable("id") Long id) {
-
+    public String detail(Model model, @PathVariable("id") Long id, Principal principal) {
         Product product = this.productService.getProduct(id);
         model.addAttribute("product", product);
+
+        if (principal != null) {
+            SiteUser siteUser = this.userService.getUser(principal.getName());
+            boolean hasWished = product.getWish().contains(siteUser);
+            model.addAttribute("hasWished", hasWished);
+        }
 
         return "product_detail";
     }

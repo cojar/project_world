@@ -43,7 +43,8 @@ section {
 
 .panel-productName,
 .panel-developer,
-.panel-price {
+.panel-price ,
+.wish{
   font-size: 3rem;
   font-weight: bold;
   color: white;
@@ -63,6 +64,10 @@ section {
 .panel-price{
   bottom: 100px;
   left: 70px;
+}
+.wish{
+bottom:10px;
+left:70px;
 }
 
 .panel-btn {
@@ -181,15 +186,29 @@ justify-content: center;
   color:black;
 }
 
+.review-create-box{
+text-align:center;
+border-bottom:2px solid white;
+position:relative;
+height:50px;
+margin-top:50px;
+}
+.review-create-box > span{
+font-family: NeoDunggeunmoPro-Regular;
+text-shadow: 2px 2px 4px black;
+}
 
 .review-create-btn{
-  margin-left: 5%;
-  margin-top: 10px;
+  position:absolute;
+  bottom:0;
+  right:0;
   width: 100px;
-  background: rgb(20, 20, 20);
-  border: 2px solid white;
+  background: #373838;
   color: white;
-  font-size: 20px;
+  font-size: 15px;
+}
+.review-create-btn:hover{
+background: gray;
 }
 
 .review-list-section{
@@ -212,6 +231,7 @@ justify-content: center;
   align-items: flex-end;
   width: 100%;
   padding: 10px;
+  border-bottom:0.3px solid white;
 }
 
 .review-state,
@@ -223,6 +243,9 @@ justify-content: center;
 .review-subject {
   width: 55%;
   cursor: pointer;
+}
+.review-subject:hover{
+color:gray;
 }
 
 .review-content {
@@ -258,22 +281,59 @@ justify-content: center;
 .review-modify, .review-delete{
   height: 35px;
   width: auto;
-  background: rgb(20, 20, 20);
-  border: 2px solid white;
-  color: white;
+  background: #373838;
+  color:white;
   font-size: 20px;
+}
+.review-modify:hover{
+background-color:gray;
+}
+
+.review-delete:hover{
+background-color:gray;
 }
 
 
+.form-container{
+text-align:center;}
+
+#system-specification{
+font-family: "NeoDunggeunmoPro-Regular";
+font-size:15px;
+display:inline-block;
+position:relative;
+width: 68%;
+border-bottom:2px solid white;
+height:50px;
+margin-top:50px;
+margin-right:0;
+margin-bottom:20px;
+text-shadow: 2px 2px 4px black;
+}
+
+.question-create-box{
+text-align:center;
+border-bottom:2px solid white;
+position:relative;
+height:50px;
+margin-top:50px;
+}
+.question-create-box > span{
+font-family: NeoDunggeunmoPro-Regular;
+text-shadow: 2px 2px 4px black;
+}
 
 .question-create-btn{
-  margin-left: 5%;
-    margin-top: 10px;
+    position:absolute;
+    bottom:0;
+    right:0;
     width: 100px;
-    background: rgb(20, 20, 20);
-    border: 2px solid white;
-    color: white;
-    font-size: 20px;
+    background: #373838;
+    color:white;
+    font-size: 15px;
+}
+.question-create-btn:hover{
+background: gray;
 }
 
 .question-list-section{
@@ -296,6 +356,7 @@ justify-content: center;
   align-items: flex-end;
   width: 100%;
   padding: 10px;
+  border-bottom:0.3px solid white;
 }
 
 .question-state,
@@ -307,6 +368,10 @@ justify-content: center;
 .question-subject {
   width: 55%;
   cursor: pointer;
+}
+
+.question-subject:hover{
+color:gray;
 }
 
 .question-content {
@@ -343,11 +408,18 @@ justify-content: center;
 .question-modify, .question-delete{
   height: 35px;
   width: auto;
-  background: rgb(20, 20, 20);
-  border: 2px solid white;
-  color: white;
+  background: #373838;
+  color:white;
   font-size: 20px;
 }
+.question-modify:hover{
+background-color:gray;
+}
+
+.question-delete:hover{
+background-color:gray;
+}
+
 
 .page-link1{
   background-color: rgb(30, 30, 30);
@@ -366,8 +438,19 @@ background-color: white;
 color:rgb(30, 30, 30);
 }
 .pagination1{
-margin:0;}
+margin:0;
+padding:0;
+}
 
 .page-item{
  Display:inline-block;
+}
+
+
+
+.productTitle{
+    background-color:rgba(30,30,30,0.5);
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
 }
