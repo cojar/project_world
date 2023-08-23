@@ -71,7 +71,7 @@ public class ReviewService {
 
     public Page<Review> getList(int page, int size) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
         return this.reviewRepository.findAll(pageable);
     }

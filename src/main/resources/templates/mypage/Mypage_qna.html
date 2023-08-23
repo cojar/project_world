@@ -21,7 +21,7 @@
       <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
       <ul class="posts">
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/order}">
             <div class="icon">
               <i class="fas fa-money-check-alt"></i>
             </div>
@@ -30,17 +30,20 @@
               <div class="sub">
                 <strong>주문내역</strong>
                 <span>&nbsp;-&nbsp;</span>
+
                 <span>
                   <i class="fas fa-money-check-alt"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${orderCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
+
+
               </div>
             </div>
           </a>
         </li>
         <li class="crypto">
-          <a href="#">
+          <a th:href="@{/mypage/wish}">
             <div class="icon">
               <i class="fas fa-shopping-cart"></i>
             </div>
@@ -48,9 +51,8 @@
               <h5>Wish List</h5>
               <div class="sub">
                 <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
-                <span>
-                  <i class="fas fa-shopping-cart"></i>
-                  &nbsp;<span th:text="${#lists.size(wishList)}"></span>
+                <i class="fas fa-shopping-cart"></i>
+                &nbsp;<span th:text="${#lists.size(wishList)}"></span>
                 </span>
                 <span>&nbsp;건</span>
               </div>
@@ -58,28 +60,31 @@
           </a>
         </li>
         <li class="coding">
-          <a href="#">
+          <a th:href="@{/mypage/review}">
             <div class="icon">
-              <i class="fas fa-sticky-note"></i>
+              <i class="	fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Review</h5>
               <div class="sub">
                 <strong>내가 쓴 리뷰</strong>
                 <span>&nbsp;-&nbsp;</span>
+
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;3(타임리프)
+                  &nbsp;<span th:text='${reviewCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
+
+
               </div>
             </div>
           </a>
         </li>
         <li class="design">
-          <a href="#">
+          <a th:href="@{/mypage/qna}">
             <div class="icon">
-              <i class="fas fa-sticky-note"></i>
+              <i class="	fas fa-sticky-note"></i>
             </div>
             <div class="txt">
               <h5>My Question</h5>
@@ -88,15 +93,17 @@
                 <span>&nbsp;-&nbsp;</span>
                 <span>
                   <i class="fas fa-sticky-note"></i>
-                  &nbsp;<span th:text="${#lists.size(questionList)}"></span>
+                  &nbsp;<span th:text='${questionCount}'></span>
                 </span>
                 <span>&nbsp;건</span>
+
+
               </div>
             </div>
           </a>
         </li>
         <li class="general">
-          <a href="#">
+          <a th:href="@{/mypage/user}">
             <div class="icon">
               <i class="fas fa-user-cog"></i>
             </div>
@@ -104,6 +111,7 @@
               <h5>User Edit</h5>
               <div class="sub">
                 <strong>회원정보수정</strong>
+
               </div>
             </div>
           </a>
@@ -123,7 +131,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question : ${questionList}">
+        <tr th:each="question : ${paging}">
           <td class="number" th:text="${question.product?.productName}">상품명</td>
           <td class="title">
             <span th:text="${question.product?.developer}">개발사</span>

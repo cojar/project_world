@@ -61,13 +61,23 @@ public class MypageController {
     }
     @GetMapping("/order")
     public String myOrder(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        Page<ProductOrder> paging = this.orderService.getList(page, size);
         SiteUser user = this.userService.getUser(principal.getName());
-
-        List<ProductOrder> productOrderList = this.orderService.getOrderList();
+        Page<ProductOrder> paging = this.orderService.getCustomer(page, user);
         List<Product> productList = this.productService.getProductList();
+
+        List<ProductOrder> articles = this.orderService.getAuthor(user);
+        List<Review> reviews = this.reviewService.getAuthor(user);
+        List<Question> questions = this.questionService.getAuthor(user);
+        List<Product> wishList = this.productService.getProductsByWish(user);
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+        model.addAttribute("wishList", wishList);
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
         model.addAttribute("paging", paging);
-        model.addAttribute("productOrderList", productOrderList);
         model.addAttribute("productList", productList);
         model.addAttribute("user", user);
 
@@ -80,14 +90,21 @@ public class MypageController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/qna")
     public String myqna(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Question> paging = this.questionService.getList(page, size);
         SiteUser user = this.userService.getUser(principal.getName());
-        List<Question> questionList = this.questionService.getQuestionList();
-        List<Product> productList = this.productService.getProductList();
+        Page<Question> paging = this.questionService.getAuthorPage(page, user);
         List<Product> wishList = this.productService.getProductsByWish(user);
+
+        List<ProductOrder> articles = this.orderService.getAuthor(user);
+        List<Review> reviews = this.reviewService.getAuthor(user);
+        List<Question> questions = this.questionService.getAuthor(user);
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
         model.addAttribute("paging", paging);
-        model.addAttribute("questionList", questionList);
-        model.addAttribute("productList", productList);
         model.addAttribute("wishList", wishList);
         model.addAttribute("user", user);
 
@@ -97,16 +114,27 @@ public class MypageController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/wish")
     public String myWish(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Product> paging = this.productService.getList(page, size);
+
         SiteUser user = this.userService.getUser(principal.getName());
-        List<Product> wishList = this.productService.getProductsByWish(user);
+        Page<Product> paging = this.productService.getCustomerWish(page, user);
         List<Product> productList = this.productService.getProductList();
-        List<Question> questionList = this.questionService.getQuestionList();
+
+        List<Product> wishList = this.productService.getProductsByWish(user);
+        List<ProductOrder> articles = this.orderService.getAuthor(user);
+        List<Review> reviews = this.reviewService.getAuthor(user);
+        List<Question> questions = this.questionService.getAuthor(user);
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
         model.addAttribute("paging", paging);
         model.addAttribute("user", user);
         model.addAttribute("wishList", wishList);
         model.addAttribute("productList", productList);
-        model.addAttribute("questionList", questionList);
 
         return "mypage/Mypage_wish";
     }
@@ -117,6 +145,18 @@ public class MypageController {
 
         Page<Review> paging = this.reviewService.getReviewsByAuthor(siteUser,page);
 
+        List<Product> wishList = this.productService.getProductsByWish(siteUser);
+        List<ProductOrder> articles = this.orderService.getAuthor(siteUser);
+        List<Review> reviews = this.reviewService.getAuthor(siteUser);
+        List<Question> questions = this.questionService.getAuthor(siteUser);
+        int orderCount = articles.size();
+        int reviewCount = reviews.size();
+        int questionCount=questions.size();
+
+        model.addAttribute("wishList", wishList);
+        model.addAttribute("questionCount",questionCount);
+        model.addAttribute("reviewCount",reviewCount);
+        model.addAttribute("orderCount",orderCount);
         model.addAttribute("paging", paging);
         model.addAttribute("user", siteUser);
 

@@ -87,7 +87,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="review : ${reviewList}">
+                <tr th:each="review : ${paging}">
                   <td class="number" th:text="${review.id}">1</td>
                   <td class="user">
                     <span th:text="${review.author.username}">작성자 e-mail</span>

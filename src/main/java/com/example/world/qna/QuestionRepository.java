@@ -18,4 +18,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findByProduct_Id(Long productId, Pageable pageable);
 
     List<Question> findByAuthor(SiteUser siteUser);
+
+    Page<Question> findByAuthor(Pageable pageable , SiteUser siteUser);
 }

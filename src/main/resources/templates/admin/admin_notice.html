@@ -62,9 +62,9 @@
 
           <div class="date_content">
             <div class="date_title"><p>공지사항 관리 </p></div>
-            <div class="btn_line">
+            <div class="btn_line" >
               <button type="button" id="deleteButton" class="date_btn"> 선택 삭제</button>
-              <button type="button" class="date_btn"><a th:href="@{|/admin/notice/create|}">글쓰기</a> </button>
+              <a th:href="@{|/admin/notice/create|}"><button type="button" class="date_btn" style="color:black;" >글쓰기</button></a>
 
 
 
@@ -96,7 +96,7 @@
                   <td class="nickname"><a th:href="@{|/notice/detail/${notice.id}|}" th:text="${notice.subject}"></a></td>
 
                   <td class="date" th:text="${notice.viewCount}"></td>
-                  <td class="inquiry" ><a th:href="@{|/notice/modify/${notice.id}|}"><button>수정</button></a></td>
+                  <td class="inquiry" ><a th:href="@{|/notice/modify/${notice.id}|}"><button style="color:black;">수정</button></a></td>
                   <td class="button_menu">
                     <label class="order_check"><input type="checkbox" name="orderCheck" th:value="${notice.id}"  > </label>
                   </td>

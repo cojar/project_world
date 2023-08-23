@@ -3,6 +3,7 @@ package com.example.world.product;
 
 import com.example.world.file.UploadedFile;
 //import com.example.world.product.productImage.ProductImage;
+import com.example.world.order.ProductOrder;
 import com.example.world.product.productImage.ProductImage;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macRecommended.MacRecommended;
@@ -78,6 +79,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<Question> questionList;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductOrder> orderList;
     // 상품과 연결된 질문들
 
 

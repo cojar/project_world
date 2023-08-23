@@ -28,7 +28,7 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
       <li>
-        <a th:href="@{/admin}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin/}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
         <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
@@ -60,8 +60,8 @@
           <div class="date_content">
             <div class="date_title"><p>주문내역 </p></div>
             <div class="btn_line">
-              <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
               <button type="button" class="date_btn" onclick="adminConfirmOrder()"> 결제확인 </button>
+              <button type="button" class="date_btn" onclick="showCodeInput()"> 발송입력 </button>
               <button type="button" class="date_btn" onclick="adminCompleteCancelOrder()"> 주문취소 </button>
             </div>
             <div class="code_input" style="display: none;">

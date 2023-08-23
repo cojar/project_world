@@ -37,17 +37,25 @@ section {
   margin-top: 30px;
   text-align: center;
 }
-.write-btn-box button {
+.write-btn-box > button {
   height: 40px;
   width: 110px;
-  border: 2px solid white;
+  background:rgb(30,30,30);
   color: white;
   font-size: 20px;
   font-family: "NeoDunggeunmoPro-Regular";
 }
-#cancel_button {
+#cancel_button:hover {
   background: gray;
 }
-#submit_button {
-  background: rgb(20, 20, 20);
+#submit_button:hover {
+  background: gray;
 }
+
+
+h3{
+font-family: none;
+}
+
+h5{
+font-family: none;}

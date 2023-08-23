@@ -115,4 +115,10 @@ public class OrderService {
         return this.orderRepository.findAll(pageable);
     }
 
+    public Page<ProductOrder> getCustomer(int page, SiteUser user) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("orderDate"));
+        Pageable pageable = PageRequest.of(page,10,Sort.by(sorts));
+        return this.orderRepository.findByUser(pageable,user);
+    }
 }

@@ -29,7 +29,7 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
       <li>
-        <a th:href="@{/admin}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin/}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
         <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
@@ -77,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="question : ${questionList}">
+                <tr th:each="question : ${paging}">
                   <td class="number" th:text="${question.id}">문의 번호</td>
                   <td class="title">
                     <span th:text="${question.author.username}">작성자 e-mail</span>
@@ -85,7 +85,7 @@
                   <td class="nickname" th:text="${question.content}">문의 내용</td>
                   <td class="nickname" ><a th:href="@{|/product/${question.product?.id}|}" th:text="${question.product?.productName}">상품명</a></td>
                   <td class="date" th:text="${#lists.size(question.answerList)}">답변 수</td>
-                  <td class="inquiry">
+                  <td class="inquiry" id="modify_btn">
                     <a th:href="@{/admin/qna/answer/{id}(id=${question.id})}">
                       <button>답변</button>
                     </a>
