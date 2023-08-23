@@ -80,8 +80,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/sbb-1:${{ needs.tag.outputs.tag_name }},
-            ghcr.io/${{ env.OWNER_LC }}/sbb-1:latest
+            ghcr.io/${{ env.OWNER_LC }}/world-1:${{ needs.tag.outputs.tag_name }},
+            ghcr.io/${{ env.OWNER_LC }}/world-1:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
@@ -97,5 +97,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Docker run
         run: |
-          docker stop sbb-1 && docker rm sbb-1 && docker rmi ghcr.io/${{ github.actor }}/sbb-1:latest
-          docker run -d -p 80:8000 --name sbb-1 --restart always ghcr.io/${{ github.actor }}/sbb-1:latest
+          docker stop world-1 && docker rm world-1 && docker rmi ghcr.io/${{ github.actor }}/world-1:latest
+          docker run -d -p 80:8000 --name world-1 --restart always ghcr.io/${{ github.actor }}/world-1:latest
