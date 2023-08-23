@@ -8,7 +8,7 @@ on:
       - 'Dockerfile'
       - 'readme.md'
     branches:
-      - 'main'
+      - 'dev'
 jobs:
   build:
     name: 빌드
