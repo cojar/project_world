@@ -71,7 +71,7 @@
                   <th class="title">작성자 e-mail</th>
                   <th class="name">문의 내용</th>
                   <th class="name">상품명</th>
-                  <th class="date">답변 수</th>
+                  <th class="date">답변 여부</th>
                   <th class="inquiry">답변달기</th>
                   <th class="button_menu">선택</th>
                 </tr>
@@ -84,7 +84,10 @@
                   </td>
                   <td class="nickname" th:text="${question.content}">문의 내용</td>
                   <td class="nickname" ><a th:href="@{|/product/${question.product?.id}|}" th:text="${question.product?.productName}">상품명</a></td>
-                  <td class="date" th:text="${#lists.size(question.answerList)}">답변 수</td>
+                  <td class="date" >
+                    <span th:if="${question.answered}">답변 완료</span>
+                    <span th:unless="${question.answered}">답변 대기중</span>
+                  </td>
                   <td class="inquiry" id="modify_btn">
                     <a th:href="@{/admin/qna/answer/{id}(id=${question.id})}">
                       <button>답변</button>
