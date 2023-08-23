@@ -99,13 +99,11 @@
                   <td class="inquiry" ><a th:href="@{|/notice/modify/${notice.id}|}"><button>수정</button></a></td>
                   <td class="button_menu">
                     <label class="order_check"><input type="checkbox" name="orderCheck" th:value="${notice.id}"  > </label>
-
                   </td>
                 </tr>
                 </tbody>
               </table>
-
-              <!— 페이징처리 시작 —>
+              <!-- 페이징처리 시작 -->
               <div th:if="${!paging.isEmpty()}" style="text-align: center;">
                 <ul class="pagination justify-content-center">
                   <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
@@ -126,11 +124,9 @@
                   </li>
                 </ul>
               </div>
-              <!— 페이징처리 끝 —>
-
-
-
-              <!--    리스트 -->                   </div>
+              <!-- 페이징처리 끝 -->
+              <!--    리스트 -->
+            </div>
           </div>
         </div>
       </div>

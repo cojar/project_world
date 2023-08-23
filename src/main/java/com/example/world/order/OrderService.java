@@ -32,16 +32,17 @@ public class OrderService {
         this.orderRepository.save(order);
     }
 
-    public Long tossCreate(Product product, SiteUser user, OrderForm orderForm) {
+    public long tossOrderCreate(Product product, SiteUser user) {
         ProductOrder order = new ProductOrder();
         order.setProduct(product);
         order.setUser(user);
-        order.setCustomerName(orderForm.getCustomerName());
-        order.setEmail(orderForm.getEmail());
-        order.setPayment("토스 간편결제");
+        order.setCustomerName(user.getNickname());
+        order.setEmail(user.getUsername());
+        order.setOrderStatus("결제완료");
+        order.setPayment("토스결제");
         order.setOrderDate(LocalDateTime.now());
-        this.orderRepository.save(order);
-        return order.getId();
+        return this.orderRepository.save(order).getId();
+
     }
 
     public ProductOrder getOrder(Long id) {
