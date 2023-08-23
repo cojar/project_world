@@ -141,4 +141,9 @@ display:inline-block;
     outline: none;
   }
 
+  .image-panel-img {
+      width: 300px;
+      height: 150px;
+    }
+
 
