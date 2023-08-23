@@ -11,11 +11,11 @@
 <section class="section section-payment-fail container mx-auto">
     <div class="success-icon">✔</div>
     <h2>주문 결제 성공</h2>
-    <p>주문번호 : [[${orderId}]]</p>
+    <p>주문번호 : [[${productOrderId}]]</p>
     <p>
-<!--        <a th:href="@{|/order/detail/${productOrder.id}|}">-->
-<!--        <button type="button">주문상세보기</button>-->
-<!--        </a>-->
+        <a th:href="@{|/order/detail/${productOrderId}|}">
+        <button type="button">주문상세보기</button>
+        </a>
     </p>
 </section>
 <footer th:replace="layout/footer.html"></footer>

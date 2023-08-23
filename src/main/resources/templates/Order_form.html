@@ -43,11 +43,11 @@
           </div>
           <div class="customer">
             <p>구매자명 :</p>
-            <input class="styled-input" type="text" name="customerName" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
+            <input class="styled-input" id="customerName" type="text" name="customerName" placeholder="무통장입금 시 입금자명과 동일해야 합니다." required>
           </div>
           <div class="customer">
             <p>e-mail :</p>
-            <input class="styled-input" type="text" name="email" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
+            <input class="styled-input" id="email" type="text" name="email" placeholder="게임코드를 받으실 e-mail 주소를 입력해 주세요." required>
           </div>
         </div>
       </div>
@@ -83,13 +83,15 @@
 <footer th:replace="layout/footer.html"></footer>
 <script src="https://js.tosspayments.com/v1"></script>
 <script th:inline="javascript">
-  let amount = /*[[ ${product.price}]]*/;
-  let orderName = /*[[ ${product.productName}]]*/;
+  let amount = /*[[ ${product.price} ]]*/;
+  let orderName = /*[[ ${product.productName} ]]*/;
+  let productId = /*[[ ${product.id} ]]*/;
 
   let tossPayments = TossPayments("test_ck_dP9BRQmyarYvxo5lPeL8J07KzLNk"); //테스트 클라이언트 키
 
+
   let path = "/order/";
-  let successUrl = window.location.origin + path + "success";
+  let successUrl = window.location.origin + path + "/" + productId + "/" + "success";
   let failUrl = window.location.origin + path + "fail";
   let callbackUrl = window.location.origin + path + "va_callback";
   let orderId = new Date().getTime();
@@ -97,6 +99,9 @@
   function pay() {
         const method = "카드";
         const requestJson = {
+            "productId": productId,
+            "customerName": "김월드",
+            "email": email,
             "amount": amount,
             "orderId": "sample-" + orderId,
             "orderName": orderName,
@@ -106,7 +111,6 @@
             "cardInstallmentPlan": null,
             "maxCardInstallmentPlan": null,
             "useCardPoint": false,
-            "customerName": "박토스",
             "customerEmail": null,
             "customerMobilePhone": null,
             "taxFreeAmount": null,

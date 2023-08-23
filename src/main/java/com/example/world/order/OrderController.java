@@ -87,12 +87,15 @@ public class OrderController {
     private String paymentSecretKey;
     String secretKey = "test_sk_ZORzdMaqN3wBKjyXWOB85AkYXQGw";
 
-    @GetMapping("/success")
+    @GetMapping("{id}/success")
     public String paymentResult(
             Model model,
+            @PathVariable("id") String id,
             @RequestParam(value = "orderId") String orderId,
-            @RequestParam(value = "amount") Integer amount,
-            @RequestParam(value = "paymentKey") String paymentKey) throws Exception {
+            @RequestParam(value = "paymentKey") String paymentKey,
+            @RequestParam(value = "amount") String amount,
+            OrderForm orderForm,
+            Principal principal) throws Exception {
 
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] encodedBytes = encoder.encode(secretKey.getBytes("UTF-8"));
@@ -107,7 +110,10 @@ public class OrderController {
         connection.setDoOutput(true);
         JSONObject obj = new JSONObject();
         obj.put("orderId", orderId);
+        obj.put("productId", id);
         obj.put("amount", amount);
+//        obj.put("customerName", customerName);
+//        obj.put("email", email);
 
         OutputStream outputStream = connection.getOutputStream();
         outputStream.write(obj.toString().getBytes("UTF-8"));
@@ -142,6 +148,13 @@ public class OrderController {
             model.addAttribute("code", (String) jsonObject.get("code"));
             model.addAttribute("message", (String) jsonObject.get("message"));
         }
+
+        Product product = this.productService.getProduct(id);
+        SiteUser user = userService.getUser(principal.getName());
+
+        Long productOrderId = this.orderService.tossOrderCreate(product, user);
+
+        model.addAttribute("productOrderId", productOrderId);
 
         return "order/success";
     }
