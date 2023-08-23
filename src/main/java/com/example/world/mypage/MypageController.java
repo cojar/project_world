@@ -116,9 +116,9 @@ public class MypageController {
     public String myReview(Model model, Principal principal, ReviewForm reviewForm, @RequestParam(value = "page", defaultValue = "0") int page) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
 
-        List<Review> userReviews = this.reviewService.getReviewsByAuthor(siteUser);
+        Page<Review> paging = this.reviewService.getReviewsByAuthor(siteUser,page);
 
-        model.addAttribute("userReviews", userReviews);
+        model.addAttribute("paging", paging);
         model.addAttribute("user", siteUser);
 
         return "/mypage/Mypage_review";
