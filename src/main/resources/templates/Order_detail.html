@@ -18,7 +18,9 @@
         <div class="product_title_box">
             <span class="product_title">product</span>
             <div class="product" th:if="${product != null}">
-                <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                <div class="image-panel" th:each="productImage, loop : ${orderProduct.product.productImageList}">
+                    <img class="image-panel-img" th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt="">
+                </div>
                 <div class="product_detail">
                     <div>
                         <p>상품명 :</p>

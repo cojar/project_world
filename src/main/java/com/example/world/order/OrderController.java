@@ -54,20 +54,17 @@ public class OrderController {
         }
         Product product = this.productService.getProduct(id);
         SiteUser user = this.userService.getUser(principal.getName());
-        this.orderService.create(orderForm,product,user);
+        Long orderId = this.orderService.create(orderForm, product, user);
 
-        return String.format("redirect:/order/detail/%s", id);
+        return String.format("redirect:/order/detail/%s", orderId);
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/detail/{id}")
     public String orderDetail(@PathVariable Long id, Principal principal, Model model) {
         SiteUser user = userService.getUser(principal.getName());
         ProductOrder productOrder = orderService.getOrder(id);
-
-//        ReviewForm reviewForm = new ReviewForm();
-//        reviewForm.setProductOrderId(id);
-//        model.addAttribute("reviewForm", reviewForm);
 
         model.addAttribute("orderProduct", productOrder);
         model.addAttribute("username", user);
@@ -112,8 +109,6 @@ public class OrderController {
         obj.put("orderId", orderId);
         obj.put("productId", id);
         obj.put("amount", amount);
-//        obj.put("customerName", customerName);
-//        obj.put("email", email);
 
         OutputStream outputStream = connection.getOutputStream();
         outputStream.write(obj.toString().getBytes("UTF-8"));
@@ -151,9 +146,7 @@ public class OrderController {
 
         Product product = this.productService.getProduct(id);
         SiteUser user = userService.getUser(principal.getName());
-
         Long productOrderId = this.orderService.tossOrderCreate(product, user);
-
         model.addAttribute("productOrderId", productOrderId);
 
         return "order/success";
