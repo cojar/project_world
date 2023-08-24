@@ -22,6 +22,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+
+import java.util.stream.Collectors;
+import java.util.Comparator;
+import org.springframework.data.domain.PageImpl;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -71,12 +76,26 @@ public class ProductService {
         return this.productRepository.findAll(spec, pageable);
     }
 
-    public Page<Product> sortVoteAll(int page){
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("wish"));
-        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
-        return this.productRepository.findAll(pageable);
-    }
+//    public Page<Product> sortVoteAll(int page){
+//        List<Sort.Order> sorts = new ArrayList<>();
+//        sorts.add(Sort.Order.desc("wish"));
+//        Pageable pageable = PageRequest.of(page,16,Sort.by(sorts));
+//        return this.productRepository.findAll(pageable);
+//    }
+public Page<Product> sortVoteAll(int page) {
+    Pageable pageable = PageRequest.of(page, 16);
+
+    // Fetch products with associated wish users
+    Page<Product> productsWithWishes = this.productRepository.findAllWithWishes(pageable);
+
+    // Sort products based on the size of the wish set in descending order (high to low)
+    List<Product> sortedProducts = productsWithWishes.getContent()
+            .stream()
+            .sorted(Comparator.comparingInt(product -> -product.getWish().size())) // 음수 부호를 추가하여 역순으로 정렬
+            .collect(Collectors.toList());
+
+    return new PageImpl<>(sortedProducts, pageable, productsWithWishes.getTotalElements());
+}
 
     public Page<Product>sortHigh(int page, String key){
         List<Sort.Order> sorts = new ArrayList<>();
