@@ -19,10 +19,11 @@
         <div class="product" >
         </div>
         <form th:object="${noticeForm}"  method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="createform">
                 <div class="create-box">
                     <span> 제목 : </span>
-                    <input class="input-text" type="text" name="subject" id="subject">
+                    <input class="input-text" type="text" name="subject" id="subject" th:field="*{subject}">
                 </div>
                 <div class="create-box">
                     <span>사진 :</span>
@@ -32,7 +33,7 @@
                 <div class="create-box">
                     <span>내용 :</span>
                     <div>
-                        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                        <textarea name="content" id="content" cols="30" rows="10" th:field="*{content}"></textarea>
                     </div>
                 </div>
 
