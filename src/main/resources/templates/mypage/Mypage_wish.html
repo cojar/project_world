@@ -21,7 +21,7 @@
             <h5>&nbsp;&nbsp;&nbsp;User Tools</h5>
             <ul class="posts">
                 <li class="coding">
-                    <a href="#">
+                    <a th:href="@{/mypage/order}">
                         <div class="icon">
                             <i class="fas fa-money-check-alt"></i>
                         </div>
@@ -31,16 +31,16 @@
                                 <strong>주문내역</strong>
                                 <span>&nbsp;-&nbsp;</span>
                                 <span>
-                                  <i class="fas fa-money-check-alt"></i>
-                                  &nbsp;3(타임리프)
-                                </span>
+                  <i class="fas fa-money-check-alt"></i>
+                  &nbsp;<span th:text='${orderCount}'></span>
+                </span>
                                 <span>&nbsp;건</span>
                             </div>
                         </div>
                     </a>
                 </li>
                 <li class="crypto">
-                    <a href="#">
+                    <a th:href="@{mypage/wish}">
                         <div class="icon">
                             <i class="fas fa-shopping-cart"></i>
                         </div>
@@ -48,9 +48,8 @@
                             <h5>Wish List</h5>
                             <div class="sub">
                                 <strong>찜목록</strong><span>&nbsp;-&nbsp;</span>
-                                <span>
-                                  <i class="fas fa-shopping-cart"></i>
-                                  &nbsp;<span th:text="${#lists.size(wishList)}"></span>
+                                <i class="fas fa-shopping-cart"></i>
+                                &nbsp;<span th:text="${#lists.size(wishList)}"></span>
                                 </span>
                                 <span>&nbsp;건</span>
                             </div>
@@ -58,7 +57,7 @@
                     </a>
                 </li>
                 <li class="coding">
-                    <a href="#">
+                    <a th:href="@{/mypage/review}">
                         <div class="icon">
                             <i class="fas fa-sticky-note"></i>
                         </div>
@@ -68,16 +67,16 @@
                                 <strong>내가 쓴 리뷰</strong>
                                 <span>&nbsp;-&nbsp;</span>
                                 <span>
-                                  <i class="fas fa-sticky-note"></i>
-                                  &nbsp;3(타임리프)
-                                </span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;<span th:text='${reviewCount}'></span>
+                </span>
                                 <span>&nbsp;건</span>
                             </div>
                         </div>
                     </a>
                 </li>
                 <li class="design">
-                    <a href="#">
+                    <a th:href="@{/mypage/qna}">
                         <div class="icon">
                             <i class="fas fa-sticky-note"></i>
                         </div>
@@ -87,16 +86,16 @@
                                 <strong>내 문의</strong>
                                 <span>&nbsp;-&nbsp;</span>
                                 <span>
-                                  <i class="fas fa-sticky-note"></i>
-                                  &nbsp;<span th:text="${#lists.size(questionList)}"></span>
-                                </span>
+                  <i class="fas fa-sticky-note"></i>
+                  &nbsp;<span th:text='${questionCount}'></span>
+                </span>
                                 <span>&nbsp;건</span>
                             </div>
                         </div>
                     </a>
                 </li>
                 <li class="general">
-                    <a href="#">
+                    <a th:href="@{/mypage/user}">
                         <div class="icon">
                             <i class="fas fa-user-cog"></i>
                         </div>
@@ -113,11 +112,11 @@
         <div class="side">
             <h5>찜목록</h5>
             <tbody>
-            <tr th:each="product : ${wishList}">
+            <tr th:each="product : ${paging}">
                 <td >
                     <li class="tal2"> <div class="tal">
-                        <div class="product">
-                            <img src="https://i.postimg.cc/15KqsFbz/1-1200-600.png"/>
+                        <div class="product" th:each="productImage, loop : ${product.productImageList}">
+                            <img th:attr="src=${@commonUtil.getFilePath(productImage.image.id)}" alt=""/>
                             <div>
                                 <p style="color:white;">상품명 :</p>
                                 <p style="color:white;" th:text="${product?.productName}">디아블로</p>
@@ -135,7 +134,7 @@
                                 <p style="color:white;" th:text="${product?.theme}">RPG</p>
                             </div>
                             <td class="button_menu">
-                                <div>
+                                <div class="button_div">
                                     <a th:href="@{|/order/create/${product.id}|}"><button type="button">구매하기</button></a>
                                     <a th:href="@{|/product/${product.id}|}"><button type="button">상품보기</button></a>
                                 </div>

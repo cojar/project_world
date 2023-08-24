@@ -278,3 +278,9 @@ margin:0;}
 .page-item{
  Display:inline-block;
 }
+
+
+.button_div{
+position:absolute;
+bottom:15px;
+}

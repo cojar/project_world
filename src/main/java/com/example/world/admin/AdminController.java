@@ -383,9 +383,7 @@ public class AdminController {
     public String adminQna(Long id, Model model, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Page<Question> paging = this.questionService.getList(page, size);
-        List<Question> questionList = this.questionService.getQuestionList();
         model.addAttribute("paging", paging);
-        model.addAttribute("questionList", questionList);
         return "admin/admin_qna";
     }
 

@@ -24,4 +24,6 @@ public interface OrderRepository extends JpaRepository<ProductOrder, Long> {
     Optional<ProductOrder> findByProduct(Product product);
 
     List<ProductOrder> findByUser(SiteUser siteUser);
+
+    Page<ProductOrder> findByUser(Pageable pageable, SiteUser siteUser);
 }

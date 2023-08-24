@@ -30,7 +30,7 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
       <li>
-        <a th:href="@{/admin}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
+        <a th:href="@{/admin/}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>매출</a>
       </li>
       <li>
         <a th:href="@{/admin/order}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>주문 관리</a>
@@ -89,8 +89,8 @@
                   </td>
                   <td class="nickname" th:text="${product.theme}">테마</td>
                   <td class="nickname" th:text="${product.price}">가격</td>
-                  <td class="date" th:text="${completedOrderCount}">판매건수</td>
-                  <td class="inquiry"><a th:href="@{/admin/product/modify/{id}(id=${product?.id})}"><button>수정</button></a></td>
+                  <td class="date" th:text="${#lists.size(product.orderList)}">판매건수</td>
+                  <td class="inquiry" id="modify_btn"><a th:href="@{/admin/product/modify/{id}(id=${product?.id})}"><button>수정</button></a></td>
 <!--                  <td class="button_menu">-->
 <!--                    <label class="order_check">-->
 <!--                      <input type="checkbox" name="orderCheck" th:value="${product.id}">-->

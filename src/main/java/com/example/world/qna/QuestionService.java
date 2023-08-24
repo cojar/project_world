@@ -32,14 +32,14 @@ public class QuestionService {
 
     public Page<Question> getListByProductId(Long productId, int page) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.questionRepository.findByProduct_Id(productId, pageable);
     }
 
     public Page<Question> getList(int page, int size) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
         return this.questionRepository.findAll(pageable);
     }
@@ -92,5 +92,14 @@ public class QuestionService {
 
     public List<Question> getAuthor(SiteUser siteUser) {
         return this.questionRepository.findByAuthor(siteUser);
+    }
+
+
+    public Page<Question> getAuthorPage(int page , SiteUser siteUser){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page,10,Sort.by(sorts));
+        return this.questionRepository.findByAuthor(pageable,siteUser);
+
     }
 }

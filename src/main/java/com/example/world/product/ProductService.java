@@ -153,7 +153,7 @@ public class ProductService {
 
     public Page<Product> getList(int page, int size) {
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, size, Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
@@ -300,14 +300,21 @@ public class ProductService {
     public Page<Product> sortHighMain(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("price"));
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
     }
 
     public Page<Product> sortLowMain(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.asc("price"));
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 16,Sort.by(sorts));
         return this.productRepository.findAll(pageable);
+    }
+
+    public Page<Product> getCustomerWish(int page, SiteUser user) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.asc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10,Sort.by(sorts));
+        return  this.productRepository.findByWish(pageable, user);
     }
 }

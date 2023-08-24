@@ -4,6 +4,8 @@
     <div class="title">답변하기</div>
     <form th:object="${answerForm}" method="post" class="answer-write-form">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div><h3>문의 내용 : </h3></div>
+        <div><h5 th:text="${question.content}"></h5></div>
         <div class="write-body">
             <textarea class="content" th:field="*{content}" placeholder="답변하실 내용을 입력하세요"></textarea>
         </div>

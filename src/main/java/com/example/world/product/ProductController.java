@@ -43,7 +43,7 @@ public class ProductController {
                        @RequestParam(value = "kw", defaultValue = "") String kw) {
         Page<Product> paging = this.productService.getSearch(page, kw);
         model.addAttribute("paging", paging);
-        model.addAttribute("themeKey", "검색어: "+kw);
+        model.addAttribute("themeKey", "KeyWord: "+kw);
         return "product_list";
     }
 
