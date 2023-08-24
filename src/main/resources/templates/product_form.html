@@ -131,20 +131,12 @@
             </div>
         </div>
 
-<!--        <li class="type">프로필 사진</li>-->
-<!--        <li class="content">-->
-<!--            <div class="profile-imgUrl">-->
-<!--                <div class="uploaded-file-name">프로필 사진을 업로드 해주세요.</div>-->
-<!--                <input type="file" th:value="${panelImage}" th:field="*{panelImage}"-->
-<!--                       placeholder="프로필 사진을 업로드 해주세요." th:onchange="_getFileName(this)">-->
-<!--                <label th:for="panelImage"><i class="fa-solid fa-cloud-arrow-up"></i></label>-->
-<!--            </div>-->
-<!--        </li>-->
+
 
 
         <div class="product-form-btn">
             <button class="cancel_button" type="button" id="btn_cancel">취소</button>
-            <button class="submit_button" type="submit" id="btn_submit">등록</button>
+            <button class="submit_button" type="submit" id="btn_submit" onclick="return validateForm();">등록</button>
         </div>
     </form>
 </section>
@@ -189,5 +181,34 @@ $(document).ready(function() {
         $(_this).siblings("div.uploaded-file-name").addClass("active");
     }
 });
+</script>
+<script>
+    function _getFileName(input) {
+        const file = input.files[0];
+        const submitButton = document.getElementById('btn_submit');
+
+        if (file) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+
+    // 등록 버튼 클릭 시 호출되는 함수
+    function validateForm() {
+        const fileInputs = document.querySelectorAll('.upload-image');
+        let isAnyFileSelected = false;
+
+        fileInputs.forEach(input => {
+            if (input.files.length > 0) {
+                isAnyFileSelected = true;
+            }
+        });
+
+        if (!isAnyFileSelected) {
+            alert('파일을 등록해주세요.');
+            return false; // 등록 막기
+        }
+    }
 </script>
 </html>

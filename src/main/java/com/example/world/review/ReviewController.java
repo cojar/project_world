@@ -38,8 +38,14 @@ public class ReviewController {
     @GetMapping("/list/{productId}")
     public String list(Model model,
                        @PathVariable("productId") Long productId,
-                       @RequestParam(value = "page", defaultValue = "0") int page) {
+                       @RequestParam(value = "page", defaultValue = "0") int page,Principal principal) {
         Page<Review> paging = this.reviewService.getListByProductId(productId, page );
+
+        if (principal != null) {
+            SiteUser siteUser = this.userService.getUser(principal.getName());
+            model.addAttribute("user", siteUser);
+        }
+
         model.addAttribute("paging", paging);
         return "review_list";
     }

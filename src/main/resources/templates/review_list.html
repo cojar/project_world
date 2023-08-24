@@ -11,20 +11,21 @@
     <div class="review-container" th:each="review, loop : ${paging}">
       <div class="review-header">
         <span class="review-author" th:text="${review.author.nickname}"></span>
-        <span class="review-score" th:text="${review.score}"></span>
 
+        <span class="review-subject" th:text="${#strings.length(review.content) > 30 ? #strings.substring(review.content, 0, 30) + '' : review.content.replaceAll('\n', ' ')}"> </span>
         <div class="like">
           <a class="like-action" href="javascript:void(0);"
-             th:data-uri="@{|/review/vote/${review.id}|}">
-            <i class="fa-thumbs-up fa-2xl fa-regular"></i>
+             th:data-uri="@{|/review/vote/${review.id}|}" th:classappend="${#lists.contains(review.voter, user) ? 'fa fa-thumbs-up' : 'fa fa-thumbs-o-up'}">
+            <!--            <i class="fa fa-thumbs-up"></i>-->
+            <!--            <i class="fa fa-thumbs-o-up"></i>-->
             <span th:text="${#lists.size(review.voter)}"></span>
           </a>
         </div>
-        <span class="review-subject" th:text="${#strings.length(review.content) > 30 ? #strings.substring(review.content, 0, 30) + '' : review.content.replaceAll('\n', ' ')}"> </span>
         <span class="review-create-date" th:text="${#temporals.format(review.createDate, 'yyyy-MM-dd')}"></span>
       </div>
       <div class="review-content">
         <div class="accordion-content" style="width: 55%; margin-left: 16%">
+          <span class="review-score">평점: <span th:text="${review.score}"></span></span>
           <p th:text="${review.content}"></p>
           <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
                   th:data-review-id="${review.id}" class="review-modify" style="font-family: NeoDunggeunmoPro-Regular;">

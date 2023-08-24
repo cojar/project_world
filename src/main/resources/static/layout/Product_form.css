@@ -68,19 +68,23 @@ section {
 .product-form-btn > .cancel_button {
   height: 35px;
   width: 80px;
-  background: gray;
-  border: 2px solid white;
+  background: rgb(30, 30, 30);
   color: white;
   font-size: 20px;
+}
+.product-form-btn >.cancel_button:hover {
+  background: gray;
 }
 
 .product-form-btn > .submit_button {
   height: 35px;
   width: 80px;
-  background: rgb(20, 20, 20);
-  border: 2px solid white;
+  background: rgb(30, 30, 30);
   color: white;
   font-size: 20px;
+}
+.product-form-btn > .submit_button:hover{
+background: gray;
 }
 
 .checkbox-container {
