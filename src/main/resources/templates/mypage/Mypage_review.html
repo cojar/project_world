@@ -125,12 +125,12 @@
 
       <table class="list_table">
         <thead>
-        <tr>
-          <th class="number">상품번호</th>
-          <th class="title">상품명</th>
-          <th class="orderView">상품페이지</th>
-          <th class="date">리뷰</th>
-          <th class="inquiry">평점</th>
+        <tr >
+          <th class="number" style="text-align:center;">상품번호</th>
+          <th class="title" style="text-align:center;">상품명</th>
+          <th class="orderView" style="text-align:center;">상품페이지</th>
+          <th class="date" style="text-align:center;">리뷰</th>
+          <th class="inquiry" style="text-align:center;">평점</th>
 
 
         </thead>
@@ -138,7 +138,7 @@
         <tr th:each="review : ${paging}">
           <td class="number" th:text="${review.productOrder.id}"></td>
           <td class="title" th:text="${review.productOrder.product.productName}">상품명</td>
-          <td><a th:href="@{|/product/${review.productOrder.id}|}"><button type="button">주문상세보기</button></a></td>
+          <td><a th:href="@{|/product/${review.productOrder.product.id}|}"><button type="button">상품상세보기</button></a></td>
           <td class="date" th:text="${review.content}"></td>
           <td class="inquiry" th:text="${review.score}">평점(타임리프)</td>
 
