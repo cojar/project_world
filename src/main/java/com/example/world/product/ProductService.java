@@ -15,23 +15,17 @@ import com.example.world.product.specification.windowRecommended.WindowRecommend
 import com.example.world.user.SiteUser;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-
-import java.util.stream.Collectors;
-import java.util.Comparator;
-import org.springframework.data.domain.PageImpl;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -196,60 +190,127 @@ public Page<Product> sortVoteAll(int page) {
         product.setContent(productForm.getContent());
 
         List<WindowMin> windowMinList = new ArrayList<>();
-        for (WindowMinForm windowMinForm : productForm.getWindowMinList()) {
-            WindowMin windowMin = new WindowMin();
-            windowMin.setOperatingSystem(windowMinForm.getOperatingSystem());
-            windowMin.setProcessor(windowMinForm.getProcessor());
-            windowMin.setMemory(windowMinForm.getMemory());
-            windowMin.setGraphics(windowMinForm.getGraphics());
-            windowMin.setStorage(windowMinForm.getStorage());
-            windowMin.setDirectAccess(windowMinForm.getDirectAccess());
-            windowMin.setNetwork(windowMinForm.getNetwork());
-            windowMinList.add(windowMin);
+        if (productForm.getWindowMinList() != null) {
+            for (WindowMinForm windowMinForm : productForm.getWindowMinList()) {
+                WindowMin windowMin = new WindowMin();
+                if (windowMinForm.getOperatingSystem() != null) {
+                    windowMin.setOperatingSystem(windowMinForm.getOperatingSystem());
+                }
+                if (windowMinForm.getProcessor() != null) {
+                    windowMin.setProcessor(windowMinForm.getProcessor());
+                }
+                if (windowMinForm.getMemory() != null) {
+                    windowMin.setMemory(windowMinForm.getMemory());
+                }
+                if (windowMinForm.getGraphics() != null) {
+                    windowMin.setGraphics(windowMinForm.getGraphics());
+                }
+                if (windowMinForm.getStorage() != null) {
+                    windowMin.setStorage(windowMinForm.getStorage());
+                }
+                if (windowMinForm.getDirectAccess() != null) {
+                    windowMin.setDirectAccess(windowMinForm.getDirectAccess());
+                }
+                if (windowMinForm.getNetwork() != null) {
+                    windowMin.setNetwork(windowMinForm.getNetwork());
+                }
+                windowMinList.add(windowMin);
+            }
+            product.setWindowMinList(windowMinList);
         }
-        product.setWindowMinList(windowMinList);
 
         List<WindowRecommended> windowRecommendedList = new ArrayList<>();
-        for (WindowRecommendedForm windowRecommendedForm : productForm.getWindowRecommendedList()) {
-            WindowRecommended windowRecommended = new WindowRecommended();
-            windowRecommended.setOperatingSystem(windowRecommendedForm.getOperatingSystem());
-            windowRecommended.setProcessor(windowRecommendedForm.getProcessor());
-            windowRecommended.setMemory(windowRecommendedForm.getMemory());
-            windowRecommended.setGraphics(windowRecommendedForm.getGraphics());
-            windowRecommended.setStorage(windowRecommendedForm.getStorage());
-            windowRecommended.setDirectAccess(windowRecommendedForm.getDirectAccess());
-            windowRecommended.setNetwork(windowRecommendedForm.getNetwork());
-            windowRecommendedList.add(windowRecommended);
+        if (productForm.getWindowRecommendedList() != null) {
+            for (WindowRecommendedForm windowRecommendedForm : productForm.getWindowRecommendedList()) {
+                WindowRecommended windowRecommended = new WindowRecommended();
+                if (windowRecommendedForm.getOperatingSystem() != null) {
+                    windowRecommended.setOperatingSystem(windowRecommendedForm.getOperatingSystem());
+                }
+                if (windowRecommendedForm.getProcessor() != null) {
+                    windowRecommended.setProcessor(windowRecommendedForm.getProcessor());
+                }
+                if (windowRecommendedForm.getMemory() != null) {
+                    windowRecommended.setMemory(windowRecommendedForm.getMemory());
+                }
+                if (windowRecommendedForm.getGraphics() != null) {
+                    windowRecommended.setGraphics(windowRecommendedForm.getGraphics());
+                }
+                if (windowRecommendedForm.getStorage() != null) {
+                    windowRecommended.setStorage(windowRecommendedForm.getStorage());
+                }
+                if (windowRecommendedForm.getDirectAccess() != null) {
+                    windowRecommended.setDirectAccess(windowRecommendedForm.getDirectAccess());
+                }
+                if (windowRecommendedForm.getNetwork() != null) {
+                    windowRecommended.setNetwork(windowRecommendedForm.getNetwork());
+                }
+                windowRecommendedList.add(windowRecommended);
+            }
+            product.setWindowRecommendedList(windowRecommendedList);
         }
-        product.setWindowRecommendedList(windowRecommendedList);
+
 
         List<MacMin> macMinList = new ArrayList<>();
-        for (MacMinForm macMinForm : productForm.getMacMinList()) {
-            MacMin macMin = new MacMin();
-            macMin.setOperatingSystem(macMinForm.getOperatingSystem());
-            macMin.setProcessor(macMinForm.getProcessor());
-            macMin.setMemory(macMinForm.getMemory());
-            macMin.setGraphics(macMinForm.getGraphics());
-            macMin.setStorage(macMinForm.getStorage());
-            macMin.setDirectAccess(macMinForm.getDirectAccess());
-            macMin.setNetwork(macMinForm.getNetwork());
-            macMinList.add(macMin);
+        if (productForm.getMacMinList() != null) {
+            for (MacMinForm macMinForm : productForm.getMacMinList()) {
+                MacMin macMin = new MacMin();
+                if (macMinForm.getOperatingSystem() != null) {
+                    macMin.setOperatingSystem(macMinForm.getOperatingSystem());
+                }
+                if (macMinForm.getProcessor() != null) {
+                    macMin.setProcessor(macMinForm.getProcessor());
+                }
+                if (macMinForm.getMemory() != null) {
+                    macMin.setMemory(macMinForm.getMemory());
+                }
+                if (macMinForm.getGraphics() != null) {
+                    macMin.setGraphics(macMinForm.getGraphics());
+                }
+                if (macMinForm.getStorage() != null) {
+                    macMin.setStorage(macMinForm.getStorage());
+                }
+                if (macMinForm.getDirectAccess() != null) {
+                    macMin.setDirectAccess(macMinForm.getDirectAccess());
+                }
+                if (macMinForm.getNetwork() != null) {
+                    macMin.setNetwork(macMinForm.getNetwork());
+                }
+                macMinList.add(macMin);
+            }
+            product.setMacMinList(macMinList);
         }
-        product.setMacMinList(macMinList);
+
 
         List<MacRecommended> macRecommendedList = new ArrayList<>();
-        for (MacRecommendedForm macRecommendedForm : productForm.getMacRecommendedList()) {
-            MacRecommended macRecommended = new MacRecommended();
-            macRecommended.setOperatingSystem(macRecommendedForm.getOperatingSystem());
-            macRecommended.setProcessor(macRecommendedForm.getProcessor());
-            macRecommended.setMemory(macRecommendedForm.getMemory());
-            macRecommended.setGraphics(macRecommendedForm.getGraphics());
-            macRecommended.setStorage(macRecommendedForm.getStorage());
-            macRecommended.setDirectAccess(macRecommendedForm.getDirectAccess());
-            macRecommended.setNetwork(macRecommendedForm.getNetwork());
-            macRecommendedList.add(macRecommended);
+        if (productForm.getMacRecommendedList() != null) {
+            for (MacRecommendedForm macRecommendedForm : productForm.getMacRecommendedList()) {
+                MacRecommended macRecommended = new MacRecommended();
+                if (macRecommendedForm.getOperatingSystem() != null) {
+                    macRecommended.setOperatingSystem(macRecommendedForm.getOperatingSystem());
+                }
+                if (macRecommendedForm.getProcessor() != null) {
+                    macRecommended.setProcessor(macRecommendedForm.getProcessor());
+                }
+                if (macRecommendedForm.getMemory() != null) {
+                    macRecommended.setMemory(macRecommendedForm.getMemory());
+                }
+                if (macRecommendedForm.getGraphics() != null) {
+                    macRecommended.setGraphics(macRecommendedForm.getGraphics());
+                }
+                if (macRecommendedForm.getStorage() != null) {
+                    macRecommended.setStorage(macRecommendedForm.getStorage());
+                }
+                if (macRecommendedForm.getDirectAccess() != null) {
+                    macRecommended.setDirectAccess(macRecommendedForm.getDirectAccess());
+                }
+                if (macRecommendedForm.getNetwork() != null) {
+                    macRecommended.setNetwork(macRecommendedForm.getNetwork());
+                }
+                macRecommendedList.add(macRecommended);
+            }
+            product.setMacRecommendedList(macRecommendedList);
         }
-        product.setMacRecommendedList(macRecommendedList);
+
 
 //        List<ProductImage> productImageList = new ArrayList<>();
 //        for (ProductImageForm productImageForm : productForm.getProductImageList()) {
@@ -260,7 +321,6 @@ public Page<Product> sortVoteAll(int page) {
 //            productImageList.add(productImage);
 //        }
 //        product.setProductImageList(productImageList);
-
 
         //product = productRepository.save(product);
         this.productRepository.save(product);
