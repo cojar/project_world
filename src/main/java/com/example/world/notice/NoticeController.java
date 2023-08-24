@@ -58,10 +58,13 @@ public class NoticeController {
 
 
     @GetMapping("/modify/{id}")
-    public String noticeModify(NoticeForm noticeForm, @PathVariable("id") Integer id) {
+    public String noticeModify(NoticeForm noticeForm, @PathVariable("id") Integer id, Model model) {
         Notice notice = this.noticeService.getNotice(id);
         noticeForm.setSubject(notice.getSubject());
         noticeForm.setContent(notice.getContent());
+
+        model.addAttribute("noticeForm",noticeForm);
+
         return "notice_form";
     }
 
@@ -74,7 +77,7 @@ public class NoticeController {
         }
         Notice notice = this.noticeService.getNotice(id);
         this.noticeService.modify(notice, noticeForm.getSubject(), noticeForm.getContent());
-        return String.format("redirect:/ad/notice");
+        return String.format("redirect:/admin/notice");
     }
 
     @GetMapping("/delete")
