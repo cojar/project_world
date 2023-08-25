@@ -120,3 +120,8 @@ form>div{
   gap:15px 0;
 }
 
+#login-kakao{
+  margin-top:20px;
+  height: 62px;
+  width: 100%;
+}

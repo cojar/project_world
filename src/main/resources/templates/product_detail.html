@@ -292,6 +292,31 @@ $(document).ready(function() {
             heartIcon.removeClass(".fa-heart").addClass(".fa-heart-o");
         }
     });
+
+    $(".page-link1").click(function(event) {
+    event.preventDefault(); // 기본 링크 동작을 막음
+
+    var targetPage = $(this).attr("href").split("=")[1]; // 클릭한 페이지 번호 추출
+    updateReviewList(targetPage); // 해당 페이지의 리뷰 리스트를 업데이트하는 함수 호출
+});
+
+// 리뷰 리스트를 업데이트하는 함수
+function updateReviewList(page) {
+    $.ajax({
+        url: "/review/list/" + productId + "?page=" + page, // 적절한 URL로 수정
+        type: "GET",
+        success: function(data) {
+            $(".review-list-content").html(data); // 리뷰 리스트 영역을 새로운 데이터로 갱신
+        },
+        error: function() {
+            console.error("리뷰 리스트 업데이트 실패");
+        }
+    });
+    }
+
+
+
+
 });
 </script>
 <script>

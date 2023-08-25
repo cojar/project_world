@@ -86,41 +86,10 @@
     </ul>
   </div>
   <!-- 페이징처리 끝 -->
-<!--  <input type="hidden" name="productOrderId" value="주문 아이디">-->
 </section>
 <script>
 $(document).ready(function () {
 var productId = localStorage.getItem("productId");
-
-<!--  $(".review-create-btn").click(function() {-->
-<!--        var productOrderId = $("#productOrderId").val(); // 주문 ID를 가져옴-->
-<!--        console.log(productOrderId);-->
-<!--        $.ajax({-->
-<!--            url: "/review/create", // 리뷰 생성 엔드포인트-->
-<!--            type: "POST",-->
-<!--            data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄-->
-<!--        success: function(data) {-->
-<!--            // 리뷰 작성 성공 처리-->
-<!--            console.log("리뷰 작성 성공");-->
-<!--            if (productId !== null) {-->
-<!--    var width = 700; // 새 창의 너비-->
-<!--    var height = 500; // 새 창의 높이-->
-<!--    var left = (window.screen.width - width) / 2;-->
-<!--    var top = (window.screen.height - height) / 2;-->
-<!--    var options =-->
-<!--      "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;-->
-
-<!--    var url = "/review/create?productOrderId=" + productOrderId + "&productId=" + productId;-->
-<!--  window.open(url, "_blank", options);-->
-<!--    } else {-->
-<!--      console.error("상품 ID를 찾지 못했습니다.");-->
-<!--    }-->
-<!--        },-->
-<!--        error: function() {-->
-<!--            console.error("리뷰 작성 실패");-->
-<!--        }-->
-<!--    });-->
-<!--  });-->
 
   $(".like-action").click(function () {
       // Toggle heart icon classes
