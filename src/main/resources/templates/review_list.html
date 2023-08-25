@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="/layout/Product_detail.css"/>
 <script type="text/javascript" th:src="@{/jquery-3.7.0.min.js}"></script>
+<style>
+  .star-rating{width:200px;}
+  .star-rating,.star-rating span {display:inline-block; height:36px; overflow:hidden; background:url(https://i.postimg.cc/fLQN3N9P/star.png)no-repeat;}
+  .star-rating span{background-position:left bottom; line-height:0; vertical-align:top;}
+  .brContent{margin-bottom:30px;}
+</style>
 <section th:fragment="review_listFragment" class="review-list-section">
   <div class="review-create-box">
     <span>Review</span>
@@ -25,7 +31,26 @@
       </div>
       <div class="review-content">
         <div class="accordion-content" style="width: 55%; margin-left: 16%">
-          <span class="review-score">평점: <span th:text="${review.score}"></span></span>
+          <span> score :</span>
+          <div class="wrap-star">
+            <span class="star-rating" th:if="${review.score == 1}">
+            <span style="width:20%"></span>
+            </span>
+            <span class="star-rating" th:if="${review.score == 2}">
+            <span style="width:40%"></span>
+            </span>
+            <span class="star-rating" th:if="${review.score == 3}">
+            <span style="width:60%"></span>
+            </span>
+            <span class="star-rating" th:if="${review.score == 4}">
+            <span style="width:80%"></span>
+            </span>
+            <span class="star-rating" th:if="${review.score == 5}">
+            <span style="width:100%"></span>
+            </span>
+          </div>
+          <span class="brContent"> content :</span>
+          <br>
           <p th:text="${review.content}"></p>
           <button th:if="${review.author != null and #authentication.isAuthenticated() and #authentication.name == review.author.username}"
                   th:data-review-id="${review.id}" class="review-modify" style="font-family: NeoDunggeunmoPro-Regular;">
@@ -61,41 +86,10 @@
     </ul>
   </div>
   <!-- 페이징처리 끝 -->
-<!--  <input type="hidden" name="productOrderId" value="주문 아이디">-->
 </section>
 <script>
 $(document).ready(function () {
 var productId = localStorage.getItem("productId");
-
-<!--  $(".review-create-btn").click(function() {-->
-<!--        var productOrderId = $("#productOrderId").val(); // 주문 ID를 가져옴-->
-<!--        console.log(productOrderId);-->
-<!--        $.ajax({-->
-<!--            url: "/review/create", // 리뷰 생성 엔드포인트-->
-<!--            type: "POST",-->
-<!--            data: { productOrderId: productOrderId }, // productOrderId를 서버로 보냄-->
-<!--        success: function(data) {-->
-<!--            // 리뷰 작성 성공 처리-->
-<!--            console.log("리뷰 작성 성공");-->
-<!--            if (productId !== null) {-->
-<!--    var width = 700; // 새 창의 너비-->
-<!--    var height = 500; // 새 창의 높이-->
-<!--    var left = (window.screen.width - width) / 2;-->
-<!--    var top = (window.screen.height - height) / 2;-->
-<!--    var options =-->
-<!--      "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top;-->
-
-<!--    var url = "/review/create?productOrderId=" + productOrderId + "&productId=" + productId;-->
-<!--  window.open(url, "_blank", options);-->
-<!--    } else {-->
-<!--      console.error("상품 ID를 찾지 못했습니다.");-->
-<!--    }-->
-<!--        },-->
-<!--        error: function() {-->
-<!--            console.error("리뷰 작성 실패");-->
-<!--        }-->
-<!--    });-->
-<!--  });-->
 
   $(".like-action").click(function () {
       // Toggle heart icon classes
