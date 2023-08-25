@@ -16,6 +16,7 @@
             </div>
             <div class="question-content">
                 <div class="accordion-content" style="width: 55%; margin-left: 16%">
+                    <span>문의 내용 :</span>
                     <p th:text="${question.content}"></p>
                     <button th:if="${question.author != null and #authentication.isAuthenticated() and #authentication.name == question.author.username}"
                             th:data-question-id="${question.id}" class="question-modify" style="font-family: NeoDunggeunmoPro-Regular;">
@@ -28,6 +29,7 @@
                     <div th:if="${question.answerList}">
                         <hr>
                         <div th:each="answer : ${question.answerList}">
+                            <span>답변 :</span>
                             <p><span th:text="${answer.content}"></span></p>
                         </div>
                     </div>

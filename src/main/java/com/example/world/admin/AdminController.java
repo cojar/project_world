@@ -183,7 +183,7 @@ public class AdminController {
             String userEmail = productOrder.getEmail();
 
             String emailSubject = "발송 코드 정보";
-            String emailContent = "반갑습니다 WORLD 에서 주문하신 상품의 코드입니다 : " + sendCode;
+            String emailContent = "반갑습니다 WORLD 에서 주문하신" + productOrder.getProduct().getProductName()+" 상품의 코드입니다 : " + sendCode;
 
             try {
                 MimeMessage mail = mailSender.createMimeMessage();
@@ -421,7 +421,7 @@ public class AdminController {
 
     //////공지사항작성///////
     @GetMapping("/notice/create")
-    public String noticeCreate(){
+    public String noticeCreate(NoticeForm noticeForm){
         return "notice_form";
     }
 
