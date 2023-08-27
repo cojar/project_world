@@ -57,7 +57,7 @@ public class MypageController {
         model.addAttribute("user",siteUser);
         model.addAttribute("user", user);
 
-        return "/mypage/Mypage_main";
+        return "mypage/Mypage_main";
     }
     @GetMapping("/order")
     public String myOrder(Model model, Principal principal, @RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "10") int size){
@@ -81,7 +81,7 @@ public class MypageController {
         model.addAttribute("productList", productList);
         model.addAttribute("user", user);
 
-        return "/mypage/Mypage_order";
+        return "mypage/Mypage_order";
     }
 
 
@@ -160,7 +160,7 @@ public class MypageController {
         model.addAttribute("paging", paging);
         model.addAttribute("user", siteUser);
 
-        return "/mypage/Mypage_review";
+        return "mypage/Mypage_review";
     }
 
 
@@ -183,7 +183,7 @@ public class MypageController {
         model.addAttribute("reviewCount",reviewCount);
         model.addAttribute("orderCount",orderCount);
         model.addAttribute("user",siteUser);
-        return "/mypage/Mypage_usr";
+        return "mypage/Mypage_usr";
     }
 
 
