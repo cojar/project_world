@@ -1,10 +1,8 @@
 package com.example.world.security.dto;
 
 import com.example.world.user.SiteUser;
-import com.example.world.user.UserRole;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 

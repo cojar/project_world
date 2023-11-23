@@ -1,7 +1,7 @@
 package com.example.world.notice;
 
 
-import  com.example.world.DataNotFoundException;
+import com.example.world.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

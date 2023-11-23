@@ -1,7 +1,6 @@
 package com.example.world.product;
 
 //import com.example.world.product.productImage.ProductImageForm;
-import com.example.world.file.UploadedFile;
 import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macRecommended.MacRecommendedForm;
@@ -12,7 +11,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

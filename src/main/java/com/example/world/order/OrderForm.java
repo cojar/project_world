@@ -2,9 +2,6 @@ package com.example.world.order;
 
 import com.example.world.product.Product;
 import com.example.world.user.SiteUser;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;

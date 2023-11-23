@@ -1,7 +1,5 @@
 package com.example.world.qnaAnswer;
 
-import com.example.world.order.OrderForm;
-import com.example.world.product.Product;
 import com.example.world.qna.Question;
 import com.example.world.qna.QuestionService;
 import com.example.world.user.SiteUser;

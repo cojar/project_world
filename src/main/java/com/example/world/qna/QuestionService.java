@@ -7,14 +7,12 @@ import com.example.world.qnaAnswer.Answer;
 import com.example.world.qnaAnswer.AnswerRepository;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

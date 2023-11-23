@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,8 +64,9 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
                     user = new SiteUser();
                     user.setUsername(email);
                     user.setNickname(nickname);
-                    user.setPassword("");
+                    user.setPassword("0");
                     user.setRole(UserRole.valueOf("USER"));
+                    user.setBirthDate(LocalDate.parse("1900-01-01"));
                     userRepository.save(user);
                 }
             }

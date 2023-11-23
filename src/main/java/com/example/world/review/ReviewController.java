@@ -2,18 +2,13 @@ package com.example.world.review;
 
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
-import com.example.world.product.Product;
 import com.example.world.product.ProductService;
-import com.example.world.qna.Question;
-import com.example.world.qna.QuestionForm;
-import com.example.world.qnaAnswer.AnswerForm;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 @RequestMapping("/review")
 @RequiredArgsConstructor // 변수를 포함하는 생성자를 자동으로 생성.
@@ -118,7 +111,7 @@ public class ReviewController {
         if (!review.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.reviewService.modify(review, reviewForm.getContent());
+        this.reviewService.modify(reviewForm.getScore(), review, reviewForm.getContent());
         return String.format("redirect:/review/detail/%s", id);
     }
 

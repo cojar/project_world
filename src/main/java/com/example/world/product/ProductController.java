@@ -1,30 +1,23 @@
 package com.example.world.product;
 
-import com.example.world.product.productImage.ProductImageForm;
 import com.example.world.product.productImage.ProductImageService;
-import com.example.world.product.specification.macMin.MacMinForm;
 import com.example.world.product.specification.macMin.MacMinService;
-import com.example.world.product.specification.macRecommended.MacRecommendedForm;
 import com.example.world.product.specification.macRecommended.MacRecommendedService;
-import com.example.world.product.specification.windowMin.WindowMinForm;
 import com.example.world.product.specification.windowMin.WindowMinService;
-import com.example.world.product.specification.windowRecommended.WindowRecommendedForm;
 import com.example.world.product.specification.windowRecommended.WindowRecommendedService;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

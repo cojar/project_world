@@ -121,9 +121,6 @@ left:70px;
   border-width: 0;
 }
 
-
-
-
 .detail-box, .form-container{
   color:white;
   text-align:center;
@@ -131,6 +128,13 @@ left:70px;
   font-weight: bold;
 
 }
+
+.detail-content {
+        display: inline-block;
+        width: 68%;
+        word-wrap:break-word;
+        font-size:1.6rem;
+    }
 
 .detail-box > div{
   margin-top:30px;

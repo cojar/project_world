@@ -28,7 +28,7 @@ public class MailConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("thdcodud010128@gmail.com");
-        mailSender.setPassword("djmtkbgthrjclsxh");
+        mailSender.setPassword("tqplzgcpipzislbo");
         mailSender.setDefaultEncoding("utf-8");
         return mailSender;
     }

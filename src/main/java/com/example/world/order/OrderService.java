@@ -102,8 +102,10 @@ public class OrderService {
 
 
     public List<ProductOrder> getOrdersBetweenDates(LocalDateTime start, LocalDateTime end) {
-        return this.orderRepository.findByOrderDateBetween(start, end);
-    }
+//        return this.orderRepository.findByOrderDateBetween(start, end);
+        return  this.orderRepository.findCompletedOrdersBetweenDates(start, end);
+    };
+
 
 
     public List<ProductOrder> getAuthor(SiteUser siteUser) {

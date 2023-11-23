@@ -3,17 +3,13 @@ package com.example.world.review;
 import com.example.world.DataNotFoundException;
 import com.example.world.order.OrderService;
 import com.example.world.order.ProductOrder;
-import com.example.world.product.Product;
 import com.example.world.product.ProductService;
-import com.example.world.qna.Question;
-import com.example.world.qnaAnswer.Answer;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -80,7 +76,8 @@ public class ReviewService {
         return this.reviewRepository.findAll();
     }
 
-    public void modify(Review review, String content) {
+    public void modify(int score, Review review, String content) {
+        review.setScore(score);
         review.setContent(content);
         review.setModifyDate(LocalDateTime.now());
         this.reviewRepository.save(review);

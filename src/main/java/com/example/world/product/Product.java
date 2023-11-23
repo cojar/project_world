@@ -1,22 +1,20 @@
 package com.example.world.product;
 
 
-import com.example.world.file.UploadedFile;
 //import com.example.world.product.productImage.ProductImage;
+
 import com.example.world.order.ProductOrder;
 import com.example.world.product.productImage.ProductImage;
 import com.example.world.product.specification.macMin.MacMin;
 import com.example.world.product.specification.macRecommended.MacRecommended;
 import com.example.world.product.specification.windowMin.WindowMin;
 import com.example.world.product.specification.windowRecommended.WindowRecommended;
-import com.example.world.review.Review;
 import com.example.world.qna.Question;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
@@ -35,7 +33,6 @@ public class Product {
 //    @ManyToOne
 //    private SiteUser username;
 
-    @Size(max = 30)
     private String productName;
     // 게임 이름
 

@@ -1,6 +1,5 @@
 package com.example.world.review;
 
-import com.example.world.order.ProductOrder;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;

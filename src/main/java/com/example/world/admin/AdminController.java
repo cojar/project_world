@@ -201,7 +201,7 @@ public class AdminController {
                 return "redirect:/admin/order";
             }
         } else {
-            return "redirect:/admin";
+            return "redirect:/admin/";
         }
     }
 

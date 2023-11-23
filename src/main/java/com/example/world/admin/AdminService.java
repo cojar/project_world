@@ -6,12 +6,10 @@ import com.example.world.product.Product;
 import com.example.world.user.SiteUser;
 import com.example.world.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,7 +40,7 @@ public class AdminService {
         LocalDateTime start = LocalDateTime.of(date.getYear(), date.getMonth(), 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(date.atEndOfMonth(), LocalTime.of(23, 59, 59));
 
-        List<ProductOrder> list = this.orderRepository.findByOrderDateBetween(start, end);
+        List<ProductOrder> list = this.orderRepository.findCompletedOrdersBetweenDates(start, end);
         int totalPrice=1;
         for (ProductOrder order : list) {
             Product product = order.getProduct();

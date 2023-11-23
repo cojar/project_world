@@ -4,14 +4,11 @@ import com.example.world.product.Product;
 import com.example.world.qnaAnswer.Answer;
 import com.example.world.user.SiteUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
