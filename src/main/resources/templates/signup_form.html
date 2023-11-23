@@ -131,7 +131,7 @@
           clearInterval(timer);
           $("#timer").hide();
           $("#timer-expired").show();
-          $("#mailKey").prop("disabled", true); // 인증번호 입력 필드 비활성화d
+          $("#mailKey").prop("disabled", true); // 인증번호 입력 필드 비활성화
           return;
         }
         minutes--;
@@ -327,7 +327,7 @@ function validatePassword() {
     var mailKey = $("#mailKey").val();
     // AJAX 요청 보내기
     $.ajax({
-        url: "http://localhost:8080/mailCheck", // 이메일 인증번호를 보낼 서버의 URL
+        url: "/mailCheck", // 이메일 인증번호를 보낼 서버의 URL
         method: "GET",
         data: {
         email: email,
